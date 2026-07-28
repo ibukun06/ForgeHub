@@ -1,44 +1,35 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
-import { useTheme } from "next-themes";
 
 interface LogoProps {
   className?: string;
   variant?: "solid" | "inverse" | "mesh" | string; 
   tone?: "brand" | "mono" | "inverse" | string;
-  // The ultimate TypeScript trap-door:
-  // Accepts any lingering SVG props from other files so the build won't fail
   [key: string]: any; 
 }
 
-// We extract ...rest to satisfy TypeScript, but we do NOT pass it to the Image 
-// to prevent React console warnings about invalid HTML attributes.
 export const Logo: React.FC<LogoProps> = ({ className = "", variant, tone, ...rest }) => {
-  const { theme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return <div className={`h-8 w-auto aspect-[406/267] ${className}`} />;
-  }
-
-  const currentTheme = resolvedTheme || theme;
-  const logoSrc = currentTheme === "dark" ? "/logo-dark.png" : "/logo-light.png";
-  const logoAlt = currentTheme === "dark" ? "ForgeHub Logo (Dark Theme)" : "ForgeHub Logo (Light Theme)";
-
   return (
-    <Image
-      src={logoSrc}
-      alt={logoAlt}
-      width={406}
-      height={267}
-      className={`h-8 w-auto object-contain ${className}`}
-      priority
-    />
+    <>
+      {/* Light Theme Image: Visible by default, hidden when 'dark' class is active */}
+      <Image
+        src="/logo-light.png"
+        alt="ForgeHub Logo"
+        width={406}
+        height={267}
+        className={`block dark:hidden h-8 w-auto object-contain ${className}`}
+        priority
+      />
+
+      {/* Dark Theme Image: Hidden by default, visible when 'dark' class is active */}
+      <Image
+        src="/logo-dark.png"
+        alt="ForgeHub Logo"
+        width={406}
+        height={267}
+        className={`hidden dark:block h-8 w-auto object-contain ${className}`}
+        priority
+      />
+    </>
   );
 };
