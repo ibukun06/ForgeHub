@@ -7,9 +7,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <header className="border-b border-border">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <Link href="/dashboard" className="flex items-center gap-2 font-semibold text-text-primary">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-white text-sm">
-              F
-            </span>
+            import { Logo } from "@/components/ui/logo";
+            <Logo variant="solid" className="h-8 w-auto" />
             ForgeHub
           </Link>
           <form action={signOut}>
