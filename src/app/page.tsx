@@ -4,9 +4,8 @@ import { buttonVariants } from "@/components/ui/button";
 export default function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-bg px-4 text-center">
-      <span className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-xl font-semibold text-white">
-        F
-      </span>
+      import { Logo } from "@/components/ui/logo";
+      <Logo variant="solid" className="h-8 w-auto" />
       <h1 className="max-w-xl text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">
         Document the project as you build it, not the night before it&apos;s due.
       </h1>
