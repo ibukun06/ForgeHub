@@ -1,26 +1,35 @@
-import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
-import { Logo } from "@/components/ui/logo";
+import { Navbar } from "@/components/landing/Navbar";
+import { Hero } from "@/components/landing/Hero";
+import { BuiltFor } from "@/components/landing/BuiltFor";
+import { WhatIsForgeHub } from "@/components/landing/WhatIsForgeHub";
+import { FeatureGrid } from "@/components/landing/FeatureGrid";
+import { HowItWorks } from "@/components/landing/HowItWorks";
+import { FeaturedProjects } from "@/components/landing/FeaturedProjects";
+import { Categories } from "@/components/landing/Categories";
+import { WhyForgeHub } from "@/components/landing/WhyForgeHub";
+import { Testimonials } from "@/components/landing/Testimonials";
+import { FAQ } from "@/components/landing/FAQ";
+import { CTA } from "@/components/landing/CTA";
+import { Footer } from "@/components/landing/Footer";
 
 export default function LandingPage() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-bg px-4 text-center">
-      <Logo variant="solid" className="mb-6 h-14 w-auto" />
-      <h1 className="max-w-xl text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">
-        Document the project as you build it, not the night before it&apos;s due.
-      </h1>
-      <p className="mt-4 max-w-md text-text-muted">
-        A guided, AI-assisted workspace for student and early-career technical teams.
-        Private by default, shareable when you&apos;re ready.
-      </p>
-      <div className="mt-8 flex gap-3">
-        <Link href="/signup" className={buttonVariants("primary")}>
-          Start a project
-        </Link>
-        <Link href="/login" className={buttonVariants("secondary")}>
-          Log in
-        </Link>
-      </div>
-    </div>
+    <>
+      <Navbar />
+      <main>
+        <Hero />
+        <BuiltFor />
+        <WhatIsForgeHub />
+        <FeatureGrid />
+        <HowItWorks />
+        <FeaturedProjects />
+        <Categories />
+        <WhyForgeHub />
+        <Testimonials />
+        <FAQ />
+        <CTA />
+      </main>
+      <Footer />
+    </>
   );
 }
