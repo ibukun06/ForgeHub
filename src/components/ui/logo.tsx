@@ -2,16 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 
 interface LogoProps {
   className?: string;
-  // Putting this back so TypeScript doesn't fail the build when layouts pass it
   variant?: "solid" | "inverse" | string; 
 }
 
-export const Logo: React.FC<LogoProps> = ({ className, variant }) => {
+export const Logo: React.FC<LogoProps> = ({ className = "", variant }) => {
   const { theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -20,7 +18,7 @@ export const Logo: React.FC<LogoProps> = ({ className, variant }) => {
   }, []);
 
   if (!mounted) {
-    return <div className={cn("h-8 w-auto aspect-[406/267]", className)} />;
+    return <div className={`h-8 w-auto aspect-[406/267] ${className}`} />;
   }
 
   const currentTheme = resolvedTheme || theme;
@@ -33,7 +31,7 @@ export const Logo: React.FC<LogoProps> = ({ className, variant }) => {
       alt={logoAlt}
       width={406}
       height={267}
-      className={cn("h-8 w-auto object-contain", className)}
+      className={`h-8 w-auto object-contain ${className}`}
       priority
     />
   );
