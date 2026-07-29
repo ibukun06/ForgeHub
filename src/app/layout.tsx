@@ -19,6 +19,7 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: "ForgeHub",
   description:
     "A guided, AI-assisted workspace where technical teams build the documentation their project actually needs — as they work, not at the deadline.",

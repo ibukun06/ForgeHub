@@ -2,19 +2,24 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { buttonVariants } from "@/components/ui/button";
 
+// Absolute paths, not bare "#anchor" — a relative anchor only works if
+// you're already on the page that has that section. Now that Navbar is
+// shared across every public page, that distinction actually matters.
 const NAV_LINKS = [
   { href: "/explore", label: "Explore" },
-  { href: "#categories", label: "Categories" },
-  { href: "#how-it-works", label: "How it works" },
+  { href: "/explore#categories", label: "Categories" },
+  { href: "/#how-it-works", label: "How it works" },
 ];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-bg/80 backdrop-blur-md">
@@ -26,13 +31,7 @@ export function Navbar() {
 
         <nav className="hidden items-center gap-8 md:flex">
           {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm text-text-muted transition-colors hover:text-text-primary"
-            >
-              {link.label}
-            </a>
+            <NavLink key={link.href} href={link.href} label={link.label} pathname={pathname} />
           ))}
         </nav>
 
@@ -61,14 +60,14 @@ export function Navbar() {
         <div className="border-t border-border px-4 py-4 md:hidden">
           <nav className="flex flex-col gap-4">
             {NAV_LINKS.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className="text-sm text-text-muted"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
             <div className="flex items-center justify-between pt-2">
               <Link href="/login" className="text-sm text-text-muted">
@@ -83,5 +82,25 @@ export function Navbar() {
         </div>
       )}
     </header>
+  );
+}
+
+function NavLink({ href, label, pathname }: { href: string; label: string; pathname: string }) {
+  // Only true page destinations (no #anchor) get active-state highlighting.
+  // Categories/How-it-works are jump-links to a section, not a distinct
+  // page — treating them as "current page" would be misleading.
+  const isPageLink = !href.includes("#");
+  const isActive = isPageLink && pathname === href;
+
+  return (
+    <Link
+      href={href}
+      aria-current={isActive ? "page" : undefined}
+      className={`text-sm transition-colors ${
+        isActive ? "font-medium text-text-primary" : "text-text-muted hover:text-text-primary"
+      }`}
+    >
+      {label}
+    </Link>
   );
 }
