@@ -1,35 +1,41 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 
 interface LogoProps {
   className?: string;
-  variant?: "solid" | "inverse" | "mesh" | string; 
-  tone?: "brand" | "mono" | "inverse" | string;
+  variant?: string; 
+  tone?: string;
   [key: string]: any; 
 }
 
 export const Logo: React.FC<LogoProps> = ({ className = "", variant, tone, ...rest }) => {
-  return (
-    <>
-      {/* Light Theme Image: Visible by default, hidden when 'dark' class is active */}
-      <Image
-        src="/logo-light.png"
-        alt="ForgeHub Logo"
-        width={406}
-        height={267}
-        className={`block dark:hidden h-8 w-auto object-contain ${className}`}
-        priority
-      />
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-      {/* Dark Theme Image: Hidden by default, visible when 'dark' class is active */}
-      <Image
-        src="/logo-dark.png"
-        alt="ForgeHub Logo"
-        width={406}
-        height={267}
-        className={`hidden dark:block h-8 w-auto object-contain ${className}`}
-        priority
-      />
-    </>
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <div className={`h-8 w-8 ${className}`} />;
+  }
+
+  // Strict boolean check ensures it defaults properly
+  const isDark = resolvedTheme === "dark";
+  const logoSrc = isDark ? "/logo-dark.png" : "/logo-light.png";
+
+  return (
+    <Image
+      src={logoSrc}
+      alt="ForgeHub Logo"
+      width={128}
+      height={128}
+      className={`h-8 w-8 object-contain ${className}`}
+      priority
+      unoptimized // Bypasses Vercel's image cache to fix the stuck logo
+    />
   );
 };
