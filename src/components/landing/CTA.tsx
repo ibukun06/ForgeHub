@@ -13,9 +13,9 @@ export function CTA() {
           <Link href="/signup" className={buttonVariants("primary", "px-6 py-3 text-base")}>
             Forge Your First Project
           </Link>
-          <a href="#featured-projects" className={buttonVariants("secondary", "px-6 py-3 text-base")}>
+          <Link href="/explore" className={buttonVariants("secondary", "px-6 py-3 text-base")}>
             Explore Community Projects
-          </a>
+          </Link>
         </div>
       </div>
     </section>

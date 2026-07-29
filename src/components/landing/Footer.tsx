@@ -20,9 +20,9 @@ export function Footer() {
             <h3 className="font-heading text-sm font-semibold text-text-primary">Product</h3>
             <ul className="mt-3 space-y-2 text-sm text-text-muted">
               <li>
-                <a href="#featured-projects" className="hover:text-text-primary">
+                <Link href="/explore" className="hover:text-text-primary">
                   Explore
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#categories" className="hover:text-text-primary">

@@ -22,9 +22,9 @@ export function Hero() {
             <Link href="/signup" className={buttonVariants("primary", "px-6 py-3 text-base")}>
               Start Forging
             </Link>
-            <a href="#featured-projects" className={buttonVariants("secondary", "px-6 py-3 text-base")}>
+            <Link href="/explore" className={buttonVariants("secondary", "px-6 py-3 text-base")}>
               Explore Projects
-            </a>
+            </Link>
           </div>
         </div>
 
