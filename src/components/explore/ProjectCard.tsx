@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Star, Eye, Users } from "lucide-react";
 import { CATEGORIES } from "@/components/landing/data";
 import { getProjectStatus } from "./filters";
+import { getProjectUrl } from "@/lib/urls";
 import type { ExploreProject } from "./data";
 
 export function ProjectCard({ project }: { project: ExploreProject }) {
@@ -10,7 +11,7 @@ export function ProjectCard({ project }: { project: ExploreProject }) {
 
   return (
     <Link
-      href={`/projects/${project.slug}`}
+      href={getProjectUrl(project.slug)}
       className="flex flex-col overflow-hidden rounded-lg border border-border bg-surface transition-colors hover:border-primary"
     >
       <div className="flex h-32 items-center justify-center bg-gradient-to-br from-primary/20 to-secondary/20">

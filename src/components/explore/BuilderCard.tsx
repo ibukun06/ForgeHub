@@ -1,19 +1,12 @@
 import Link from "next/link";
+import { getProfileUrl } from "@/lib/urls";
+import { initials } from "@/lib/format";
 import type { Builder } from "./data";
-
-function initials(name: string) {
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-}
 
 export function BuilderCard({ builder }: { builder: Builder }) {
   return (
     <Link
-      href={`/profile/${builder.username}`}
+      href={getProfileUrl(builder.username)}
       className="flex flex-col items-center rounded-lg border border-border bg-surface p-6 text-center transition-colors hover:border-primary"
     >
       <span className="flex h-14 w-14 items-center justify-center rounded-full bg-primary font-heading text-lg font-semibold text-white">
