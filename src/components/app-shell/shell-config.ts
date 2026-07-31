@@ -1,23 +1,23 @@
 import type { LucideIcon } from "lucide-react";
 import {
+  Activity,
   Bell,
+  BookMarked,
   BookOpen,
+  BriefcaseBusiness,
   ChartColumnBig,
+  Compass,
   FolderKanban,
   Home,
+  KanbanSquare,
   LayoutDashboard,
   LibraryBig,
+  Map,
+  MessageCircleMore,
   MessagesSquare,
   Settings2,
-  Sparkles,
-  BriefcaseBusiness,
-  Map,
-  KanbanSquare,
-  BookMarked,
-  MessageCircleMore,
   ShieldCheck,
-  Activity,
-  Compass,
+  Sparkles,
 } from "lucide-react";
 
 export type ShellAreaKey =
@@ -30,6 +30,15 @@ export type ShellAreaKey =
   | "reports"
   | "templates"
   | "admin";
+
+export type ProjectSectionKey =
+  | "overview"
+  | "plan"
+  | "work"
+  | "knowledge"
+  | "conversation"
+  | "review"
+  | "insights";
 
 export type ContextItem = {
   label: string;
@@ -48,6 +57,18 @@ export type NavItem = {
   href: string;
   icon: LucideIcon;
   shortLabel?: string;
+};
+
+export type ProjectSpineItem = {
+  key: ProjectSectionKey;
+  label: string;
+  icon: LucideIcon;
+};
+
+export type FavoriteLink = {
+  label: string;
+  href: string;
+  icon: LucideIcon;
 };
 
 export type ShellState = {
@@ -74,7 +95,7 @@ export const PRIMARY_NAV: NavItem[] = [
   { key: "admin", label: "Admin", href: "/admin", icon: Settings2, shortLabel: "Admin" },
 ];
 
-export const PROJECT_SPINE = [
+export const PROJECT_SPINE: ProjectSpineItem[] = [
   { key: "overview", label: "Overview", icon: LayoutDashboard },
   { key: "plan", label: "Plan", icon: Map },
   { key: "work", label: "Work", icon: KanbanSquare },
@@ -82,7 +103,15 @@ export const PROJECT_SPINE = [
   { key: "conversation", label: "Conversation", icon: MessageCircleMore },
   { key: "review", label: "Review", icon: ShieldCheck },
   { key: "insights", label: "Insights", icon: Activity },
-] as const;
+];
+
+export const FAVORITE_LINKS: FavoriteLink[] = [
+  { label: "ForgeHub Redesign", href: "/w/forgehub/p/forgehub-redesign/overview", icon: Compass },
+  { label: "Execution board", href: "/work#board", icon: KanbanSquare },
+  { label: "Decision log", href: "/knowledge#decisions", icon: BookOpen },
+];
+
+export const COMMAND_MODE_TABS = ["Find", "Do", "Ask", "Create"] as const;
 
 export function prettyLabel(slug?: string): string {
   if (!slug) return "Overview";
@@ -112,7 +141,7 @@ function topLevelContext(area: ShellAreaKey): ContextItem[] {
       return [
         { label: "Active projects", href: "/projects#active-projects", hint: "Current delivery focus" },
         { label: "Portfolio view", href: "/projects#portfolio", hint: "By stage, team, and risk" },
-        { label: "Templates", href: "/templates", hint: "Reusable project operating models" },
+        { label: "Templates", href: "/projects#project-kits", hint: "Reusable project operating models" },
         { label: "ForgeHub redesign", href: "/w/forgehub/p/forgehub-redesign/overview", hint: "Flagship project cockpit" },
       ];
     case "work":
@@ -197,7 +226,11 @@ export function getShellState(pathname: string): ShellState {
   if (segments[0] === "w" && segments[2] === "p") {
     const workspaceSlug = segments[1];
     const projectSlug = segments[3];
-    const projectSection = segments[4] ?? "overview";
+    const rawSection = segments[4] ?? "overview";
+    const projectSection = PROJECT_SPINE.some((item) => item.key === rawSection)
+      ? (rawSection as ProjectSectionKey)
+      : "overview";
+
     const contextItems = PROJECT_SPINE.map((item) => ({
       label: item.label,
       href: `/w/${workspaceSlug}/p/${projectSlug}/${item.key}`,
@@ -278,11 +311,3 @@ export function getShellState(pathname: string): ShellState {
     utilitySections: topLevelUtilities(normalizedArea),
   };
 }
-
-export const COMMAND_MODE_TABS = ["Find", "Do", "Ask", "Create"] as const;
-
-export const FAVORITE_LINKS = [
-  { label: "ForgeHub Redesign", href: "/w/forgehub/p/forgehub-redesign/overview", icon: Compass },
-  { label: "Execution board", href: "/work#board", icon: KanbanSquare },
-  { label: "Decision log", href: "/knowledge#decisions", icon: BookOpen },
-];

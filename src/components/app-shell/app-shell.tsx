@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -25,7 +26,7 @@ type AppShellProps = {
     displayName: string;
     email: string;
   };
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export function AppShell({ user, children }: AppShellProps) {
@@ -41,6 +42,7 @@ export function AppShell({ user, children }: AppShellProps) {
         event.preventDefault();
         setCommandOpen(true);
       }
+
       if (event.key === "Escape") {
         setCommandOpen(false);
         setNavOpen(false);
@@ -61,8 +63,8 @@ export function AppShell({ user, children }: AppShellProps) {
         closeMobile={() => setNavOpen(false)}
       />
 
-      <div className="min-h-screen lg:pl-[17.5rem]">
-        <header className="sticky top-0 z-30 border-b border-border/80 bg-bg/90 backdrop-blur">
+      <div className="min-h-screen lg:pl-[18rem]">
+        <header className="sticky top-0 z-30 border-b border-border/80 bg-bg/90 backdrop-blur-xl">
           <div className="flex items-center gap-3 px-4 py-3 sm:px-5 lg:px-6">
             <button
               type="button"
@@ -79,7 +81,11 @@ export function AppShell({ user, children }: AppShellProps) {
               className="hidden h-10 w-10 items-center justify-center rounded-2xl border border-border bg-surface text-text-primary transition-colors hover:border-primary xl:inline-flex"
               aria-label={contextCollapsed ? "Expand context rail" : "Collapse context rail"}
             >
-              {contextCollapsed ? <PanelLeftOpen className="h-4 w-4" aria-hidden /> : <PanelLeftClose className="h-4 w-4" aria-hidden />}
+              {contextCollapsed ? (
+                <PanelLeftOpen className="h-4 w-4" aria-hidden />
+              ) : (
+                <PanelLeftClose className="h-4 w-4" aria-hidden />
+              )}
             </button>
 
             <div className="min-w-0 flex-1">
@@ -93,12 +99,14 @@ export function AppShell({ user, children }: AppShellProps) {
                     ) : (
                       <span className="text-text-primary">{breadcrumb.label}</span>
                     )}
-                    {index < shellState.breadcrumbs.length - 1 ? <ChevronRight className="h-3 w-3 text-text-muted" aria-hidden /> : null}
+                    {index < shellState.breadcrumbs.length - 1 ? (
+                      <ChevronRight className="h-3 w-3 text-text-muted" aria-hidden />
+                    ) : null}
                   </div>
                 ))}
               </div>
               <div className="flex items-center gap-3">
-                <p className="rounded-full border border-border bg-surface px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-text-muted">
+                <p className="signal-pill signal-pill-neutral text-[11px] uppercase tracking-[0.16em] text-text-muted">
                   {shellState.scopeLabel}
                 </p>
                 <p className="truncate text-base font-semibold text-text-primary">{shellState.pageTitle}</p>
@@ -123,7 +131,7 @@ export function AppShell({ user, children }: AppShellProps) {
               Create
             </Link>
             <ThemeToggle />
-            <div className="hidden items-center gap-3 rounded-2xl border border-border bg-surface px-3 py-2 text-sm sm:flex">
+            <div className="hidden items-center gap-3 rounded-2xl border border-border bg-surface px-3 py-2 text-sm shadow-sm sm:flex">
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary/12 text-sm font-semibold text-primary">
                 {initials(user.displayName)}
               </span>
@@ -132,7 +140,7 @@ export function AppShell({ user, children }: AppShellProps) {
                 <p className="truncate text-xs text-text-muted">{user.email}</p>
               </div>
             </div>
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface sm:hidden">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface shadow-sm sm:hidden">
               <UserCircle2 className="h-5 w-5 text-text-muted" aria-hidden />
             </div>
           </div>
@@ -166,9 +174,16 @@ function GlobalSidebar({
 }) {
   return (
     <>
-      {mobileOpen ? <button type="button" onClick={closeMobile} className="fixed inset-0 z-40 bg-slate-950/45 lg:hidden" aria-label="Close navigation overlay" /> : null}
+      {mobileOpen ? (
+        <button
+          type="button"
+          onClick={closeMobile}
+          className="fixed inset-0 z-40 bg-slate-950/45 lg:hidden"
+          aria-label="Close navigation overlay"
+        />
+      ) : null}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-[17.5rem] flex-col border-r border-border bg-[#0f151d] text-slate-200 transition-transform duration-200 lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-[18rem] flex-col border-r border-white/8 bg-[#0f151d] text-slate-200 transition-transform duration-200 lg:translate-x-0 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -214,7 +229,7 @@ function GlobalSidebar({
                 onClick={closeMobile}
                 aria-current={active ? "page" : undefined}
                 className={`flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm transition-colors ${
-                  active ? "bg-white text-slate-950" : "text-slate-300 hover:bg-white/8 hover:text-white"
+                  active ? "bg-white text-slate-950 shadow-lg shadow-slate-950/10" : "text-slate-300 hover:bg-white/8 hover:text-white"
                 }`}
               >
                 <Icon className="h-4 w-4" aria-hidden />
@@ -261,14 +276,14 @@ function GlobalSidebar({
 
 function ContextRail({ shellState }: { shellState: ShellState }) {
   return (
-    <aside className="hidden w-72 shrink-0 border-r border-border bg-surface/80 px-4 py-5 xl:block">
-      <div className="mb-5 rounded-3xl border border-border bg-bg p-4">
-        <p className="text-xs uppercase tracking-[0.18em] text-text-muted">Current scope</p>
+    <aside className="hidden w-[18rem] shrink-0 border-r border-border bg-surface/75 px-4 py-5 xl:block">
+      <div className="surface-panel mb-5 p-4">
+        <p className="eyebrow">Current scope</p>
         <h2 className="mt-2 font-heading text-xl text-text-primary">{shellState.pageTitle}</h2>
         <p className="mt-1 text-sm text-text-muted">{shellState.scopeLabel}</p>
       </div>
 
-      <div className="mb-3 text-xs uppercase tracking-[0.18em] text-text-muted">Context rail</div>
+      <div className="eyebrow mb-3">Context rail</div>
       <div className="space-y-2">
         {shellState.contextItems.map((item) => (
           <ContextRailItem key={item.href} item={item} />
@@ -280,7 +295,7 @@ function ContextRail({ shellState }: { shellState: ShellState }) {
 
 function ContextRailItem({ item }: { item: ContextItem }) {
   return (
-    <Link href={item.href} className="block rounded-2xl border border-border bg-bg px-3 py-3 transition-colors hover:border-primary hover:bg-surface">
+    <Link href={item.href} className="surface-panel-muted block px-3 py-3 transition-colors hover:border-primary/60 hover:bg-surface">
       <p className="font-medium text-text-primary">{item.label}</p>
       {item.hint ? <p className="mt-1 text-sm text-text-muted">{item.hint}</p> : null}
     </Link>
@@ -289,11 +304,11 @@ function ContextRailItem({ item }: { item: ContextItem }) {
 
 function UtilityRail({ shellState }: { shellState: ShellState }) {
   return (
-    <aside className="hidden w-80 shrink-0 border-l border-border bg-surface/70 px-4 py-5 2xl:block">
-      <div className="mb-3 text-xs uppercase tracking-[0.18em] text-text-muted">Utility rail</div>
+    <aside className="hidden w-[20rem] shrink-0 border-l border-border bg-surface/70 px-4 py-5 2xl:block">
+      <div className="eyebrow mb-3">Utility rail</div>
       <div className="space-y-4">
         {shellState.utilitySections.map((section) => (
-          <div key={section.title} className="rounded-3xl border border-border bg-bg p-4">
+          <div key={section.title} className="surface-panel p-4">
             <h3 className="font-medium text-text-primary">{section.title}</h3>
             <ul className="mt-3 space-y-2 text-sm text-text-muted">
               {section.items.map((item) => (
@@ -313,7 +328,10 @@ function MobileTabBar({ openCommand }: { openCommand: () => void }) {
   const mobileItems = PRIMARY_NAV.filter((item) => ["home", "inbox", "work", "knowledge"].includes(item.key));
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-bg/95 px-3 py-2 backdrop-blur lg:hidden" aria-label="Mobile navigation">
+    <nav
+      className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-bg/95 px-3 py-2 backdrop-blur-xl lg:hidden"
+      aria-label="Mobile navigation"
+    >
       <div className="grid grid-cols-5 items-center gap-2">
         {mobileItems.slice(0, 2).map((item) => {
           const Icon = item.icon;
@@ -335,7 +353,7 @@ function MobileTabBar({ openCommand }: { openCommand: () => void }) {
         <button
           type="button"
           onClick={openCommand}
-          className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-white shadow-lg shadow-primary/20"
+          className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-white shadow-[0_18px_36px_rgba(36,70,107,0.28)]"
           aria-label="Open command surface"
         >
           <Search className="h-5 w-5" aria-hidden />

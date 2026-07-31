@@ -11,7 +11,15 @@ type CommandSurfaceProps = {
   shellState: ShellState;
 };
 
-const STATIC_RESULTS = [
+type CommandMode = (typeof COMMAND_MODE_TABS)[number];
+
+type CommandResult = {
+  label: string;
+  mode: CommandMode;
+  href?: string;
+};
+
+const STATIC_RESULTS: CommandResult[] = [
   { label: "ForgeHub redesign cockpit", href: "/w/forgehub/p/forgehub-redesign/overview", mode: "Find" },
   { label: "My work — timeline view", href: "/work#timeline", mode: "Find" },
   { label: "Decision log", href: "/knowledge#decisions", mode: "Find" },
@@ -21,10 +29,10 @@ const STATIC_RESULTS = [
   { label: "Draft weekly project update", mode: "Ask" },
   { label: "Prioritize the current backlog", mode: "Do" },
   { label: "Open pending approvals", href: "/inbox#approvals", mode: "Do" },
-] as const;
+];
 
 export function CommandSurface({ open, onClose, shellState }: CommandSurfaceProps) {
-  const [activeMode, setActiveMode] = useState<(typeof COMMAND_MODE_TABS)[number]>("Find");
+  const [activeMode, setActiveMode] = useState<CommandMode>("Find");
   const [query, setQuery] = useState("");
 
   const filteredResults = useMemo(() => {
