@@ -16,7 +16,6 @@ import {
   MessageSquareMore,
   Scale,
   ShieldCheck,
-  Sparkles,
   Target,
   Users,
   Waypoints,
