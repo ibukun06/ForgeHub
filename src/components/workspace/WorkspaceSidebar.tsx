@@ -5,7 +5,7 @@ import { BarChart3, BookOpen, Flag, FolderOpen, LayoutDashboard, ListChecks, Mes
 
 const ITEMS = [
   { slug: "overview", label: "Overview", icon: LayoutDashboard, enabled: true },
-  { slug: "docs", label: "Documentation", icon: BookOpen, enabled: false },
+  { slug: "docs", label: "Documentation", icon: BookOpen, enabled: true },
   { slug: "tasks", label: "Tasks", icon: ListChecks, enabled: false },
   { slug: "milestones", label: "Milestones", icon: Flag, enabled: false },
   { slug: "files", label: "Files", icon: FolderOpen, enabled: false },
