@@ -259,11 +259,11 @@ export function HomeScreen({ scope, data }: { scope?: string; data?: HomeScreenD
     { label: "Projects in motion", value: "3", hint: "1 milestone needs an immediate decision" },
     { label: "AI prompts", value: "4", hint: "Suggested summaries, risk checks, and standups" },
   ];
-  const focusItems = data?.focusItems?.length ? data.focusItems : HOME_FOCUS;
-  const approvals = data?.approvals?.length ? data.approvals : HOME_APPROVALS;
-  const projects = data?.projects?.length ? data.projects : ACTIVE_PROJECTS;
-  const watchlist = data?.watchlist?.length ? data.watchlist : DEFAULT_HOME_WATCHLIST;
-  const schedule = data?.schedule?.length ? data.schedule : DEFAULT_HOME_SCHEDULE;
+  const focusItems = data ? data.focusItems : HOME_FOCUS;
+  const approvals = data ? data.approvals : HOME_APPROVALS;
+  const projects = data ? data.projects : ACTIVE_PROJECTS;
+  const watchlist = data ? data.watchlist : DEFAULT_HOME_WATCHLIST;
+  const schedule = data ? data.schedule : DEFAULT_HOME_SCHEDULE;
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -344,9 +344,9 @@ export function HomeScreen({ scope, data }: { scope?: string; data?: HomeScreenD
 }
 
 export function InboxScreen({ data }: { data?: InboxScreenData }) {
-  const items = data?.items?.length ? data.items : DEFAULT_INBOX_ITEMS;
+  const items = data ? data.items : DEFAULT_INBOX_ITEMS;
   const selected = data?.selected ?? DEFAULT_INBOX_SELECTED;
-  const triage = data?.triage?.length ? data.triage : DEFAULT_INBOX_TRIAGE;
+  const triage = data ? data.triage : DEFAULT_INBOX_TRIAGE;
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -403,7 +403,7 @@ export function InboxScreen({ data }: { data?: InboxScreenData }) {
         </PanelCard>
 
         <PanelCard title="AI triage" description="Helpful where it reduces noise, never where it hides truth.">
-          <AssistList items={triage} />
+          <AssistList items={triage.length ? triage : ["No triage suggestions right now. Inbox signals are already well scoped."]} />
         </PanelCard>
       </div>
     </div>
@@ -412,9 +412,9 @@ export function InboxScreen({ data }: { data?: InboxScreenData }) {
 
 export function ProjectsScreen({ scope, data }: { scope?: string; data?: ProjectsScreenData }) {
   const metrics = data?.metrics ?? DEFAULT_PROJECTS_METRICS;
-  const projects = data?.projects?.length ? data.projects : ACTIVE_PROJECTS;
-  const lanes = data?.lanes?.length ? data.lanes : DEFAULT_PROJECT_LANES;
-  const kits = data?.kits?.length ? data.kits : DEFAULT_PROJECT_KITS;
+  const projects = data ? data.projects : ACTIVE_PROJECTS;
+  const lanes = data ? data.lanes : DEFAULT_PROJECT_LANES;
+  const kits = data ? data.kits : DEFAULT_PROJECT_KITS;
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -445,13 +445,13 @@ export function ProjectsScreen({ scope, data }: { scope?: string; data?: Project
       <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
         <PanelCard id="active-projects" title="Portfolio lanes" description="Group work by stage, owner, and operating risk.">
           <div className="grid gap-3 md:grid-cols-3">
-            {lanes.map((lane) => <ActionTile key={lane.title} title={lane.title} description={lane.description} />)}
+            {lanes.length ? lanes.map((lane) => <ActionTile key={lane.title} title={lane.title} description={lane.description} />) : <EmptyInlineState title="No portfolio lanes yet" description="As real portfolio signals accumulate, project grouping summaries will appear here." />}
           </div>
         </PanelCard>
 
         <PanelCard id="project-kits" title="Project kits" description="Opinionated starting structures, not generic templates.">
           <div className="grid gap-3">
-            {kits.map((kit) => <ActionTile key={kit.title} title={kit.title} description={kit.description} />)}
+            {kits.length ? kits.map((kit) => <ActionTile key={kit.title} title={kit.title} description={kit.description} />) : <EmptyInlineState title="No project kits yet" description="Template storage will surface real kits here once it is wired into the platform." />}
           </div>
         </PanelCard>
       </div>
@@ -465,9 +465,9 @@ export function WorkScreen({ scope, data }: { scope?: string; data?: WorkScreenD
     { label: "Saved views", value: "4", hint: "By priority, by stream, by assignee" },
     { label: "AI suggestions", value: "3", hint: "Assignee, due-date, and backlog cues" },
   ];
-  const tasks = data?.tasks?.length ? data.tasks : DEFAULT_WORK_TASKS;
-  const timelineItems = data?.timelineItems?.length ? data.timelineItems : DEFAULT_WORK_TIMELINE;
-  const aiItems = data?.aiItems?.length ? data.aiItems : DEFAULT_WORK_AI;
+  const tasks = data ? data.tasks : DEFAULT_WORK_TASKS;
+  const timelineItems = data ? data.timelineItems : DEFAULT_WORK_TIMELINE;
+  const aiItems = data ? data.aiItems : DEFAULT_WORK_AI;
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -511,7 +511,7 @@ export function WorkScreen({ scope, data }: { scope?: string; data?: WorkScreenD
           </PanelCard>
 
           <PanelCard id="workload" title="AI execution assist" description="Preview-first automation and planning support.">
-            <AssistList items={aiItems} />
+            <AssistList items={aiItems.length ? aiItems : ["No execution suggestions available yet."]} />
           </PanelCard>
         </div>
       </div>
@@ -521,9 +521,9 @@ export function WorkScreen({ scope, data }: { scope?: string; data?: WorkScreenD
 
 export function KnowledgeScreen({ scope, data }: { scope?: string; data?: KnowledgeScreenData }) {
   const metrics = data?.metrics ?? DEFAULT_KNOWLEDGE_METRICS;
-  const docs = data?.docs?.length ? data.docs : KNOWLEDGE_DOCS;
-  const libraryItems = data?.libraryItems?.length ? data.libraryItems : DEFAULT_LIBRARY_ITEMS;
-  const aiItems = data?.aiItems?.length ? data.aiItems : DEFAULT_KNOWLEDGE_AI;
+  const docs = data ? data.docs : KNOWLEDGE_DOCS;
+  const libraryItems = data ? data.libraryItems : DEFAULT_LIBRARY_ITEMS;
+  const aiItems = data ? data.aiItems : DEFAULT_KNOWLEDGE_AI;
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -537,7 +537,7 @@ export function KnowledgeScreen({ scope, data }: { scope?: string; data?: Knowle
       <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr_0.8fr]">
         <PanelCard id="docs" title="Library" description="Browse by document type, collection, or project scope.">
           <div className="grid gap-3">
-            {libraryItems.map((item) => <ActionTile key={item.title} title={item.title} description={item.description} />)}
+            {libraryItems.length ? libraryItems.map((item) => <ActionTile key={item.title} title={item.title} description={item.description} />) : <EmptyInlineState title="No library structure yet" description="Knowledge collections will appear here as the workspace grows." />}
           </div>
         </PanelCard>
 
@@ -556,7 +556,7 @@ export function KnowledgeScreen({ scope, data }: { scope?: string; data?: Knowle
         </PanelCard>
 
         <PanelCard title="AI knowledge assist" description="Citations and synthesis before generation.">
-          <AssistList items={aiItems} />
+          <AssistList items={aiItems.length ? aiItems : ["No knowledge suggestions available yet."]} />
         </PanelCard>
       </div>
     </div>
@@ -575,10 +575,10 @@ export function ProjectCockpitScreen({
   const projectName = prettyLabel(projectSlug);
   const workspaceName = prettyLabel(workspaceSlug);
   const metrics = data?.metrics ?? DEFAULT_COCKPIT_METRICS;
-  const blockers = data?.blockers?.length ? data.blockers : DEFAULT_COCKPIT_BLOCKERS;
-  const aiBrief = data?.aiBrief?.length ? data.aiBrief : DEFAULT_COCKPIT_BRIEF;
-  const decisions = data?.decisions?.length ? data.decisions : DEFAULT_COCKPIT_DECISIONS;
-  const artifacts = data?.artifacts?.length ? data.artifacts : KNOWLEDGE_DOCS;
+  const blockers = data ? data.blockers : DEFAULT_COCKPIT_BLOCKERS;
+  const aiBrief = data ? data.aiBrief : DEFAULT_COCKPIT_BRIEF;
+  const decisions = data ? data.decisions : DEFAULT_COCKPIT_DECISIONS;
+  const artifacts = data ? data.artifacts : KNOWLEDGE_DOCS;
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -609,7 +609,7 @@ export function ProjectCockpitScreen({
         </PanelCard>
 
         <PanelCard title="AI project brief" description="Ambient intelligence with visible, inspectable evidence.">
-          <AssistList items={aiBrief} />
+          <AssistList items={aiBrief.length ? aiBrief : ["No AI brief available for this project yet."]} />
         </PanelCard>
       </div>
 
