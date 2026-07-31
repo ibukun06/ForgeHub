@@ -1,5 +1,17 @@
 import { notFound } from "next/navigation";
-import { HomeScreen, KnowledgeScreen, PlaceholderScreen, ProjectsScreen, WorkScreen } from "@/components/app-shell/screens";
+import {
+  HomeScreen,
+  KnowledgeScreen,
+  PlaceholderScreen,
+  ProjectsScreen,
+  WorkScreen,
+} from "@/components/app-shell/screens";
+import {
+  getHomeScreenData,
+  getKnowledgeScreenData,
+  getProjectsScreenData,
+  getWorkScreenData,
+} from "@/lib/app-shell-data";
 import { prettyLabel } from "@/components/app-shell/shell-config";
 
 const VALID_SECTIONS = new Set([
@@ -28,13 +40,13 @@ export default async function WorkspaceSectionPage({
 
   switch (section) {
     case "home":
-      return <HomeScreen scope={scope} />;
+      return <HomeScreen scope={scope} data={await getHomeScreenData()} />;
     case "projects":
-      return <ProjectsScreen scope={scope} />;
+      return <ProjectsScreen scope={scope} data={await getProjectsScreenData()} />;
     case "work":
-      return <WorkScreen scope={scope} />;
+      return <WorkScreen scope={scope} data={await getWorkScreenData()} />;
     case "knowledge":
-      return <KnowledgeScreen scope={scope} />;
+      return <KnowledgeScreen scope={scope} data={await getKnowledgeScreenData()} />;
     case "conversations":
       return (
         <PlaceholderScreen
