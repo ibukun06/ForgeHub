@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Check, FileText, Loader2, Save, Sparkles } from "lucide-react";
 
 type Section = { id: string; prompt: string; content: string | null; status: string; order: number; updated_at: string };
