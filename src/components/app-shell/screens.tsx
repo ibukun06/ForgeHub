@@ -16,12 +16,19 @@ import {
   MessageSquareMore,
   Scale,
   ShieldCheck,
-  Sparkles,
   Target,
   Users,
   Waypoints,
 } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import type {
+  HomeScreenData,
+  InboxScreenData,
+  KnowledgeScreenData,
+  ProjectCockpitData,
+  ProjectsScreenData,
+  WorkScreenData,
+} from "@/lib/app-shell-data";
 import { prettyLabel } from "./shell-config";
 
 type FocusTone = "urgent" | "warning" | "default";
@@ -49,6 +56,12 @@ type ApprovalCard = {
   title: string;
   owner: string;
   summary: string;
+};
+
+type DetailCardData = {
+  eyebrow: string;
+  title: string;
+  description: string;
 };
 
 type ProjectSectionCard = {
@@ -103,7 +116,155 @@ const HOME_APPROVALS: ApprovalCard[] = [
   },
 ];
 
-export function HomeScreen({ scope }: { scope?: string }) {
+const DEFAULT_HOME_WATCHLIST: DetailCardData[] = [
+  {
+    eyebrow: "Milestone drift",
+    title: "Phase 3 visual-system signoff slipped by one review cycle",
+    description: "The impact is contained, but it compresses the timeline for high-fidelity implementation.",
+  },
+  {
+    eyebrow: "Dependency risk",
+    title: "AI approval thresholds still need one explicit policy decision",
+    description: "Resolve before the assistant is allowed to propose bulk work mutations.",
+  },
+];
+
+const DEFAULT_HOME_SCHEDULE = [
+  "2:30 PM · Review workspace route architecture",
+  "4:00 PM · Align cockpit module density",
+  "Tomorrow · Start detailed work view wireframes",
+];
+
+const DEFAULT_PROJECTS_METRICS = [
+  { label: "Active", value: "3", hint: "1 flagship build · 2 exploratory tracks" },
+  { label: "On watch", value: "1", hint: "Needs a milestone decision" },
+  { label: "Templates", value: "7", hint: "Reusable operating models ready" },
+];
+
+const DEFAULT_PROJECT_LANES = [
+  { title: "Foundation", description: "Architecture and shell work nearing stability." },
+  { title: "Pilot", description: "Research and academic workflows being validated." },
+  { title: "Discovery", description: "Enterprise governance surface still gathering constraints." },
+];
+
+const DEFAULT_PROJECT_KITS = [
+  { title: "Startup sprint OS", description: "Fast-moving team template for product, engineering, and review cycles." },
+  { title: "Research studio", description: "Notes, evidence, advisor review, and milestone defense built in." },
+  { title: "Enterprise rollout", description: "Governance, stakeholder reporting, and cross-team approval layers." },
+];
+
+const DEFAULT_WORK_TASKS = [
+  {
+    title: "Ship shell architecture",
+    status: "In progress",
+    owner: "Ibukunoluwa",
+    due: "Today",
+    summary: "Inline editing, due-date control, dependency visibility, and keyboard navigation all live in the same row model.",
+  },
+  {
+    title: "Map workspace routes",
+    status: "Review",
+    owner: "AI architect",
+    due: "Tomorrow",
+    summary: "Preserve scope and context as users move between projects, work, and knowledge.",
+  },
+  {
+    title: "Draft workload balancing logic",
+    status: "Backlog",
+    owner: "Ops design",
+    due: "Next week",
+    summary: "Ensure rebalancing guidance stays visible without becoming noisy or paternalistic.",
+  },
+];
+
+const DEFAULT_WORK_TIMELINE = [
+  "Milestone 1 · App shell foundation",
+  "Milestone 2 · Detailed wireframe rollout",
+  "Milestone 3 · High-fidelity design-system hardening",
+];
+
+const DEFAULT_WORK_AI = [
+  "Suggest the best assignee based on current load and previous work history.",
+  "Detect tasks likely to slip based on clustered due dates and blocked dependencies.",
+  "Preview a backlog reprioritization before changing any work in bulk.",
+];
+
+const DEFAULT_KNOWLEDGE_METRICS = [
+  { label: "Key docs", value: "9", hint: "Briefs, roadmaps, and architectural rationale" },
+  { label: "Decision records", value: "5", hint: "Each tied to alternatives and outcomes" },
+  { label: "Research sets", value: "3", hint: "Competitive, user, and implementation evidence" },
+];
+
+const DEFAULT_LIBRARY_ITEMS = [
+  { title: "Docs", description: "Specs, plans, one-pagers, and briefs with direct links to execution." },
+  { title: "Decisions", description: "Rationale, status, alternatives, and linked artifacts." },
+  { title: "Research", description: "Evidence, citations, summaries, and knowledge extraction." },
+  { title: "Collections", description: "Curated spaces for references, files, and topic clusters." },
+];
+
+const DEFAULT_KNOWLEDGE_AI = [
+  "Summarize the latest research collection with explicit evidence links.",
+  "Extract action items from the last three meeting notes and route them into Work.",
+  "Answer a project question using only cited artifacts from this knowledge scope.",
+];
+
+const DEFAULT_INBOX_ITEMS = [
+  { title: "Approve the command-surface interaction model", source: "ForgeHub Redesign · Approval", state: "Action required" },
+  { title: "New comment on AI guardrails", source: "Decision log · Mention", state: "Mention" },
+  { title: "Milestone risk changed", source: "Project cockpit · Update", state: "Project update" },
+  { title: "Research synthesis ready", source: "Knowledge hub · Digest", state: "AI digest" },
+];
+
+const DEFAULT_INBOX_SELECTED = {
+  title: "Approve the command-surface interaction model",
+  summary:
+    "The command surface now unifies find, do, ask, and create into one overlay. This approval locks the navigation grammar before deeper task, search, and AI data integration.",
+  source: "ForgeHub Redesign / Decision log",
+  action: "Approve with a note on mobile focus recovery",
+};
+
+const DEFAULT_INBOX_TRIAGE = [
+  "Cluster related updates into one review batch instead of showing three separate messages.",
+  "Explain why the selected approval matters for later wireframe and visual-system work.",
+  "Draft a concise reply that confirms direction and captures the guardrails still open.",
+];
+
+const DEFAULT_COCKPIT_METRICS = [
+  { label: "Health", value: "On watch", hint: "1 blocker · 2 decisions pending" },
+  { label: "Milestone", value: "Phase 3", hint: "Wireframes and premium UI refinement" },
+  { label: "Team load", value: "Balanced", hint: "No contributor over safe capacity" },
+];
+
+const DEFAULT_COCKPIT_BLOCKERS = [
+  "Interaction density needs careful testing so enterprise richness does not become clutter.",
+  "Knowledge architecture still needs final decision-record metadata before deep database integration.",
+  "AI assist patterns need explicit approval policy before any consequential automation is shipped.",
+];
+
+const DEFAULT_COCKPIT_BRIEF = [
+  "The project is strongest when the cockpit stays the default landing surface for every project type.",
+  "The unified command surface remains ForgeHub’s clearest differentiator versus fragmented productivity stacks.",
+  "Next best move after this pass: bind the core surfaces to live data and search state.",
+];
+
+const DEFAULT_COCKPIT_DECISIONS = [
+  { title: "Project cockpit becomes the default project landing surface", status: "Accepted" },
+  { title: "Command, search, and AI merge into one command surface", status: "Accepted" },
+  { title: "Work and knowledge remain lenses on the same system, not separate products", status: "Accepted" },
+];
+
+export function HomeScreen({ scope, data }: { scope?: string; data?: HomeScreenData }) {
+  const metrics = data?.metrics ?? [
+    { label: "Actionable items", value: "12", hint: "6 due today · 2 awaiting approval" },
+    { label: "Projects in motion", value: "3", hint: "1 milestone needs an immediate decision" },
+    { label: "AI prompts", value: "4", hint: "Suggested summaries, risk checks, and standups" },
+  ];
+  const focusItems = data ? data.focusItems : HOME_FOCUS;
+  const approvals = data ? data.approvals : HOME_APPROVALS;
+  const projects = data ? data.projects : ACTIVE_PROJECTS;
+  const watchlist = data ? data.watchlist : DEFAULT_HOME_WATCHLIST;
+  const schedule = data ? data.schedule : DEFAULT_HOME_SCHEDULE;
+
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
       <ScreenHero
@@ -111,28 +272,20 @@ export function HomeScreen({ scope }: { scope?: string }) {
         eyebrow="Home"
         title="Operate the day with one calm, command-first view."
         description={`${scope ?? "Your personal command center"} brings together priorities, approvals, active projects, and AI intelligence so you can start meaningful work without hunting across surfaces.`}
-        metrics={[
-          { label: "Actionable items", value: "12", hint: "6 due today · 2 awaiting approval" },
-          { label: "Projects in motion", value: "3", hint: "1 milestone needs an immediate decision" },
-          { label: "AI prompts", value: "4", hint: "Suggested summaries, risk checks, and standups" },
-        ]}
+        metrics={metrics}
       />
 
       <div className="grid gap-6 xl:grid-cols-[1.15fr_1fr_0.92fr]">
         <div className="space-y-6">
           <PanelCard id="today-focus" title="Today focus" description="The exact work to protect time for first.">
             <div className="space-y-3">
-              {HOME_FOCUS.map((item) => (
-                <FocusItem key={item.title} {...item} />
-              ))}
+              {focusItems.length ? focusItems.map((item) => <FocusItem key={item.title} {...item} />) : <EmptyInlineState title="No urgent work in this scope" description="Capture a task or review project updates to seed your focus list." />}
             </div>
           </PanelCard>
 
           <PanelCard id="approvals" title="Approvals & reviews" description="Decisions waiting on your signal.">
             <div className="space-y-3">
-              {HOME_APPROVALS.map((item) => (
-                <DetailCard key={item.title} title={item.title} eyebrow={item.owner} description={item.summary} />
-              ))}
+              {approvals.length ? approvals.map((item) => <DetailCard key={item.title} title={item.title} eyebrow={item.owner} description={item.summary} />) : <EmptyInlineState title="No approvals right now" description="When teammates request decisions or reviews, they will appear here." />}
             </div>
           </PanelCard>
         </div>
@@ -140,7 +293,7 @@ export function HomeScreen({ scope }: { scope?: string }) {
         <div className="space-y-6">
           <PanelCard id="active-projects" title="Active projects" description="Resume the most important workstreams in one hop.">
             <div className="space-y-3">
-              {ACTIVE_PROJECTS.map((project) => (
+              {projects.length ? projects.map((project) => (
                 <Link key={project.name} href={project.href} className="surface-panel-muted block p-4 transition-colors hover:border-primary/60 hover:bg-surface">
                   <div className="flex items-center justify-between gap-4">
                     <div>
@@ -151,22 +304,13 @@ export function HomeScreen({ scope }: { scope?: string }) {
                   </div>
                   <p className="signal-pill signal-pill-neutral mt-3 text-xs text-text-muted">{project.stage}</p>
                 </Link>
-              ))}
+              )) : <EmptyInlineState title="No active projects yet" description="Create a project to populate your command center and project cockpit." />}
             </div>
           </PanelCard>
 
           <PanelCard id="watchlist" title="Watchlist changes" description="Cross-project updates that might affect what you do next.">
             <div className="space-y-3">
-              <DetailCard
-                eyebrow="Milestone drift"
-                title="Phase 3 visual-system signoff slipped by one review cycle"
-                description="The impact is contained, but it compresses the timeline for high-fidelity implementation."
-              />
-              <DetailCard
-                eyebrow="Dependency risk"
-                title="AI approval thresholds still need one explicit policy decision"
-                description="Resolve before the assistant is allowed to propose bulk work mutations."
-              />
+              {watchlist.length ? watchlist.map((item) => <DetailCard key={item.title} eyebrow={item.eyebrow} title={item.title} description={item.description} />) : <EmptyInlineState title="No watchlist signals" description="Pin projects or generate a review batch to start tracking critical changes." />}
             </div>
           </PanelCard>
         </div>
@@ -191,13 +335,7 @@ export function HomeScreen({ scope }: { scope?: string }) {
           </PanelCard>
 
           <PanelCard title="Upcoming schedule" description="Time-based context for the next working window.">
-            <MiniTimeline
-              items={[
-                "2:30 PM · Review workspace route architecture",
-                "4:00 PM · Align cockpit module density",
-                "Tomorrow · Start detailed work view wireframes",
-              ]}
-            />
+            {schedule.length ? <MiniTimeline items={schedule} /> : <EmptyInlineState title="No upcoming schedule context" description="As projects and work gain more time data, the next working window will appear here." />}
           </PanelCard>
         </div>
       </div>
@@ -205,13 +343,10 @@ export function HomeScreen({ scope }: { scope?: string }) {
   );
 }
 
-export function InboxScreen() {
-  const inboxItems = [
-    { title: "Approve the command-surface interaction model", source: "ForgeHub Redesign · Approval", state: "Action required" },
-    { title: "New comment on AI guardrails", source: "Decision log · Mention", state: "Mention" },
-    { title: "Milestone risk changed", source: "Project cockpit · Update", state: "Project update" },
-    { title: "Research synthesis ready", source: "Knowledge hub · Digest", state: "AI digest" },
-  ];
+export function InboxScreen({ data }: { data?: InboxScreenData }) {
+  const items = data ? data.items : DEFAULT_INBOX_ITEMS;
+  const selected = data?.selected ?? DEFAULT_INBOX_SELECTED;
+  const triage = data ? data.triage : DEFAULT_INBOX_TRIAGE;
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -223,22 +358,22 @@ export function InboxScreen() {
       <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)_320px]">
         <PanelCard id="action-required" title="Action required" description="Triage queue with urgency first, chronology second.">
           <div className="space-y-3">
-            {inboxItems.map((item, index) => (
+            {items.length ? items.map((item, index) => (
               <div
-                key={item.title}
+                key={`${item.title}-${item.source}`}
                 className={`rounded-[22px] border p-4 ${index === 0 ? "border-primary/40 bg-primary/8" : "border-border bg-bg"}`}
               >
                 <p className="eyebrow">{item.state}</p>
                 <p className="mt-2 font-medium text-text-primary">{item.title}</p>
                 <p className="mt-1 text-sm text-text-muted">{item.source}</p>
               </div>
-            ))}
+            )) : <EmptyInlineState title="Inbox is clear" description="No approvals, mentions, or updates need attention right now." />}
           </div>
 
           <div className="mt-6 grid gap-3" id="approvals">
-            <ActionTile title="Approvals" description="2 approval requests need explicit signoff before work can proceed." />
-            <ActionTile title="Project updates" description="3 updates are grouped into one review batch to reduce noise." />
-            <ActionTile title="Snoozed" description="1 thread is muted until tomorrow morning and still searchable." />
+            <ActionTile title="Approvals" description="Review queues stay visible without forcing you out of Inbox." />
+            <ActionTile title="Project updates" description="Related changes can be grouped into one review batch to reduce noise." />
+            <ActionTile id="snoozed" title="Snoozed" description="Deferred threads remain searchable and can return at the right time." />
           </div>
         </PanelCard>
 
@@ -246,23 +381,21 @@ export function InboxScreen() {
           <div className="surface-panel-muted p-5">
             <div className="flex items-center gap-2 text-sm text-primary">
               <ShieldCheck className="h-4 w-4" aria-hidden />
-              Approval request
+              {selected.source}
             </div>
-            <h2 className="mt-3 font-heading text-2xl text-text-primary">Approve the command-surface interaction model</h2>
-            <p className="mt-3 text-text-muted">
-              The command surface now unifies find, do, ask, and create into one overlay. This approval locks the navigation grammar before deeper task, search, and AI data integration.
-            </p>
+            <h2 className="mt-3 font-heading text-2xl text-text-primary">{selected.title}</h2>
+            <p className="mt-3 text-text-muted">{selected.summary}</p>
             <div className="mt-5 grid gap-3 md:grid-cols-2">
-              <SignalTile title="Source" value="ForgeHub Redesign / Decision log" icon={FileStack} />
-              <SignalTile title="Recommended action" value="Approve with a note on mobile focus recovery" icon={BellDot} />
+              <SignalTile title="Source" value={selected.source} icon={FileStack} />
+              <SignalTile title="Recommended action" value={selected.action} icon={BellDot} />
             </div>
             <div className="mt-5 flex flex-wrap gap-3">
-              <button className={buttonVariants("primary")}>Approve direction</button>
+              <button className={buttonVariants("primary")}>Take action</button>
               <button className={buttonVariants("secondary")}>Ask AI to summarize thread</button>
             </div>
           </div>
 
-          <div className="mt-5 grid gap-3 md:grid-cols-3" id="snoozed">
+          <div className="mt-5 grid gap-3 md:grid-cols-3">
             <ActionTile title="Mark read" description="Preserve source context while clearing the item from the active queue." />
             <ActionTile title="Snooze" description="Move follow-up to a future window without losing history or searchability." />
             <ActionTile title="Convert to task" description="Turn the thread into a durable execution item with one action." />
@@ -270,35 +403,30 @@ export function InboxScreen() {
         </PanelCard>
 
         <PanelCard title="AI triage" description="Helpful where it reduces noise, never where it hides truth.">
-          <AssistList
-            items={[
-              "Cluster related updates into one review batch instead of showing three separate messages.",
-              "Explain why the selected approval matters for later wireframe and visual-system work.",
-              "Draft a concise reply that confirms direction and captures the guardrails still open.",
-            ]}
-          />
+          <AssistList items={triage.length ? triage : ["No triage suggestions right now. Inbox signals are already well scoped."]} />
         </PanelCard>
       </div>
     </div>
   );
 }
 
-export function ProjectsScreen({ scope }: { scope?: string }) {
+export function ProjectsScreen({ scope, data }: { scope?: string; data?: ProjectsScreenData }) {
+  const metrics = data?.metrics ?? DEFAULT_PROJECTS_METRICS;
+  const projects = data ? data.projects : ACTIVE_PROJECTS;
+  const lanes = data ? data.lanes : DEFAULT_PROJECT_LANES;
+  const kits = data ? data.kits : DEFAULT_PROJECT_KITS;
+
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
       <ScreenHero
         eyebrow="Projects"
         title={scope ? `${scope} projects` : "Portfolio visibility with direct paths into execution."}
         description="Projects are the center of gravity for planning, work, knowledge, and collaboration. This surface keeps the portfolio legible without turning it into dashboard noise."
-        metrics={[
-          { label: "Active", value: "3", hint: "1 flagship build · 2 exploratory tracks" },
-          { label: "On watch", value: "1", hint: "Needs a milestone decision" },
-          { label: "Templates", value: "7", hint: "Reusable operating models ready" },
-        ]}
+        metrics={metrics}
       />
 
       <section id="portfolio" className="grid gap-4 lg:grid-cols-3">
-        {ACTIVE_PROJECTS.map((project) => (
+        {projects.length ? projects.map((project) => (
           <Link key={project.name} href={project.href} className="surface-panel block p-5 transition-colors hover:border-primary/60 hover:bg-surface">
             <div className="flex items-center justify-between gap-4">
               <FolderKanban className="h-5 w-5 text-primary" aria-hidden />
@@ -311,23 +439,19 @@ export function ProjectsScreen({ scope }: { scope?: string }) {
               <ArrowRight className="h-4 w-4" aria-hidden />
             </p>
           </Link>
-        ))}
+        )) : <div className="surface-panel col-span-full p-6"><EmptyInlineState title="No projects yet" description="Create a project to start using the portfolio and cockpit model." /></div>}
       </section>
 
       <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
         <PanelCard id="active-projects" title="Portfolio lanes" description="Group work by stage, owner, and operating risk.">
           <div className="grid gap-3 md:grid-cols-3">
-            <ActionTile title="Foundation" description="Architecture and shell work nearing stability." />
-            <ActionTile title="Pilot" description="Research and academic workflows being validated." />
-            <ActionTile title="Discovery" description="Enterprise governance surface still gathering constraints." />
+            {lanes.length ? lanes.map((lane) => <ActionTile key={lane.title} title={lane.title} description={lane.description} />) : <EmptyInlineState title="No portfolio lanes yet" description="As real portfolio signals accumulate, project grouping summaries will appear here." />}
           </div>
         </PanelCard>
 
         <PanelCard id="project-kits" title="Project kits" description="Opinionated starting structures, not generic templates.">
           <div className="grid gap-3">
-            <ActionTile title="Startup sprint OS" description="Fast-moving team template for product, engineering, and review cycles." />
-            <ActionTile title="Research studio" description="Notes, evidence, advisor review, and milestone defense built in." />
-            <ActionTile title="Enterprise rollout" description="Governance, stakeholder reporting, and cross-team approval layers." />
+            {kits.length ? kits.map((kit) => <ActionTile key={kit.title} title={kit.title} description={kit.description} />) : <EmptyInlineState title="No project kits yet" description="Template storage will surface real kits here once it is wired into the platform." />}
           </div>
         </PanelCard>
       </div>
@@ -335,12 +459,15 @@ export function ProjectsScreen({ scope }: { scope?: string }) {
   );
 }
 
-export function WorkScreen({ scope }: { scope?: string }) {
-  const tasks = [
-    { title: "Ship shell architecture", status: "In progress", owner: "Ibukunoluwa", due: "Today" },
-    { title: "Map workspace routes", status: "Review", owner: "AI architect", due: "Tomorrow" },
-    { title: "Draft workload balancing logic", status: "Backlog", owner: "Ops design", due: "Next week" },
+export function WorkScreen({ scope, data }: { scope?: string; data?: WorkScreenData }) {
+  const metrics = data?.metrics ?? [
+    { label: "Due today", value: "6", hint: "2 blocked · 1 awaiting review" },
+    { label: "Saved views", value: "4", hint: "By priority, by stream, by assignee" },
+    { label: "AI suggestions", value: "3", hint: "Assignee, due-date, and backlog cues" },
   ];
+  const tasks = data ? data.tasks : DEFAULT_WORK_TASKS;
+  const timelineItems = data ? data.timelineItems : DEFAULT_WORK_TIMELINE;
+  const aiItems = data ? data.aiItems : DEFAULT_WORK_AI;
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -348,11 +475,7 @@ export function WorkScreen({ scope }: { scope?: string }) {
         eyebrow="Work"
         title={scope ? `${scope} work` : "One execution graph, many lenses."}
         description="List, board, timeline, calendar, and workload are different views of the same execution system. Filters, scope, and intent persist across every lens."
-        metrics={[
-          { label: "Due today", value: "6", hint: "2 blocked · 1 awaiting review" },
-          { label: "Saved views", value: "4", hint: "By priority, by stream, by assignee" },
-          { label: "AI suggestions", value: "3", hint: "Assignee, due-date, and backlog cues" },
-        ]}
+        metrics={metrics}
       />
 
       <PanelCard id="saved-views" title="View system" description="Switch lenses without switching products.">
@@ -368,39 +491,27 @@ export function WorkScreen({ scope }: { scope?: string }) {
       <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
         <PanelCard id="my-work" title="Current work view" description="Detailed wireframe for dense list execution with bulk action readiness.">
           <div className="grid gap-3">
-            {tasks.map((task) => (
+            {tasks.length ? tasks.map((task) => (
               <div key={task.title} className="surface-panel-muted grid gap-3 p-4 md:grid-cols-[minmax(0,1fr)_120px_120px_100px] md:items-center">
                 <div>
                   <p className="font-medium text-text-primary">{task.title}</p>
-                  <p className="mt-1 text-sm text-text-muted">Inline editing, due-date control, dependency visibility, and keyboard navigation all live in the same row model.</p>
+                  <p className="mt-1 text-sm text-text-muted">{task.summary}</p>
                 </div>
                 <span className="signal-pill signal-pill-neutral justify-center text-xs text-text-muted">{task.status}</span>
                 <span className="text-sm text-text-muted">{task.owner}</span>
                 <span className="text-sm text-text-muted">{task.due}</span>
               </div>
-            ))}
+            )) : <EmptyInlineState title="No live work items in this scope" description="When work objects connect to the current context, they will appear here with status and ownership." />}
           </div>
         </PanelCard>
 
         <div className="space-y-6">
           <PanelCard id="timeline" title="Timeline & dependencies" description="Calendar-aware sequencing without becoming a separate app.">
-            <MiniTimeline
-              items={[
-                "Milestone 1 · App shell foundation",
-                "Milestone 2 · Detailed wireframe rollout",
-                "Milestone 3 · High-fidelity design-system hardening",
-              ]}
-            />
+            {timelineItems.length ? <MiniTimeline items={timelineItems} /> : <EmptyInlineState title="No timeline data yet" description="Milestones and dependencies will appear here as soon as the current scope has enough scheduling data." />}
           </PanelCard>
 
           <PanelCard id="workload" title="AI execution assist" description="Preview-first automation and planning support.">
-            <AssistList
-              items={[
-                "Suggest the best assignee based on current load and previous work history.",
-                "Detect tasks likely to slip based on clustered due dates and blocked dependencies.",
-                "Preview a backlog reprioritization before changing any work in bulk.",
-              ]}
-            />
+            <AssistList items={aiItems.length ? aiItems : ["No execution suggestions available yet."]} />
           </PanelCard>
         </div>
       </div>
@@ -408,33 +519,31 @@ export function WorkScreen({ scope }: { scope?: string }) {
   );
 }
 
-export function KnowledgeScreen({ scope }: { scope?: string }) {
+export function KnowledgeScreen({ scope, data }: { scope?: string; data?: KnowledgeScreenData }) {
+  const metrics = data?.metrics ?? DEFAULT_KNOWLEDGE_METRICS;
+  const docs = data ? data.docs : KNOWLEDGE_DOCS;
+  const libraryItems = data ? data.libraryItems : DEFAULT_LIBRARY_ITEMS;
+  const aiItems = data ? data.aiItems : DEFAULT_KNOWLEDGE_AI;
+
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
       <ScreenHero
         eyebrow="Knowledge"
         title={scope ? `${scope} knowledge` : "Project memory that survives beyond chat and tasks."}
         description="Docs, decisions, research, files, and meeting notes live in one connected system so the why behind the work is always recoverable."
-        metrics={[
-          { label: "Key docs", value: "9", hint: "Briefs, roadmaps, and architectural rationale" },
-          { label: "Decision records", value: "5", hint: "Each tied to alternatives and outcomes" },
-          { label: "Research sets", value: "3", hint: "Competitive, user, and implementation evidence" },
-        ]}
+        metrics={metrics}
       />
 
       <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr_0.8fr]">
         <PanelCard id="docs" title="Library" description="Browse by document type, collection, or project scope.">
           <div className="grid gap-3">
-            <ActionTile title="Docs" description="Specs, plans, one-pagers, and briefs with direct links to execution." />
-            <ActionTile title="Decisions" description="Rationale, status, alternatives, and linked artifacts." />
-            <ActionTile id="research" title="Research" description="Evidence, citations, summaries, and knowledge extraction." />
-            <ActionTile id="collections" title="Collections" description="Curated spaces for references, files, and topic clusters." />
+            {libraryItems.length ? libraryItems.map((item) => <ActionTile key={item.title} title={item.title} description={item.description} />) : <EmptyInlineState title="No library structure yet" description="Knowledge collections will appear here as the workspace grows." />}
           </div>
         </PanelCard>
 
         <PanelCard id="decisions" title="Knowledge artifacts" description="High-fidelity content panels with strong hierarchy and linked context.">
           <div className="space-y-3">
-            {KNOWLEDGE_DOCS.map((doc) => (
+            {docs.length ? docs.map((doc) => (
               <div key={doc.title} className="surface-panel-muted p-4">
                 <div className="flex items-center justify-between gap-4">
                   <p className="font-medium text-text-primary">{doc.title}</p>
@@ -442,27 +551,34 @@ export function KnowledgeScreen({ scope }: { scope?: string }) {
                 </div>
                 <p className="mt-2 text-sm text-text-muted">{doc.summary}</p>
               </div>
-            ))}
+            )) : <EmptyInlineState title="No knowledge artifacts yet" description="Create a doc or log a decision to start building durable project memory." />}
           </div>
         </PanelCard>
 
         <PanelCard title="AI knowledge assist" description="Citations and synthesis before generation.">
-          <AssistList
-            items={[
-              "Summarize the latest research collection with explicit evidence links.",
-              "Extract action items from the last three meeting notes and route them into Work.",
-              "Answer a project question using only cited artifacts from this knowledge scope.",
-            ]}
-          />
+          <AssistList items={aiItems.length ? aiItems : ["No knowledge suggestions available yet."]} />
         </PanelCard>
       </div>
     </div>
   );
 }
 
-export function ProjectCockpitScreen({ workspaceSlug, projectSlug }: { workspaceSlug: string; projectSlug: string }) {
+export function ProjectCockpitScreen({
+  workspaceSlug,
+  projectSlug,
+  data,
+}: {
+  workspaceSlug: string;
+  projectSlug: string;
+  data?: ProjectCockpitData;
+}) {
   const projectName = prettyLabel(projectSlug);
   const workspaceName = prettyLabel(workspaceSlug);
+  const metrics = data?.metrics ?? DEFAULT_COCKPIT_METRICS;
+  const blockers = data ? data.blockers : DEFAULT_COCKPIT_BLOCKERS;
+  const aiBrief = data ? data.aiBrief : DEFAULT_COCKPIT_BRIEF;
+  const decisions = data ? data.decisions : DEFAULT_COCKPIT_DECISIONS;
+  const artifacts = data ? data.artifacts : KNOWLEDGE_DOCS;
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -470,11 +586,7 @@ export function ProjectCockpitScreen({ workspaceSlug, projectSlug }: { workspace
         eyebrow={`${workspaceName} workspace`}
         title={projectName}
         description="The project cockpit is the operating center of gravity: health, milestone status, blockers, active work, key docs, decisions, and AI synthesis aligned in one command bridge."
-        metrics={[
-          { label: "Health", value: "On watch", hint: "1 blocker · 2 decisions pending" },
-          { label: "Milestone", value: "Phase 3", hint: "Wireframes and premium UI refinement" },
-          { label: "Team load", value: "Balanced", hint: "No contributor over safe capacity" },
-        ]}
+        metrics={metrics}
       />
 
       <div className="grid gap-6 xl:grid-cols-[1.2fr_0.9fr_0.8fr]">
@@ -482,66 +594,48 @@ export function ProjectCockpitScreen({ workspaceSlug, projectSlug }: { workspace
           <div className="surface-panel-muted p-5">
             <div className="flex items-center gap-2 text-sm text-primary">
               <Target className="h-4 w-4" aria-hidden />
-              Phase 3 · detailed wireframes and visual-system pass
+              {data?.milestoneLabel ?? "Phase 3 · detailed wireframes and visual-system pass"}
             </div>
-            <p className="mt-3 text-text-muted">
-              Convert the structural architecture into high-confidence screen blueprints and premium UI foundations so future data integration lands on a stable interaction model.
-            </p>
+            <p className="mt-3 text-text-muted">{data?.milestoneSummary ?? "Convert the structural architecture into high-confidence screen blueprints and premium UI foundations so future data integration lands on a stable interaction model."}</p>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              <SignalTile title="Work in motion" value="Shell polish, dense wireframes, refined surfaces" icon={KanbanSquare} />
-              <SignalTile title="Key dependency" value="Approve the premium visual tokens before scaling every view" icon={Waypoints} />
+              <SignalTile title="Work in motion" value={data?.workInMotion ?? "Shell polish, dense wireframes, refined surfaces"} icon={KanbanSquare} />
+              <SignalTile title="Key dependency" value={data?.keyDependency ?? "Approve the premium visual tokens before scaling every view"} icon={Waypoints} />
             </div>
           </div>
         </PanelCard>
 
         <PanelCard title="Top blockers" description="What could slow or fragment the next phase.">
-          <AssistList
-            items={[
-              "Interaction density needs careful testing so enterprise richness does not become clutter.",
-              "Knowledge architecture still needs final decision-record metadata before deep database integration.",
-              "AI assist patterns need explicit approval policy before any consequential automation is shipped.",
-            ]}
-          />
+          {blockers.length ? <AssistList items={blockers} /> : <EmptyInlineState title="No active blockers" description="The cockpit will surface delivery, review, or knowledge risks here as soon as they appear." />}
         </PanelCard>
 
         <PanelCard title="AI project brief" description="Ambient intelligence with visible, inspectable evidence.">
-          <AssistList
-            items={[
-              "The project is strongest when the cockpit stays the default landing surface for every project type.",
-              "The unified command surface remains ForgeHub’s clearest differentiator versus fragmented productivity stacks.",
-              "Next best move after this pass: bind the core surfaces to live data and search state.",
-            ]}
-          />
+          <AssistList items={aiBrief.length ? aiBrief : ["No AI brief available for this project yet."]} />
         </PanelCard>
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
         <PanelCard title="Recent decisions" description="Durable context instead of losing rationale in chat history.">
           <div className="space-y-3">
-            {[
-              ["Project cockpit becomes the default project landing surface", "Accepted"],
-              ["Command, search, and AI merge into one command surface", "Accepted"],
-              ["Work and knowledge remain lenses on the same system, not separate products", "Accepted"],
-            ].map(([title, status]) => (
-              <div key={title} className="surface-panel-muted flex items-center justify-between gap-4 p-4">
+            {decisions.length ? decisions.map((decision) => (
+              <div key={decision.title} className="surface-panel-muted flex items-center justify-between gap-4 p-4">
                 <div>
-                  <p className="font-medium text-text-primary">{title}</p>
+                  <p className="font-medium text-text-primary">{decision.title}</p>
                   <p className="mt-1 text-sm text-text-muted">Captured with rationale, alternatives, and implementation implications.</p>
                 </div>
-                <span className="signal-pill signal-pill-neutral text-xs text-text-muted">{status}</span>
+                <span className="signal-pill signal-pill-neutral text-xs text-text-muted">{decision.status}</span>
               </div>
-            ))}
+            )) : <EmptyInlineState title="No decisions recorded yet" description="Use the knowledge system to capture rationale and keep the project memory durable." />}
           </div>
         </PanelCard>
 
         <PanelCard title="Key artifacts" description="The docs and knowledge objects currently shaping execution.">
           <div className="space-y-3">
-            {KNOWLEDGE_DOCS.map((doc) => (
+            {artifacts.length ? artifacts.map((doc) => (
               <div key={doc.title} className="surface-panel-muted p-4">
                 <p className="font-medium text-text-primary">{doc.title}</p>
                 <p className="mt-1 text-sm text-text-muted">{doc.summary}</p>
               </div>
-            ))}
+            )) : <EmptyInlineState title="No key artifacts yet" description="As the project gains docs and decisions, the cockpit will highlight them here." />}
           </div>
         </PanelCard>
       </div>
@@ -847,6 +941,15 @@ function MiniTimeline({ items }: { items: string[] }) {
           <div className="surface-panel-muted flex-1 p-4 text-sm text-text-muted">{item}</div>
         </div>
       ))}
+    </div>
+  );
+}
+
+function EmptyInlineState({ title, description }: { title: string; description: string }) {
+  return (
+    <div className="surface-panel-muted p-5 text-sm text-text-muted">
+      <p className="font-medium text-text-primary">{title}</p>
+      <p className="mt-1">{description}</p>
     </div>
   );
 }
