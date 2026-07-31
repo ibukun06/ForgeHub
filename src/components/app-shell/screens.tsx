@@ -12,8 +12,6 @@ import {
   Flag,
   FolderKanban,
   KanbanSquare,
-  Layers3,
-  LibraryBig,
   ListTodo,
   MessageSquareMore,
   Scale,
@@ -162,12 +160,12 @@ export function HomeScreen({ scope }: { scope?: string }) {
               <DetailCard
                 eyebrow="Milestone drift"
                 title="Phase 3 visual-system signoff slipped by one review cycle"
-                description="The impact is contained, but it compresses the timeline for high-fidelity implementation." 
+                description="The impact is contained, but it compresses the timeline for high-fidelity implementation."
               />
               <DetailCard
                 eyebrow="Dependency risk"
                 title="AI approval thresholds still need one explicit policy decision"
-                description="Resolve before the assistant is allowed to propose bulk work mutations." 
+                description="Resolve before the assistant is allowed to propose bulk work mutations."
               />
             </div>
           </PanelCard>
@@ -359,14 +357,7 @@ export function WorkScreen({ scope }: { scope?: string }) {
 
       <PanelCard id="saved-views" title="View system" description="Switch lenses without switching products.">
         <div className="flex flex-wrap gap-3">
-          {[
-            "List",
-            "Board",
-            "Timeline",
-            "Calendar",
-            "Workload",
-            "Table",
-          ].map((view, index) => (
+          {["List", "Board", "Timeline", "Calendar", "Workload", "Table"].map((view, index) => (
             <span key={view} className={`signal-pill ${index === 0 ? "signal-pill-brand" : "signal-pill-neutral"}`}>
               {view}
             </span>
