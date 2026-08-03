@@ -35,7 +35,7 @@ export async function POST(request: Request) {
 
   const documentRows = parsed.data.documents.map((documentType) => ({ project_id: project.id, document_type: documentType, title: titles[documentType] }));
   const { error: documentError } = await supabase.from("documents").insert(documentRows);
-  if (memberError || documentError) {
+  if (documentError) {
     await supabase.from("projects").delete().eq("id", project.id).eq("created_by", user.id);
     return NextResponse.json({ error: "The project could not finish setting itself up. Nothing was saved." }, { status: 500 });
   }
