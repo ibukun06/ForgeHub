@@ -32,7 +32,7 @@ export function DocumentationEditor({ projectId, documents, initialDocumentId }:
       } catch { setSaveState("error"); }
     }, 900);
     return () => window.clearTimeout(timer);
-  }, [content, activeSection?.id, activeDocument?.id, projectId, saveState]);
+  }, [content, activeSection?.id, activeDocument?.id, projectId]);
 
   async function createSection() {
     if (!activeDocument) return;
