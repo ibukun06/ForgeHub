@@ -285,7 +285,7 @@ export function getShellState(pathname: string): ShellState {
       workspaceSlug,
       breadcrumbs: [
         { label: prettyLabel(workspaceSlug), href: `/w/${workspaceSlug}/home` },
-        { label: PRIMARY_NAV.find((item) => item.key === activeArea)?.label },
+        { label: PRIMARY_NAV.find((item) => item.key === activeArea)?.label ?? prettyLabel(activeArea) },
       ],
       contextItems: PRIMARY_NAV.filter((item) => item.key !== "inbox").map((item) => ({
         label: item.label,
