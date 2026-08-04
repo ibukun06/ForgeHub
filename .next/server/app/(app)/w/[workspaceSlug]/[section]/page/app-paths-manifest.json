@@ -1,0 +1,3 @@
+{
+  "/(app)/w/[workspaceSlug]/[section]/page": "app/(app)/w/[workspaceSlug]/[section]/page.js"
+}
