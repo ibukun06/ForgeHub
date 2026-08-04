@@ -2,6 +2,9 @@
   "name": "forgehub",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -14,7 +17,6 @@
     "@supabase/supabase-js": "^2.110.8",
     "lucide-react": "^1.27.0",
     "next": "16.2.12",
-    "next-themes": "^0.3.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.83.0",

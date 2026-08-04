@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { BookOpen, FileText, Flag, History, Users } from "lucide-react";
+import { FileText, History, Users } from "lucide-react";
 
 export type WorkspaceActivity = { id: string; icon: LucideIcon; title: string; detail: string; time: string };
 export type WorkspaceDocument = { id: string; title: string; status: "reviewed" | "in_progress" | "not_started"; owner: string; updated: string };

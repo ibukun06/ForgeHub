@@ -2,20 +2,21 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/components/theme/theme-provider";
 
 interface LogoProps {
   className?: string;
-  variant?: string; 
+  /** Accepted for call-site compatibility; not yet used to vary rendering. */
+  variant?: string;
   tone?: string;
-  [key: string]: any; 
 }
 
-export const Logo: React.FC<LogoProps> = ({ className = "", variant, tone, ...rest }) => {
-  const { resolvedTheme } = useTheme();
+export const Logo: React.FC<LogoProps> = ({ className = "" }) => {
+  const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
@@ -23,8 +24,7 @@ export const Logo: React.FC<LogoProps> = ({ className = "", variant, tone, ...re
     return <div className={`h-8 w-8 ${className}`} />;
   }
 
-  // Strict boolean check ensures it defaults properly
-  const isDark = resolvedTheme === "dark";
+  const isDark = theme === "dark";
   const logoSrc = isDark ? "/logo-dark.png" : "/logo-light.png";
 
   return (
@@ -35,7 +35,7 @@ export const Logo: React.FC<LogoProps> = ({ className = "", variant, tone, ...re
       height={128}
       className={`h-8 w-8 object-contain ${className}`}
       priority
-      unoptimized // Bypasses Vercel's image cache to fix the stuck logo
+      unoptimized
     />
   );
 };

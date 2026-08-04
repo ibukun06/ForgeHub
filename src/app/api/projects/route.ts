@@ -33,10 +33,9 @@ export async function POST(request: Request) {
   const { data: project, error: projectError } = await supabase.from("projects").insert({ name: parsed.data.name, description: parsed.data.description || null, project_type: parsed.data.projectType, created_by: user.id, visibility: "private" }).select("id").single();
   if (projectError || !project) return NextResponse.json({ error: "We could not create the project. Try again." }, { status: 500 });
 
-  const { error: memberError } = await supabase.from("project_members").insert({ project_id: project.id, user_id: user.id, role: "team_lead" });
   const documentRows = parsed.data.documents.map((documentType) => ({ project_id: project.id, document_type: documentType, title: titles[documentType] }));
   const { error: documentError } = await supabase.from("documents").insert(documentRows);
-  if (memberError || documentError) {
+  if (documentError) {
     await supabase.from("projects").delete().eq("id", project.id).eq("created_by", user.id);
     return NextResponse.json({ error: "The project could not finish setting itself up. Nothing was saved." }, { status: 500 });
   }
