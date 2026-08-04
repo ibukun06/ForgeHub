@@ -1,5 +1,0 @@
-:HL["/_next/static/chunks/1dh4rxjsu2f59.css","style"]
-:HL["/_next/static/media/2f13ad8e538108e0-s.p.22iyan98j1_2e.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-:HL["/_next/static/media/75affa71d1e2f6a7-s.p.17-aodiw50953.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-:HL["/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"(marketing)","param":null,"prefetchHints":0,"slots":{"children":{"name":"projects","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"open-source-lab-inventory-tracker","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}}}},"staleTime":300,"buildId":"22_GjxZrAbwsYER3Mv06a"}
