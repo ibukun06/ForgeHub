@@ -19,8 +19,18 @@ export function DocumentationEditor({ projectId, documents, initialDocumentId }:
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState("");
 
-  useEffect(() => { setSectionId(activeDocument?.sections[0]?.id ?? ""); }, [activeDocument?.id]);
-  useEffect(() => { setContent(activeSection?.content ?? ""); setSaveState("saved"); }, [activeSection?.id]);
+  const [prevDocumentId, setPrevDocumentId] = useState(activeDocument?.id);
+  if (activeDocument?.id !== prevDocumentId) {
+    setPrevDocumentId(activeDocument?.id);
+    setSectionId(activeDocument?.sections[0]?.id ?? "");
+  }
+  const [prevSectionId, setPrevSectionId] = useState(activeSection?.id);
+  if (activeSection?.id !== prevSectionId) {
+    setPrevSectionId(activeSection?.id);
+    setContent(activeSection?.content ?? "");
+    setSaveState("saved");
+  }
+
   useEffect(() => {
     if (!activeSection || saveState === "saved") return;
     const timer = window.setTimeout(async () => {

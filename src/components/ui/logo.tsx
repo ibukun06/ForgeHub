@@ -6,9 +6,9 @@ import { useTheme } from "@/components/theme/theme-provider";
 
 interface LogoProps {
   className?: string;
-  variant?: string; 
+  /** Accepted for call-site compatibility; not yet used to vary rendering. */
+  variant?: string;
   tone?: string;
-  [key: string]: any; 
 }
 
 export const Logo: React.FC<LogoProps> = ({ className = "", variant, tone, ...rest }) => {
@@ -16,6 +16,7 @@ export const Logo: React.FC<LogoProps> = ({ className = "", variant, tone, ...re
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 

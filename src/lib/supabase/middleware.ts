@@ -5,7 +5,6 @@ const PUBLIC_PATHS = ["/login", "/signup", "/reset-password", "/auth", "/explore
 
 function isPublicPath(pathname: string) {
   if (PUBLIC_PATHS.some((p) => pathname.startsWith(p))) return true;
-  if (pathname.startsWith("/p/")) return true; // public project viewer
   if (pathname === "/") return true;
   return false;
 }

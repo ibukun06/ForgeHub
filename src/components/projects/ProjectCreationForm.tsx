@@ -24,20 +24,24 @@ const DOCUMENTS = [
 type ProjectType = (typeof TYPES)[number][0];
 const DRAFT_KEY = "forgehub-project-draft";
 
+function readDraft(): { name?: string; description?: string; projectType?: ProjectType; documents?: string[] } | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem(DRAFT_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
 export function ProjectCreationForm() {
   const [step, setStep] = useState(1);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [projectType, setProjectType] = useState<ProjectType>("multidisciplinary");
-  const [documents, setDocuments] = useState(DOCUMENTS.map(([id]) => id));
+  const [name, setName] = useState(() => readDraft()?.name ?? "");
+  const [description, setDescription] = useState(() => readDraft()?.description ?? "");
+  const [projectType, setProjectType] = useState<ProjectType>(() => readDraft()?.projectType ?? "multidisciplinary");
+  const [documents, setDocuments] = useState<string[]>(() => readDraft()?.documents ?? DOCUMENTS.map(([id]) => id));
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
-
-  useEffect(() => {
-    const raw = window.localStorage.getItem(DRAFT_KEY);
-    if (!raw) return;
-    try { const draft = JSON.parse(raw); setName(draft.name ?? ""); setDescription(draft.description ?? ""); setProjectType(draft.projectType ?? "multidisciplinary"); setDocuments(draft.documents ?? DOCUMENTS.map(([id]) => id)); } catch { window.localStorage.removeItem(DRAFT_KEY); }
-  }, []);
 
   useEffect(() => { window.localStorage.setItem(DRAFT_KEY, JSON.stringify({ name, description, projectType, documents })); }, [name, description, projectType, documents]);
 
