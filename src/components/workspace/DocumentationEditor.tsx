@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Check, FileText, Loader2, Save, Sparkles } from "lucide-react";
 
 type Section = { id: string; prompt: string; content: string | null; status: string; order: number; updated_at: string };
 type DocumentItem = { id: string; title: string; type: string; sections: Section[] };
 
 export function DocumentationEditor({ projectId, documents, initialDocumentId }: { projectId: string; documents: DocumentItem[]; initialDocumentId: string | null }) {
+  const router = useRouter();
   const [documentId, setDocumentId] = useState(initialDocumentId ?? documents[0]?.id ?? "");
   const activeDocument = useMemo(() => documents.find((document) => document.id === documentId) ?? documents[0], [documents, documentId]);
   const [sectionId, setSectionId] = useState(activeDocument?.sections[0]?.id ?? "");
@@ -40,18 +42,26 @@ export function DocumentationEditor({ projectId, documents, initialDocumentId }:
       } catch { setSaveState("error"); }
     }, 900);
     return () => window.clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content, activeSection?.id, activeDocument?.id, projectId]);
 
   async function createSection() {
     if (!activeDocument) return;
     setCreating(true); setCreateError("");
     try {
-      const response = await fetch(`/api/projects/${projectId}/sections`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ documentId: activeDocument.id, prompt: `What should the team record in ${activeDocument.title.toLowerCase()}?` }) });
+      const response = await fetch(`/api/projects/${projectId}/sections`, { 
+        method: "POST", 
+        headers: { "content-type": "application/json" }, 
+        body: JSON.stringify({ documentId: activeDocument.id, prompt: `What should the team record in ${activeDocument.title.toLowerCase()}?` }) 
+      });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error ?? "We could not create the section.");
-      window.location.reload();
-    } catch (error) { setCreateError(error instanceof Error ? error.message : "We could not create the section."); setCreating(false); }
+      
+      router.refresh(); // <-- Replace window.location.reload() with this!
+
+    } catch (error) { 
+      setCreateError(error instanceof Error ? error.message : "We could not create the section."); 
+      setCreating(false); 
+    }
   }
 
   if (!documents.length) return <div className="rounded-lg border border-dashed border-border p-8"><p className="font-heading text-lg font-semibold text-text-primary">Your document set is empty.</p><p className="mt-2 max-w-xl text-sm leading-relaxed text-text-muted">Create a project with a guided document set, then start with the Problem Statement. There is no useful work in a blank editor.</p><Link href="/dashboard" className="mt-5 inline-flex min-h-11 items-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white">Back to projects</Link></div>;

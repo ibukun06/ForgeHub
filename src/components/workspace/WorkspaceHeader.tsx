@@ -1,9 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { Bell, Command, Menu, Search, Users } from "lucide-react";
+import { Menu } from "lucide-react";
 
-export function WorkspaceHeader({ projectId, project, onMenu }: { projectId: string; project: { name: string; project_type: string; visibility: string; updated_at: string }; onMenu: () => void }) {
-  const updated = new Intl.DateTimeFormat("en", { month: "short", day: "numeric" }).format(new Date(project.updated_at));
-  return <header className="border-b border-border pb-4"><div className="flex items-center justify-between gap-4"><div className="flex min-w-0 items-center gap-3"><button className="min-h-11 min-w-11 rounded-md border border-border p-2 text-text-muted hover:bg-surface hover:text-text-primary lg:hidden" aria-label="Open workspace navigation" onClick={onMenu}><Menu className="mx-auto h-5 w-5" /></button><Link href="/dashboard" className="hidden text-sm text-text-muted hover:text-text-primary sm:inline">Projects</Link><span className="hidden text-border sm:inline">/</span><div className="min-w-0"><p className="truncate font-heading text-lg font-semibold text-text-primary">{project.name}</p><p className="font-mono text-[10px] uppercase tracking-[0.12em] text-text-muted">{project.project_type} · {project.visibility === "private" ? "Private" : "Published"}</p></div></div><div className="flex items-center gap-1"><button className="hidden min-h-10 items-center gap-2 rounded-md border border-border px-3 text-left text-xs text-text-muted hover:bg-surface hover:text-text-primary sm:flex" aria-label="Open workspace search"><Search className="h-4 w-4" />Search<span className="ml-3 inline-flex items-center gap-1 border-l border-border pl-3 font-mono text-[10px]"><Command className="h-3 w-3" />K</span></button><button className="min-h-11 min-w-11 rounded-md p-2 text-text-muted hover:bg-surface hover:text-text-primary" aria-label="Notifications coming soon"><Bell className="mx-auto h-4 w-4" /></button><Link href={`/project/${projectId}/team`} className="hidden min-h-10 items-center gap-2 rounded-md border border-border px-3 text-sm font-medium text-text-primary hover:border-secondary hover:text-secondary sm:inline-flex"><Users className="h-4 w-4" />Invite</Link></div></div><div className="mt-3 flex items-center justify-between text-xs text-text-muted"><span>Last updated {updated}</span><span className="font-mono uppercase tracking-[0.1em]">Project studio / active</span></div></header>;
+export function WorkspaceHeader({
+  projectId,
+  project,
+  onMenu,
+}: {
+  projectId: string;
+  project: { name: string; project_type: string; visibility: string; updated_at: string };
+  onMenu: () => void;
+}) {
+  const updated = new Intl.DateTimeFormat("en", { month: "short", day: "numeric" }).format(
+    new Date(project.updated_at)
+  );
+
+  return (
+    <header className="border-b border-border pb-4">
+      <div className="mt-3 flex items-center justify-between text-xs text-text-muted">
+        <span suppressHydrationWarning>Last updated {updated}</span>
+        <span className="font-mono uppercase tracking-[0.1em]">Project studio / active</span>
+        <button type="button" onClick={onMenu} aria-label="Open menu" className="lg:hidden">
+          <Menu className="h-5 w-5" aria-hidden />
+        </button>
+      </div>
+    </header>
+  );
 }
