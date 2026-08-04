@@ -1,0 +1,958 @@
+diff --git a/package-lock.json b/package-lock.json
+index f89e341..d5ff57d 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -27,6 +27,9 @@
+         "eslint-config-next": "16.2.12",
+         "tailwindcss": "^4",
+         "typescript": "^5"
++      },
++      "engines": {
++        "node": ">=22.0.0"
+       }
+     },
+     "node_modules/@alloc/quick-lru": {
+@@ -99,14 +102,14 @@
+       }
+     },
+     "node_modules/@babel/generator": {
+-      "version": "7.29.7",
+-      "resolved": "https://registry.npmjs.org/@babel/generator/-/generator-7.29.7.tgz",
+-      "integrity": "sha512-DkXD5OJQaAQIdZ1bt3UZdEnHAn9Imd3IVBdX03UFe+ony9Ojw5pzr9YVKGDY1jt+Gcn/FnGkNf8r+Vj5NOJWtQ==",
++      "version": "7.29.8",
++      "resolved": "https://registry.npmjs.org/@babel/generator/-/generator-7.29.8.tgz",
++      "integrity": "sha512-gZbepsdh3WDtgZKWL+vTPh71LSBrm/Y4/QDZBVCcYfmeTEEuoOYwlSy+G1StfJg+/Zy550u/3TATbm7qDbbMtg==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+-        "@babel/parser": "^7.29.7",
+-        "@babel/types": "^7.29.7",
++        "@babel/parser": "^7.29.8",
++        "@babel/types": "^7.29.8",
+         "@jridgewell/gen-mapping": "^0.3.12",
+         "@jridgewell/trace-mapping": "^0.3.28",
+         "jsesc": "^3.0.2"
+@@ -219,13 +222,13 @@
+       }
+     },
+     "node_modules/@babel/parser": {
+-      "version": "7.29.7",
+-      "resolved": "https://registry.npmjs.org/@babel/parser/-/parser-7.29.7.tgz",
+-      "integrity": "sha512-hnORnjP/1P/zFEndoeX+n+t1RwWRJiJpM/jO7FW32Kn9r5+sJB2JWOdYo4L6k78j15eCwY3Gm/7364B1EMwtNg==",
++      "version": "7.29.8",
++      "resolved": "https://registry.npmjs.org/@babel/parser/-/parser-7.29.8.tgz",
++      "integrity": "sha512-E8lTAYNB1KW+FH+VGJuZM1ioAx2E6oVlvQFRrf5P8ZZmsiJXYAD9vTFV7yyEURNzgh1dFqMZuO6tUwcARbqFCA==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+-        "@babel/types": "^7.29.7"
++        "@babel/types": "^7.29.8"
+       },
+       "bin": {
+         "parser": "bin/babel-parser.js"
+@@ -250,18 +253,18 @@
+       }
+     },
+     "node_modules/@babel/traverse": {
+-      "version": "7.29.7",
+-      "resolved": "https://registry.npmjs.org/@babel/traverse/-/traverse-7.29.7.tgz",
+-      "integrity": "sha512-EhlfNQtZ+NK22w5BM61ciuiq1m58ed33Wr1Xan//ZRTy6hgjnwyCffRYwzsGXdASJSUJ1guZILsErh1eQcl+zw==",
++      "version": "7.29.8",
++      "resolved": "https://registry.npmjs.org/@babel/traverse/-/traverse-7.29.8.tgz",
++      "integrity": "sha512-I5z7H3bf/41ktsNVLtpN0wAa336HkqIHQ5BuPLEhTkt1jVSyZpeNKIzTgEWmlxjdg81R0IgUCcaE+Ok3NvrfZg==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+         "@babel/code-frame": "^7.29.7",
+-        "@babel/generator": "^7.29.7",
++        "@babel/generator": "^7.29.8",
+         "@babel/helper-globals": "^7.29.7",
+-        "@babel/parser": "^7.29.7",
++        "@babel/parser": "^7.29.8",
+         "@babel/template": "^7.29.7",
+-        "@babel/types": "^7.29.7",
++        "@babel/types": "^7.29.8",
+         "debug": "^4.3.1"
+       },
+       "engines": {
+@@ -269,9 +272,9 @@
+       }
+     },
+     "node_modules/@babel/types": {
+-      "version": "7.29.7",
+-      "resolved": "https://registry.npmjs.org/@babel/types/-/types-7.29.7.tgz",
+-      "integrity": "sha512-4zBIxpPzowiZpusoFkyGVwakdRJUyuH5PxQ/PrqghfdFWWasvnCdPfQXHrenDai+gyLARulZjZowCOj6fjT4pA==",
++      "version": "7.29.8",
++      "resolved": "https://registry.npmjs.org/@babel/types/-/types-7.29.8.tgz",
++      "integrity": "sha512-Vj1jF3cPfxg7OAfoI7QnVKLoILlm2JF9pnVHrX8qx7AHMiYWT+NDAA7jChlNgRS4WTLc/fD1lXLmPixluj+3Gg==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+@@ -422,30 +425,6 @@
+         "url": "https://opencollective.com/eslint"
+       }
+     },
+-    "node_modules/@eslint/eslintrc/node_modules/ajv": {
+-      "version": "6.15.0",
+-      "resolved": "https://registry.npmjs.org/ajv/-/ajv-6.15.0.tgz",
+-      "integrity": "sha512-fgFx7Hfoq60ytK2c7DhnF8jIvzYgOMxfugjLOSMHjLIPgenqa7S7oaagATUq99mV6IYvN2tRmC0wnTYX6iPbMw==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "fast-deep-equal": "^3.1.1",
+-        "fast-json-stable-stringify": "^2.0.0",
+-        "json-schema-traverse": "^0.4.1",
+-        "uri-js": "^4.2.2"
+-      },
+-      "funding": {
+-        "type": "github",
+-        "url": "https://github.com/sponsors/epoberezkin"
+-      }
+-    },
+-    "node_modules/@eslint/eslintrc/node_modules/json-schema-traverse": {
+-      "version": "0.4.1",
+-      "resolved": "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz",
+-      "integrity": "sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+     "node_modules/@eslint/js": {
+       "version": "9.39.5",
+       "resolved": "https://registry.npmjs.org/@eslint/js/-/js-9.39.5.tgz",
+@@ -484,9 +463,9 @@
+       }
+     },
+     "node_modules/@hookform/resolvers": {
+-      "version": "5.5.7",
+-      "resolved": "https://registry.npmjs.org/@hookform/resolvers/-/resolvers-5.5.7.tgz",
+-      "integrity": "sha512-CyPCYV8/KlXfEXLWj8HHHhVsR/IZ6Ckm3b/a4fWtO/lRnRK1huqncb8LlAWrmpPRsse5glF5aVuDRMHEr3UGag==",
++      "version": "5.7.1",
++      "resolved": "https://registry.npmjs.org/@hookform/resolvers/-/resolvers-5.7.1.tgz",
++      "integrity": "sha512-8wS/P4UDr5sQDe4nFaV51TVyfDPrWgNIXweqG0Bs9Z5LSuzKLb+RQNPvkN2oHM5SRrJyWrVH/F+LOUcFjUyvwQ==",
+       "license": "MIT",
+       "dependencies": {
+         "@standard-schema/utils": "^0.3.0"
+@@ -495,12 +474,12 @@
+         "@sinclair/typebox": ">=0.25.24",
+         "@standard-schema/spec": "^1.0.0",
+         "@typeschema/main": ">=0.13.7",
+-        "@vinejs/vine": "^2.0.0 || ^3.0.0",
++        "@vinejs/vine": "^2.0.0 || ^3.0.0 || ^4.0.0",
+         "ajv": "^8.12.0",
+         "ajv-errors": "^3.0.0",
+         "ajv-formats": "^2.1.1",
+         "arktype": "^2.0.0",
+-        "ata-validator": "^0.7.0",
++        "ata-validator": "^1.2.0",
+         "class-transformer": ">=0.4.0",
+         "class-validator": ">=0.12.0",
+         "computed-types": "^1.0.0",
+@@ -1176,22 +1155,25 @@
+       }
+     },
+     "node_modules/@napi-rs/wasm-runtime": {
+-      "version": "1.1.6",
+-      "resolved": "https://registry.npmjs.org/@napi-rs/wasm-runtime/-/wasm-runtime-1.1.6.tgz",
+-      "integrity": "sha512-ZLv/JdUfkvOy9eCnnBaGfiO+XimbjebAeO+MRQqD/B+FR1tnRN0tpKSJHRbE8sFfS6aqsXZ67TQjfwfsxULVbg==",
++      "version": "1.2.2",
++      "resolved": "https://registry.npmjs.org/@napi-rs/wasm-runtime/-/wasm-runtime-1.2.2.tgz",
++      "integrity": "sha512-JfB4kuJQjaoHuCTseIINHtHWeJnvgEcxjwA5t/Y00ZgaOO1Crz3fjT/p8kT28zA/Caz7oiUMn3d6H2yOVCVwuw==",
+       "dev": true,
+       "license": "MIT",
+       "optional": true,
+       "dependencies": {
+         "@tybys/wasm-util": "^0.10.3"
+       },
++      "engines": {
++        "node": "^20.19.0 || ^22.13.0 || >=23.5.0"
++      },
+       "funding": {
+         "type": "github",
+         "url": "https://github.com/sponsors/Brooooooklyn"
+       },
+       "peerDependencies": {
+-        "@emnapi/core": "^1.7.1",
+-        "@emnapi/runtime": "^1.7.1"
++        "@emnapi/core": "^1.7.1 || ^2.0.0-alpha.3",
++        "@emnapi/runtime": "^1.7.1 || ^2.0.0-alpha.3"
+       }
+     },
+     "node_modules/@next/env": {
+@@ -1400,9 +1382,9 @@
+       "license": "MIT"
+     },
+     "node_modules/@supabase/auth-js": {
+-      "version": "2.110.8",
+-      "resolved": "https://registry.npmjs.org/@supabase/auth-js/-/auth-js-2.110.8.tgz",
+-      "integrity": "sha512-TQ5neTUDX2C2WmyYa03yGhLMkhdE/SkHXtK8/qxO/APUy3rsymsJCBP48p4jcN6iO2G0ow6RRexQd2mX+dSyJg==",
++      "version": "2.112.0",
++      "resolved": "https://registry.npmjs.org/@supabase/auth-js/-/auth-js-2.112.0.tgz",
++      "integrity": "sha512-8qAdObNQHKbSeVBLmf2WLNT7+bCE8zBofpCFiNUqGBAl5qw9VagSvcmPXlh78McAU7iHrGik1oeJxiB2A6B29w==",
+       "license": "MIT",
+       "dependencies": {
+         "tslib": "2.8.1"
+@@ -1412,9 +1394,9 @@
+       }
+     },
+     "node_modules/@supabase/functions-js": {
+-      "version": "2.110.8",
+-      "resolved": "https://registry.npmjs.org/@supabase/functions-js/-/functions-js-2.110.8.tgz",
+-      "integrity": "sha512-5yB9TLYzvv2oSQxwb0gamEvIAsuH66pVt7AM/pz03S7wN6ehD34GNgbShrccetqPedXQSz7e/1hAJ9NeEhoZVg==",
++      "version": "2.112.0",
++      "resolved": "https://registry.npmjs.org/@supabase/functions-js/-/functions-js-2.112.0.tgz",
++      "integrity": "sha512-2DdaEZs0vq86orMIZBO+eM5w5/UxZb1EZyg2JraBKS4W9BzfFO+fOFD6YStmZ7iAOWvxNTGPjPNItsofpGgTCA==",
+       "license": "MIT",
+       "dependencies": {
+         "tslib": "2.8.1"
+@@ -1430,9 +1412,9 @@
+       "license": "MIT"
+     },
+     "node_modules/@supabase/postgrest-js": {
+-      "version": "2.110.8",
+-      "resolved": "https://registry.npmjs.org/@supabase/postgrest-js/-/postgrest-js-2.110.8.tgz",
+-      "integrity": "sha512-QeRROxl1PpOZw5Jzi7BwdN9icsycMrLlCCvsjS0hYLW+nZoaT46zdagz/glJirj8jHF4jSd5Jyipuae2cBClCw==",
++      "version": "2.112.0",
++      "resolved": "https://registry.npmjs.org/@supabase/postgrest-js/-/postgrest-js-2.112.0.tgz",
++      "integrity": "sha512-4HKCVq32Jlk/wS8Ud8QgaAuQ4u6w1hZfw/gS5IcIN7wYddElMj4kfiCZpHMPfncomMnYzAKBUhwBZPpRcTH2Yw==",
+       "license": "MIT",
+       "dependencies": {
+         "tslib": "2.8.1"
+@@ -1442,9 +1424,9 @@
+       }
+     },
+     "node_modules/@supabase/realtime-js": {
+-      "version": "2.110.8",
+-      "resolved": "https://registry.npmjs.org/@supabase/realtime-js/-/realtime-js-2.110.8.tgz",
+-      "integrity": "sha512-mwX7ituX6O31fLf+0g65rpLlNxqgnMaPltPsQwzox6jfmbfVl3tCxXrfr3HEsQcCRjpjuJG1+A0vFzP1yVjKHA==",
++      "version": "2.112.0",
++      "resolved": "https://registry.npmjs.org/@supabase/realtime-js/-/realtime-js-2.112.0.tgz",
++      "integrity": "sha512-McFFP+ivFDMTaCEh8JDpG+sPEmv5IjKvrP0uTH3Lbsriai4KbxB8ycY8TqPQnbjhOVjEifQm1q0y2tL1CUw9Zg==",
+       "license": "MIT",
+       "dependencies": {
+         "@supabase/phoenix": "0.4.5",
+@@ -1455,21 +1437,21 @@
+       }
+     },
+     "node_modules/@supabase/ssr": {
+-      "version": "0.12.3",
+-      "resolved": "https://registry.npmjs.org/@supabase/ssr/-/ssr-0.12.3.tgz",
+-      "integrity": "sha512-qWXJ/dI7CiYDKyTgIPqJ4Qkh8y5edh2LdF/nkN48z47mmEVzAO2OE+YErYeQ/UemVfonn/F4kFz+lhLqoVMdpw==",
++      "version": "0.12.4",
++      "resolved": "https://registry.npmjs.org/@supabase/ssr/-/ssr-0.12.4.tgz",
++      "integrity": "sha512-xHzcgI8cC1TpBKSwJcR5Yd8CCwfIq0SBc5yb4yz/YFw5tbCrEQ0QT3a+2jymCxHgQWLfzwN93HZ6eRbcoMkOlA==",
+       "license": "MIT",
+       "dependencies": {
+         "cookie": "^1.0.2"
+       },
+       "peerDependencies": {
+-        "@supabase/supabase-js": "^2.110.5"
++        "@supabase/supabase-js": "^2.111.0"
+       }
+     },
+     "node_modules/@supabase/storage-js": {
+-      "version": "2.110.8",
+-      "resolved": "https://registry.npmjs.org/@supabase/storage-js/-/storage-js-2.110.8.tgz",
+-      "integrity": "sha512-CcfhkZFBLxsthgUabZKxwfsoXdrikIGsL3LsGoV3FZTqCMx/s1y49taT4jT/oya5+1IuB0sFFHw6pF0o0iJniQ==",
++      "version": "2.112.0",
++      "resolved": "https://registry.npmjs.org/@supabase/storage-js/-/storage-js-2.112.0.tgz",
++      "integrity": "sha512-X44Bl045X/e5e2tJqWsY+JmQvgtm04BJuijiWprIWYLn0mDvGnu8hLdzPOPcTVji7wlqbt2ZUHttsv+rGKQYXw==",
+       "license": "MIT",
+       "dependencies": {
+         "iceberg-js": "^0.8.1",
+@@ -1480,19 +1462,27 @@
+       }
+     },
+     "node_modules/@supabase/supabase-js": {
+-      "version": "2.110.8",
+-      "resolved": "https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-2.110.8.tgz",
+-      "integrity": "sha512-E5qzoe74zhJRv4wRcbO9eMYzeQDb/+h6c603pL8shcxLGBjTKsIF7XXj05IcNj23TLDgJN1WkMw7mwAPyu5dZg==",
++      "version": "2.112.0",
++      "resolved": "https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-2.112.0.tgz",
++      "integrity": "sha512-dHVOgog58GOagtrZuPxJYg/R45ZV2U0qqgXffH+lMlt1OS+267Pw4g7bw3iXCGxN85OufiE0nI1baxDXlgEyfQ==",
+       "license": "MIT",
+       "dependencies": {
+-        "@supabase/auth-js": "2.110.8",
+-        "@supabase/functions-js": "2.110.8",
+-        "@supabase/postgrest-js": "2.110.8",
+-        "@supabase/realtime-js": "2.110.8",
+-        "@supabase/storage-js": "2.110.8"
++        "@supabase/auth-js": "2.112.0",
++        "@supabase/functions-js": "2.112.0",
++        "@supabase/postgrest-js": "2.112.0",
++        "@supabase/realtime-js": "2.112.0",
++        "@supabase/storage-js": "2.112.0"
+       },
+       "engines": {
+         "node": ">=22.0.0"
++      },
++      "peerDependencies": {
++        "@opentelemetry/api": ">=1.0.0"
++      },
++      "peerDependenciesMeta": {
++        "@opentelemetry/api": {
++          "optional": true
++        }
+       }
+     },
+     "node_modules/@swc/helpers": {
+@@ -1818,9 +1808,9 @@
+       }
+     },
+     "node_modules/@types/react": {
+-      "version": "19.2.17",
+-      "resolved": "https://registry.npmjs.org/@types/react/-/react-19.2.17.tgz",
+-      "integrity": "sha512-MXfmqaVPEVgkBT/aY0aGCkRWWtByiYQXo3xdQ8r5RzuFrPiRn8Gar2tQdXSUQ2GKV3bkXckek89V8wQBY2Q/Aw==",
++      "version": "19.2.18",
++      "resolved": "https://registry.npmjs.org/@types/react/-/react-19.2.18.tgz",
++      "integrity": "sha512-AnzbBERsrLKtk2XSfTbYRLjQPdy116Sty4q+T+Bp3IC4l6jNBvreVPAHmpq9qhXQM7CXZPjLVmGMw9sy+hxQ3w==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+@@ -1828,9 +1818,9 @@
+       }
+     },
+     "node_modules/@types/react-dom": {
+-      "version": "19.2.3",
+-      "resolved": "https://registry.npmjs.org/@types/react-dom/-/react-dom-19.2.3.tgz",
+-      "integrity": "sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==",
++      "version": "19.2.4",
++      "resolved": "https://registry.npmjs.org/@types/react-dom/-/react-dom-19.2.4.tgz",
++      "integrity": "sha512-Bsc+QHgp+P/F02XDzNCY9jnZNCUuLki36KT7VKrTXXLdHf+vHMNZnW1rVu5DNW/rCK+fya3DATySbLM4yhtKUw==",
+       "dev": true,
+       "license": "MIT",
+       "peerDependencies": {
+@@ -2036,9 +2026,9 @@
+       }
+     },
+     "node_modules/@typescript-eslint/typescript-estree/node_modules/brace-expansion": {
+-      "version": "5.0.8",
+-      "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.8.tgz",
+-      "integrity": "sha512-JZyDyq3D4AUifKTPOB7DELf6XsB3WdPuNxCtob1vFXPsSXhdAiHBWJ/tJ8HAc9aH84BK+5JFZLNkJKx3G9kzQg==",
++      "version": "5.0.9",
++      "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.9.tgz",
++      "integrity": "sha512-ScQ4IuvIEF1TMlP7Zt+vjJ//9zlPb2SDcxWxM3bk8s6t6GGdJ7KO1dCcTidOPJKePW30LE/2cT7wCyPho9/Wxg==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+@@ -2049,13 +2039,13 @@
+       }
+     },
+     "node_modules/@typescript-eslint/typescript-estree/node_modules/minimatch": {
+-      "version": "10.2.5",
+-      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-10.2.5.tgz",
+-      "integrity": "sha512-MULkVLfKGYDFYejP07QOurDLLQpcjk7Fw+7jXS2R2czRQzR56yHRveU5NDJEOviH+hETZKSkIk5c+T23GjFUMg==",
++      "version": "10.2.6",
++      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-10.2.6.tgz",
++      "integrity": "sha512-vpLQEs+VLCr1nU0BXS07maYoFwlDAH0gngQuuttxIwutDFEMHq2blX+8vpgxDdK3J1PwjCJiep77OitTZ4Ll1A==",
+       "dev": true,
+       "license": "BlueOak-1.0.0",
+       "dependencies": {
+-        "brace-expansion": "^5.0.5"
++        "brace-expansion": "^5.0.8"
+       },
+       "engines": {
+         "node": "18 || 20 || >=22"
+@@ -2457,9 +2447,9 @@
+       ]
+     },
+     "node_modules/acorn": {
+-      "version": "8.17.0",
+-      "resolved": "https://registry.npmjs.org/acorn/-/acorn-8.17.0.tgz",
+-      "integrity": "sha512-xRQbDb9BnwDafYNn6Vwl839DYVjqXYb1XVGtWAZ1kcDc6iwAL4hg3B1dZlRiuENFeO2H53gFG3in621AdERVAg==",
++      "version": "8.18.0",
++      "resolved": "https://registry.npmjs.org/acorn/-/acorn-8.18.0.tgz",
++      "integrity": "sha512-lGq+9yr1/GuAWaVYIHRjvvySG5/4VfKIvC8EWxStPdcDh/Ka7FG3twP6v4d5BkravUilhIAsG4Qj83t02LWUPQ==",
+       "dev": true,
+       "license": "MIT",
+       "bin": {
+@@ -2480,17 +2470,16 @@
+       }
+     },
+     "node_modules/ajv": {
+-      "version": "8.20.0",
+-      "resolved": "https://registry.npmjs.org/ajv/-/ajv-8.20.0.tgz",
+-      "integrity": "sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA==",
++      "version": "6.15.0",
++      "resolved": "https://registry.npmjs.org/ajv/-/ajv-6.15.0.tgz",
++      "integrity": "sha512-fgFx7Hfoq60ytK2c7DhnF8jIvzYgOMxfugjLOSMHjLIPgenqa7S7oaagATUq99mV6IYvN2tRmC0wnTYX6iPbMw==",
++      "dev": true,
+       "license": "MIT",
+-      "optional": true,
+-      "peer": true,
+       "dependencies": {
+-        "fast-deep-equal": "^3.1.3",
+-        "fast-uri": "^3.0.1",
+-        "json-schema-traverse": "^1.0.0",
+-        "require-from-string": "^2.0.2"
++        "fast-deep-equal": "^3.1.1",
++        "fast-json-stable-stringify": "^2.0.0",
++        "json-schema-traverse": "^0.4.1",
++        "uri-js": "^4.2.2"
+       },
+       "funding": {
+         "type": "github",
+@@ -2751,9 +2740,9 @@
+       "license": "MIT"
+     },
+     "node_modules/baseline-browser-mapping": {
+-      "version": "2.11.4",
+-      "resolved": "https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.11.4.tgz",
+-      "integrity": "sha512-s4+sLr9mZ/CyqeRritFeYV/Zx73OAtmaHn6kkBS1XRoJn1hrg3xIDUcpicAEX68tkcIN0iBCgti31C8zxtkhsQ==",
++      "version": "2.11.11",
++      "resolved": "https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.11.11.tgz",
++      "integrity": "sha512-/yImnXwyTvgMkhgekLHok/Rx5vO6E0BmStWlSqKWMVm2a2ITuZ1Tn+9bgLS+gZRdZmWtd8nxuhHpdmCUOWsTQQ==",
+       "license": "Apache-2.0",
+       "bin": {
+         "baseline-browser-mapping": "dist/cli.cjs"
+@@ -2763,9 +2752,9 @@
+       }
+     },
+     "node_modules/brace-expansion": {
+-      "version": "1.1.16",
+-      "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.16.tgz",
+-      "integrity": "sha512-IDw48K2/2kRkg9LdJxurvq3lV3aBgq0REY89duEqFRthjlPdXHKMj7EnQOXVckxzgisinf3nHfrcE2FufFLXMw==",
++      "version": "1.1.18",
++      "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.18.tgz",
++      "integrity": "sha512-Edep/X9fGqVNmzKBVsDYIOtD+z1tuezV70LBjdCst9Tqu76lsnvRiZ6oTic1n+/BIwX6QDGAO94PN4N2SADvtw==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+@@ -3153,9 +3142,9 @@
+       }
+     },
+     "node_modules/electron-to-chromium": {
+-      "version": "1.5.396",
+-      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.396.tgz",
+-      "integrity": "sha512-yHiw2Y3C3H9U6TMbOfoWK/BPreiOPXRfTWPBwQBoZG6/8TB6eOPnsy5oaRYuatR7Fw2SJ4kKforgufeo7fq0EQ==",
++      "version": "1.5.399",
++      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.399.tgz",
++      "integrity": "sha512-lEcqhErbHjXRvd41rnWLpzbyU/IXfIYo7QwaFWmxGeLiLyY2TBCdHnWY88vB+p3ubnihRypDm66panXl7TylLA==",
+       "dev": true,
+       "license": "ISC"
+     },
+@@ -3167,9 +3156,9 @@
+       "license": "MIT"
+     },
+     "node_modules/enhanced-resolve": {
+-      "version": "5.24.3",
+-      "resolved": "https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.24.3.tgz",
+-      "integrity": "sha512-PwKooW9JUzh5chmYfHM3IQl5OkK2u2Nm011MgeZrss3JmFraUx/fqrf78kk8GUMYoibx/14MdwTl/1WKkG7TpQ==",
++      "version": "5.24.5",
++      "resolved": "https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.24.5.tgz",
++      "integrity": "sha512-L1l8TNvomm6UVW5B253AGxQagSQr+vGwhMlrrfRS2qmhx46AMpMVJKQYLvWYbysTMY8VoicOvzHzoHMbyzB+4A==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+@@ -3744,30 +3733,6 @@
+         "url": "https://opencollective.com/eslint"
+       }
+     },
+-    "node_modules/eslint/node_modules/ajv": {
+-      "version": "6.15.0",
+-      "resolved": "https://registry.npmjs.org/ajv/-/ajv-6.15.0.tgz",
+-      "integrity": "sha512-fgFx7Hfoq60ytK2c7DhnF8jIvzYgOMxfugjLOSMHjLIPgenqa7S7oaagATUq99mV6IYvN2tRmC0wnTYX6iPbMw==",
+-      "dev": true,
+-      "license": "MIT",
+-      "dependencies": {
+-        "fast-deep-equal": "^3.1.1",
+-        "fast-json-stable-stringify": "^2.0.0",
+-        "json-schema-traverse": "^0.4.1",
+-        "uri-js": "^4.2.2"
+-      },
+-      "funding": {
+-        "type": "github",
+-        "url": "https://github.com/sponsors/epoberezkin"
+-      }
+-    },
+-    "node_modules/eslint/node_modules/json-schema-traverse": {
+-      "version": "0.4.1",
+-      "resolved": "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz",
+-      "integrity": "sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==",
+-      "dev": true,
+-      "license": "MIT"
+-    },
+     "node_modules/espree": {
+       "version": "10.4.0",
+       "resolved": "https://registry.npmjs.org/espree/-/espree-10.4.0.tgz",
+@@ -3836,7 +3801,7 @@
+       "version": "3.1.3",
+       "resolved": "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz",
+       "integrity": "sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==",
+-      "devOptional": true,
++      "dev": true,
+       "license": "MIT"
+     },
+     "node_modules/fast-glob": {
+@@ -3883,24 +3848,6 @@
+       "dev": true,
+       "license": "MIT"
+     },
+-    "node_modules/fast-uri": {
+-      "version": "3.1.4",
+-      "resolved": "https://registry.npmjs.org/fast-uri/-/fast-uri-3.1.4.tgz",
+-      "integrity": "sha512-8JnbkQ4juDyvYs4mgFGQqg4yCYtFDtUtmp2QIQq11ZZe5CFQ5wcqm1rqDgAh/QdMySuBnPzMUiJUNZG5N/AiQw==",
+-      "funding": [
+-        {
+-          "type": "github",
+-          "url": "https://github.com/sponsors/fastify"
+-        },
+-        {
+-          "type": "opencollective",
+-          "url": "https://opencollective.com/fastify"
+-        }
+-      ],
+-      "license": "BSD-3-Clause",
+-      "optional": true,
+-      "peer": true
+-    },
+     "node_modules/fastq": {
+       "version": "1.20.1",
+       "resolved": "https://registry.npmjs.org/fastq/-/fastq-1.20.1.tgz",
+@@ -3911,6 +3858,24 @@
+         "reusify": "^1.0.4"
+       }
+     },
++    "node_modules/fdir": {
++      "version": "6.5.0",
++      "resolved": "https://registry.npmjs.org/fdir/-/fdir-6.5.0.tgz",
++      "integrity": "sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=12.0.0"
++      },
++      "peerDependencies": {
++        "picomatch": "^3 || ^4"
++      },
++      "peerDependenciesMeta": {
++        "picomatch": {
++          "optional": true
++        }
++      }
++    },
+     "node_modules/file-entry-cache": {
+       "version": "8.0.0",
+       "resolved": "https://registry.npmjs.org/file-entry-cache/-/file-entry-cache-8.0.0.tgz",
+@@ -3969,9 +3934,9 @@
+       }
+     },
+     "node_modules/flatted": {
+-      "version": "3.4.3",
+-      "resolved": "https://registry.npmjs.org/flatted/-/flatted-3.4.3.tgz",
+-      "integrity": "sha512-/zipXxyO6rGvuNGDiULY9MvEGSkb2gaG4GGH4ygMi0ZZzyMHdUZBmntJmx5x1G2VuPytCwGN4xsJP6cw+sK+vQ==",
++      "version": "3.4.4",
++      "resolved": "https://registry.npmjs.org/flatted/-/flatted-3.4.4.tgz",
++      "integrity": "sha512-5+ybhBZANEJxaH3X5evAFatUxLfEHSr7n6kYJ+1Qd0mUqr4eu9gIf6GDbWHf8RJijHrjjO8G+la14SlL2SeS1Q==",
+       "dev": true,
+       "license": "ISC"
+     },
+@@ -4113,9 +4078,9 @@
+       }
+     },
+     "node_modules/get-tsconfig": {
+-      "version": "4.14.0",
+-      "resolved": "https://registry.npmjs.org/get-tsconfig/-/get-tsconfig-4.14.0.tgz",
+-      "integrity": "sha512-yTb+8DXzDREzgvYmh6s9vHsSVCHeC0G3PI5bEXNBHtmshPnO+S5O7qgLEOn0I5QvMy6kpZN8K1NKGyilLb93wA==",
++      "version": "4.14.1",
++      "resolved": "https://registry.npmjs.org/get-tsconfig/-/get-tsconfig-4.14.1.tgz",
++      "integrity": "sha512-Dz/6HxkrxgNehhxLVeyv8sad9UzF2xBVeaKBQNDfJ5XiSXmp2gTR0eO0RWiT2NCKS5aGP9jjkOMggTN90qU50A==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+@@ -4841,9 +4806,9 @@
+       "license": "MIT"
+     },
+     "node_modules/js-yaml": {
+-      "version": "4.3.0",
+-      "resolved": "https://registry.npmjs.org/js-yaml/-/js-yaml-4.3.0.tgz",
+-      "integrity": "sha512-1td788aAnnZ5qs7V2QIRl1owjtYpbKt749Y3xauqQgwIIGF/xXWz1wMTEBx5O3LK3lXLVuqXPdPxj2BoFHaW9Q==",
++      "version": "4.3.1",
++      "resolved": "https://registry.npmjs.org/js-yaml/-/js-yaml-4.3.1.tgz",
++      "integrity": "sha512-CY6crGq313MX8GkwvB7tzgp99vjQxY1++5y10/BKN/GUfHqWaOGQMNZkBvqSzsZKWk/ijwHlWzzkLulsGHhjWQ==",
+       "dev": true,
+       "funding": [
+         {
+@@ -4884,12 +4849,11 @@
+       "license": "MIT"
+     },
+     "node_modules/json-schema-traverse": {
+-      "version": "1.0.0",
+-      "resolved": "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-1.0.0.tgz",
+-      "integrity": "sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==",
+-      "license": "MIT",
+-      "optional": true,
+-      "peer": true
++      "version": "0.4.1",
++      "resolved": "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz",
++      "integrity": "sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==",
++      "dev": true,
++      "license": "MIT"
+     },
+     "node_modules/json-stable-stringify-without-jsonify": {
+       "version": "1.0.1",
+@@ -5279,9 +5243,9 @@
+       }
+     },
+     "node_modules/lucide-react": {
+-      "version": "1.27.0",
+-      "resolved": "https://registry.npmjs.org/lucide-react/-/lucide-react-1.27.0.tgz",
+-      "integrity": "sha512-rJicGl/3Fly/E0rOH1YmPZ6e49JCnKknh1ox1vpHnkfjujAkKA6sqUZvH3MTAaXXjgexyUwgNwTJzTtYuAFYJw==",
++      "version": "1.28.0",
++      "resolved": "https://registry.npmjs.org/lucide-react/-/lucide-react-1.28.0.tgz",
++      "integrity": "sha512-fARAFJULsGuDDydjp6+6blekG/sBIM29TerzLjc9bQUKAcEfrSc4ZQKb25KRz4OMKd87cZTb5dgq0w/T6KufVg==",
+       "license": "ISC",
+       "peerDependencies": {
+         "react": "^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0"
+@@ -5774,9 +5738,9 @@
+       }
+     },
+     "node_modules/postcss": {
+-      "version": "8.5.23",
+-      "resolved": "https://registry.npmjs.org/postcss/-/postcss-8.5.23.tgz",
+-      "integrity": "sha512-g50586zr4bZmwFiTlflMu8E0bDTb5I5gertgwAKmsdUlTQIhZtunzUlD1WSzwcVWPoAVpsrA6vlfCD7oXvRwgg==",
++      "version": "8.5.25",
++      "resolved": "https://registry.npmjs.org/postcss/-/postcss-8.5.25.tgz",
++      "integrity": "sha512-DTPx3RWSSnWyzLxQnlH0rJP+EW5ekl16ZU4/psbIhA0e53kJfdgaN5vKM+xP7yJtXVu+nfdVFmlgFDEKAe4Pyw==",
+       "dev": true,
+       "funding": [
+         {
+@@ -5877,9 +5841,9 @@
+       }
+     },
+     "node_modules/react-hook-form": {
+-      "version": "7.83.0",
+-      "resolved": "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.83.0.tgz",
+-      "integrity": "sha512-AXt8cMCmx5a7u4uvpb2uRFVrWQhllI4pV+LSykxIac/hjt44TnQkmX9BKuQi2i+LDC62esmiLpilkav+kjVf/A==",
++      "version": "7.84.0",
++      "resolved": "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.84.0.tgz",
++      "integrity": "sha512-+hWvQP6GLco56mDwrbU4XnHix8t1z90ltZsDIrREl+jnQFQxYLX8oAzqe/Xn8nHpmoXTY5M6oEXrAhbP1qevNQ==",
+       "license": "MIT",
+       "engines": {
+         "node": ">=18.0.0"
+@@ -5943,17 +5907,6 @@
+         "url": "https://github.com/sponsors/ljharb"
+       }
+     },
+-    "node_modules/require-from-string": {
+-      "version": "2.0.2",
+-      "resolved": "https://registry.npmjs.org/require-from-string/-/require-from-string-2.0.2.tgz",
+-      "integrity": "sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==",
+-      "license": "MIT",
+-      "optional": true,
+-      "peer": true,
+-      "engines": {
+-        "node": ">=0.10.0"
+-      }
+-    },
+     "node_modules/resolve": {
+       "version": "2.0.0-next.7",
+       "resolved": "https://registry.npmjs.org/resolve/-/resolve-2.0.0-next.7.tgz",
+@@ -6564,24 +6517,6 @@
+         "url": "https://github.com/sponsors/SuperchupuDev"
+       }
+     },
+-    "node_modules/tinyglobby/node_modules/fdir": {
+-      "version": "6.5.0",
+-      "resolved": "https://registry.npmjs.org/fdir/-/fdir-6.5.0.tgz",
+-      "integrity": "sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==",
+-      "dev": true,
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">=12.0.0"
+-      },
+-      "peerDependencies": {
+-        "picomatch": "^3 || ^4"
+-      },
+-      "peerDependenciesMeta": {
+-        "picomatch": {
+-          "optional": true
+-        }
+-      }
+-    },
+     "node_modules/tinyglobby/node_modules/picomatch": {
+       "version": "4.0.5",
+       "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.5.tgz",
+diff --git a/package.json b/package.json
+index 20d35c9..be0e4fa 100644
+--- a/package.json
++++ b/package.json
+@@ -2,6 +2,9 @@
+   "name": "forgehub",
+   "version": "0.1.0",
+   "private": true,
++  "engines": {
++    "node": ">=22.0.0"
++  },
+   "scripts": {
+     "dev": "next dev",
+     "build": "next build",
+@@ -14,7 +17,6 @@
+     "@supabase/supabase-js": "^2.110.8",
+     "lucide-react": "^1.27.0",
+     "next": "16.2.12",
+-    "next-themes": "^0.3.0",
+     "react": "19.2.4",
+     "react-dom": "19.2.4",
+     "react-hook-form": "^7.83.0",
+diff --git a/src/app/api/projects/route.ts b/src/app/api/projects/route.ts
+index 7d1e1b4..bd7447f 100644
+--- a/src/app/api/projects/route.ts
++++ b/src/app/api/projects/route.ts
+@@ -33,10 +33,9 @@ export async function POST(request: Request) {
+   const { data: project, error: projectError } = await supabase.from("projects").insert({ name: parsed.data.name, description: parsed.data.description || null, project_type: parsed.data.projectType, created_by: user.id, visibility: "private" }).select("id").single();
+   if (projectError || !project) return NextResponse.json({ error: "We could not create the project. Try again." }, { status: 500 });
+ 
+-  const { error: memberError } = await supabase.from("project_members").insert({ project_id: project.id, user_id: user.id, role: "team_lead" });
+   const documentRows = parsed.data.documents.map((documentType) => ({ project_id: project.id, document_type: documentType, title: titles[documentType] }));
+   const { error: documentError } = await supabase.from("documents").insert(documentRows);
+-  if (memberError || documentError) {
++  if (documentError) {
+     await supabase.from("projects").delete().eq("id", project.id).eq("created_by", user.id);
+     return NextResponse.json({ error: "The project could not finish setting itself up. Nothing was saved." }, { status: 500 });
+   }
+diff --git a/src/components/app-shell/shell-config.ts b/src/components/app-shell/shell-config.ts
+index c43f557..0489539 100644
+--- a/src/components/app-shell/shell-config.ts
++++ b/src/components/app-shell/shell-config.ts
+@@ -285,7 +285,7 @@ export function getShellState(pathname: string): ShellState {
+       workspaceSlug,
+       breadcrumbs: [
+         { label: prettyLabel(workspaceSlug), href: `/w/${workspaceSlug}/home` },
+-        { label: PRIMARY_NAV.find((item) => item.key === activeArea)?.label },
++        { label: PRIMARY_NAV.find((item) => item.key === activeArea)?.label ?? prettyLabel(activeArea) },
+       ],
+       contextItems: PRIMARY_NAV.filter((item) => item.key !== "inbox").map((item) => ({
+         label: item.label,
+diff --git a/src/components/projects/ProjectCreationForm.tsx b/src/components/projects/ProjectCreationForm.tsx
+index c729258..afa5d4a 100644
+--- a/src/components/projects/ProjectCreationForm.tsx
++++ b/src/components/projects/ProjectCreationForm.tsx
+@@ -24,21 +24,25 @@ const DOCUMENTS = [
+ type ProjectType = (typeof TYPES)[number][0];
+ const DRAFT_KEY = "forgehub-project-draft";
+ 
++function readDraft(): { name?: string; description?: string; projectType?: ProjectType; documents?: string[] } | null {
++  if (typeof window === "undefined") return null;
++  try {
++    const raw = window.localStorage.getItem(DRAFT_KEY);
++    return raw ? JSON.parse(raw) : null;
++  } catch {
++    return null;
++  }
++}
++
+ export function ProjectCreationForm() {
+   const [step, setStep] = useState(1);
+-  const [name, setName] = useState("");
+-  const [description, setDescription] = useState("");
+-  const [projectType, setProjectType] = useState<ProjectType>("multidisciplinary");
+-  const [documents, setDocuments] = useState(DOCUMENTS.map(([id]) => id));
++  const [name, setName] = useState(() => readDraft()?.name ?? "");
++  const [description, setDescription] = useState(() => readDraft()?.description ?? "");
++  const [projectType, setProjectType] = useState<ProjectType>(() => readDraft()?.projectType ?? "multidisciplinary");
++  const [documents, setDocuments] = useState<string[]>(() => readDraft()?.documents ?? DOCUMENTS.map(([id]) => id));
+   const [error, setError] = useState("");
+   const [saving, setSaving] = useState(false);
+ 
+-  useEffect(() => {
+-    const raw = window.localStorage.getItem(DRAFT_KEY);
+-    if (!raw) return;
+-    try { const draft = JSON.parse(raw); setName(draft.name ?? ""); setDescription(draft.description ?? ""); setProjectType(draft.projectType ?? "multidisciplinary"); setDocuments(draft.documents ?? DOCUMENTS.map(([id]) => id)); } catch { window.localStorage.removeItem(DRAFT_KEY); }
+-  }, []);
+-
+   useEffect(() => { window.localStorage.setItem(DRAFT_KEY, JSON.stringify({ name, description, projectType, documents })); }, [name, description, projectType, documents]);
+ 
+   function next() {
+diff --git a/src/components/theme/theme-provider.tsx b/src/components/theme/theme-provider.tsx
+index 9a06861..2319f53 100644
+--- a/src/components/theme/theme-provider.tsx
++++ b/src/components/theme/theme-provider.tsx
+@@ -27,7 +27,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
+   const [theme, setThemeState] = useState<Theme>("dark");
+ 
+   useEffect(() => {
++    // Deliberately deferred to after mount: reading localStorage during the
++    // initial render would diverge from the server-rendered "dark" default
++    // and cause a hydration mismatch. The blocking inline script in
++    // layout.tsx already applies the correct class before paint; this just
++    // brings React state in sync with it.
+     const stored = localStorage.getItem(STORAGE_KEY);
++    // eslint-disable-next-line react-hooks/set-state-in-effect
+     setThemeState(stored === "light" ? "light" : "dark");
+   }, []);
+ 
+diff --git a/src/components/ui/logo.tsx b/src/components/ui/logo.tsx
+index d1ab871..75cf544 100644
+--- a/src/components/ui/logo.tsx
++++ b/src/components/ui/logo.tsx
+@@ -2,20 +2,23 @@
+ 
+ import React, { useState, useEffect } from "react";
+ import Image from "next/image";
+-import { useTheme } from "next-themes";
++import { useTheme } from "@/components/theme/theme-provider";
+ 
+ interface LogoProps {
+   className?: string;
+-  variant?: string; 
++  /** Accepted for call-site compatibility; not yet used to vary rendering. */
++  variant?: string;
+   tone?: string;
+-  [key: string]: any; 
+ }
+ 
+-export const Logo: React.FC<LogoProps> = ({ className = "", variant, tone, ...rest }) => {
+-  const { resolvedTheme } = useTheme();
++export const Logo: React.FC<LogoProps> = ({ className = "" }) => {
++  const { theme } = useTheme();
+   const [mounted, setMounted] = useState(false);
+ 
+   useEffect(() => {
++    // Standard mounted-gate: theme isn't known during SSR, so the logo
++    // src is picked only after mount to avoid a hydration mismatch.
++    // eslint-disable-next-line react-hooks/set-state-in-effect
+     setMounted(true);
+   }, []);
+ 
+@@ -24,7 +27,7 @@ export const Logo: React.FC<LogoProps> = ({ className = "", variant, tone, ...re
+   }
+ 
+   // Strict boolean check ensures it defaults properly
+-  const isDark = resolvedTheme === "dark";
++  const isDark = theme === "dark";
+   const logoSrc = isDark ? "/logo-dark.png" : "/logo-light.png";
+ 
+   return (
+diff --git a/src/components/workspace/DocumentationEditor.tsx b/src/components/workspace/DocumentationEditor.tsx
+index 880c0b5..9d98c86 100644
+--- a/src/components/workspace/DocumentationEditor.tsx
++++ b/src/components/workspace/DocumentationEditor.tsx
+@@ -17,8 +17,22 @@ export function DocumentationEditor({ projectId, documents, initialDocumentId }:
+   const [creating, setCreating] = useState(false);
+   const [createError, setCreateError] = useState("");
+ 
+-  useEffect(() => { setSectionId(activeDocument?.sections[0]?.id ?? ""); }, [activeDocument?.id]);
+-  useEffect(() => { setContent(activeSection?.content ?? ""); setSaveState("saved"); }, [activeSection?.id]);
++  // Reset the selected section when the active document changes, and reset
++  // the editor buffer when the active section changes. Done during render
++  // (React's "adjusting state when a prop changes" pattern) rather than in
++  // an effect, so there's no stale-content flash before an effect can run.
++  const [prevDocumentId, setPrevDocumentId] = useState(activeDocument?.id);
++  if (activeDocument?.id !== prevDocumentId) {
++    setPrevDocumentId(activeDocument?.id);
++    setSectionId(activeDocument?.sections[0]?.id ?? "");
++  }
++  const [prevSectionId, setPrevSectionId] = useState(activeSection?.id);
++  if (activeSection?.id !== prevSectionId) {
++    setPrevSectionId(activeSection?.id);
++    setContent(activeSection?.content ?? "");
++    setSaveState("saved");
++  }
++
+   useEffect(() => {
+     if (!activeSection || saveState === "saved") return;
+     const timer = window.setTimeout(async () => {
+@@ -30,7 +44,13 @@ export function DocumentationEditor({ projectId, documents, initialDocumentId }:
+       } catch { setSaveState("error"); }
+     }, 900);
+     return () => window.clearTimeout(timer);
+-  }, [content, activeSection?.id, activeDocument?.id, projectId, saveState]);
++    // activeSection and saveState are intentionally omitted: activeSection
++    // is a fresh object each render (from .find()) so including it would
++    // re-run this on every render, and including saveState would re-fire
++    // the effect on its own "saving"→"saved" transition, duplicating the
++    // PATCH request it just issued.
++    // eslint-disable-next-line react-hooks/exhaustive-deps
++  }, [content, activeSection?.id, activeDocument?.id, projectId]);
+ 
+   async function createSection() {
+     if (!activeDocument) return;
+diff --git a/src/components/workspace/WorkspaceOverview.tsx b/src/components/workspace/WorkspaceOverview.tsx
+index 4c82a30..f87eccf 100644
+--- a/src/components/workspace/WorkspaceOverview.tsx
++++ b/src/components/workspace/WorkspaceOverview.tsx
+@@ -1,7 +1,7 @@
+ "use client";
+ 
+ import Link from "next/link";
+-import { ArrowRight, BookOpen, Check, ChevronDown, Clock3, FileText, Flag, MoreHorizontal, Plus, Users } from "lucide-react";
++import { ArrowRight, BookOpen, ChevronDown, FileText, Flag, Plus, Users } from "lucide-react";
+ import type { WorkspaceOverviewData } from "./data";
+ 
+ export function WorkspaceOverview({ projectId, data }: { projectId: string; data: WorkspaceOverviewData }) {
+@@ -11,10 +11,10 @@ export function WorkspaceOverview({ projectId, data }: { projectId: string; data
+       <div className="mt-8 grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-3"><SummaryMetric label="Completeness" value={`${data.stats.completeness}%`} detail="documented and reviewed" /><SummaryMetric label="Active milestone" value="01" detail={data.stats.activeMilestone} /><SummaryMetric label="Recent updates" value={data.stats.recentUpdates} detail="across the workspace" /></div>
+       <div className="mt-8 grid gap-8 lg:grid-cols-[1.1fr_.9fr]">
+         <section className="border-t border-border pt-5"><SectionHeader title="Project health" action="View activity" /><div className="mt-5 grid gap-4 rounded-lg border border-border bg-surface p-5"><div className="flex items-end justify-between gap-4"><div><p className="font-mono text-xs uppercase tracking-[0.12em] text-text-muted">Documentation completeness</p><p className="mt-2 font-heading text-4xl font-semibold text-text-primary">{data.stats.completeness}<span className="text-lg text-text-muted">%</span></p></div><span className="rounded-full border border-warning-border bg-warning-bg px-2 py-1 text-xs text-warning">Testing phase</span></div><div className="h-2 overflow-hidden rounded-full bg-input-bg" role="progressbar" aria-label="Documentation completeness" aria-valuenow={data.stats.completeness} aria-valuemin={0} aria-valuemax={100}><div className="h-full rounded-full bg-secondary transition-[width] duration-500" style={{ width: `${data.stats.completeness}%` }} /></div><div className="grid grid-cols-2 gap-4 border-t border-border pt-4 text-sm"><div><p className="text-text-muted">Tasks completed</p><strong className="text-text-primary">{data.stats.completedTasks}</strong></div><div><p className="text-text-muted">Next focus</p><strong className="text-text-primary">{data.stats.activeMilestone}</strong></div></div></div></section>
+-        <ActivityCard activities={data.activity} />
++        <ActivityCard activity={data.activity} />
+       </div>
+       <div className="mt-8 grid gap-8 lg:grid-cols-[1.1fr_.9fr]"><DocumentationCard projectId={projectId} documents={data.documents} /><MilestonesCard milestones={data.milestones} /></div>
+-      <div className="mt-8 grid gap-8 lg:grid-cols-[1.1fr_.9fr]"><TeamCard members={data.team} /><QuickActions projectId={projectId} /></div>
++      <div className="mt-8 grid gap-8 lg:grid-cols-[1.1fr_.9fr]"><TeamCard team={data.team} /><QuickActions projectId={projectId} /></div>
+     </div>
+     <ContextPanel projectId={projectId} data={data} />
+   </div>;
+@@ -22,10 +22,10 @@ export function WorkspaceOverview({ projectId, data }: { projectId: string; data
+ 
+ function SummaryMetric({ label, value, detail }: { label: string; value: string; detail: string }) { return <div className="bg-surface p-5"><p className="font-mono text-[10px] uppercase tracking-[0.12em] text-text-muted">{label}</p><p className="mt-4 font-heading text-2xl font-semibold text-text-primary">{value}</p><p className="mt-1 text-xs text-text-muted">{detail}</p></div>; }
+ function SectionHeader({ title, action }: { title: string; action?: string }) { return <div className="flex items-center justify-between gap-4"><h3 className="font-heading text-lg font-semibold text-text-primary">{title}</h3>{action && <span className="text-sm text-secondary">{action}</span>}</div>; }
+-function ActivityCard({ activities }: Pick<WorkspaceOverviewData, "activity">) { return <section className="border-t border-border pt-5"><SectionHeader title="Recent activity" action="All activity" /><div className="mt-4 grid gap-4">{activities.map(({ id, icon: Icon, title, detail, time }) => <div key={id} className="flex gap-3"><span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-full border border-border bg-surface"><Icon className="h-4 w-4 text-secondary" aria-hidden /></span><div className="min-w-0"><p className="text-sm font-medium text-text-primary">{title}</p><p className="mt-0.5 text-xs text-text-muted">{detail}</p></div><time className="ml-auto shrink-0 text-xs text-text-muted">{time}</time></div>)}</div></section>; }
++function ActivityCard({ activity }: Pick<WorkspaceOverviewData, "activity">) { return <section className="border-t border-border pt-5"><SectionHeader title="Recent activity" action="All activity" /><div className="mt-4 grid gap-4">{activity.map(({ id, icon: Icon, title, detail, time }) => <div key={id} className="flex gap-3"><span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-full border border-border bg-surface"><Icon className="h-4 w-4 text-secondary" aria-hidden /></span><div className="min-w-0"><p className="text-sm font-medium text-text-primary">{title}</p><p className="mt-0.5 text-xs text-text-muted">{detail}</p></div><time className="ml-auto shrink-0 text-xs text-text-muted">{time}</time></div>)}</div></section>; }
+ function DocumentationCard({ projectId, documents }: { projectId: string; documents: WorkspaceOverviewData["documents"] }) { return <section className="border-t border-border pt-5"><SectionHeader title="Documentation" action="View all" /><div className="mt-4 grid gap-2">{documents.map((document) => <Link href={`/project/${projectId}/docs?document=${document.id}`} key={document.id} className="flex min-h-14 items-center gap-3 rounded-md border border-border px-3 py-3 transition-colors hover:bg-surface"><span className={`grid h-8 w-8 shrink-0 place-items-center rounded-md ${document.status === "reviewed" ? "bg-success-bg text-success" : "bg-warning-bg text-warning"}`}><FileText className="h-4 w-4" aria-hidden /></span><span className="min-w-0 flex-1"><span className="block truncate text-sm font-medium text-text-primary">{document.title}</span><span className="block truncate text-xs text-text-muted">{document.owner} · updated {document.updated}</span></span><span className="text-xs text-text-muted">{document.status === "reviewed" ? "Reviewed" : "In progress"}</span></Link>)}</div></section>; }
+ function MilestonesCard({ milestones }: Pick<WorkspaceOverviewData, "milestones">) { return <section className="border-t border-border pt-5"><SectionHeader title="Milestones" action="View all" /><div className="mt-4 grid gap-4">{milestones.map((milestone) => <div className="flex gap-3" key={milestone.id}><span className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${milestone.status === "active" ? "bg-secondary" : "bg-border"}`} /><div className="min-w-0"><div className="flex justify-between gap-3"><p className="text-sm font-medium text-text-primary">{milestone.title}</p><time className="font-mono text-[10px] text-text-muted">{milestone.date}</time></div><p className="mt-1 text-xs leading-relaxed text-text-muted">{milestone.detail}</p></div></div>)}</div></section>; }
+-function TeamCard({ members }: Pick<WorkspaceOverviewData, "team">) { return <section className="border-t border-border pt-5"><SectionHeader title="Team snapshot" action="Manage team" /><div className="mt-4 grid gap-3">{members.map((member) => <div className="flex items-center gap-3" key={member.id}><span className={`grid h-8 w-8 place-items-center rounded-full text-xs font-medium text-white ${member.tone}`}>{member.initials}</span><span className="min-w-0 flex-1"><span className="block truncate text-sm font-medium text-text-primary">{member.name}</span><span className="block text-xs text-text-muted">{member.role}</span></span><span className="h-2 w-2 rounded-full bg-success" aria-label="Active" /></div>)}</div></section>; }
++function TeamCard({ team }: Pick<WorkspaceOverviewData, "team">) { return <section className="border-t border-border pt-5"><SectionHeader title="Team snapshot" action="Manage team" /><div className="mt-4 grid gap-3">{team.map((member) => <div className="flex items-center gap-3" key={member.id}><span className={`grid h-8 w-8 place-items-center rounded-full text-xs font-medium text-white ${member.tone}`}>{member.initials}</span><span className="min-w-0 flex-1"><span className="block truncate text-sm font-medium text-text-primary">{member.name}</span><span className="block text-xs text-text-muted">{member.role}</span></span><span className="h-2 w-2 rounded-full bg-success" aria-label="Active" /></div>)}</div></section>; }
+ function QuickActions({ projectId }: { projectId: string }) { return <section className="border-t border-border pt-5"><SectionHeader title="Quick actions" /><div className="mt-4 grid gap-2 sm:grid-cols-2"><Link href={`/project/${projectId}/docs`} className="flex min-h-11 items-center gap-2 rounded-md border border-border px-3 text-sm text-text-primary hover:bg-surface"><Plus className="h-4 w-4 text-secondary" />Create documentation</Link><span className="flex min-h-11 cursor-not-allowed items-center gap-2 rounded-md border border-border px-3 text-sm text-text-muted"><Flag className="h-4 w-4" />Add milestone <span className="ml-auto font-mono text-[9px]">SOON</span></span><span className="flex min-h-11 cursor-not-allowed items-center gap-2 rounded-md border border-border px-3 text-sm text-text-muted"><Users className="h-4 w-4" />Invite member <span className="ml-auto font-mono text-[9px]">SOON</span></span><span className="flex min-h-11 cursor-not-allowed items-center gap-2 rounded-md border border-border px-3 text-sm text-text-muted"><FolderOpenIcon />Upload files <span className="ml-auto font-mono text-[9px]">SOON</span></span></div></section>; }
+ function FolderOpenIcon() { return <span className="h-4 w-4 rounded-sm border border-current" aria-hidden />; }
+ function ContextPanel({ projectId, data }: { projectId: string; data: WorkspaceOverviewData }) { return <aside className="border-t border-border pt-5 xl:border-l xl:border-t-0 xl:pl-6"><div className="flex items-center justify-between"><p className="font-mono text-xs uppercase tracking-[0.14em] text-text-muted">Project context</p><button className="rounded-md p-2 text-text-muted hover:bg-surface hover:text-text-primary" aria-label="Collapse project context"><ChevronDown className="h-4 w-4" /></button></div><div className="mt-5 grid gap-6"><div><p className="text-xs text-text-muted">Objective</p><p className="mt-2 text-sm leading-relaxed text-text-primary">{data.project.objective}</p></div><div><p className="text-xs text-text-muted">Current phase</p><p className="mt-2 flex items-center gap-2 text-sm font-medium text-text-primary"><span className="h-2 w-2 rounded-full bg-warning" />{data.project.phase}</p></div><div><p className="text-xs text-text-muted">Category</p><p className="mt-2 text-sm text-text-primary">{data.project.category}</p></div><div><p className="text-xs text-text-muted">Tags</p><div className="mt-2 flex flex-wrap gap-1.5">{data.project.tags.map((tag) => <span className="rounded-full border border-border px-2 py-1 text-xs text-text-muted" key={tag}>{tag}</span>)}</div></div><div><p className="text-xs text-text-muted">Pinned resources</p><div className="mt-2 grid gap-2"><span className="flex items-center gap-2 text-sm text-text-primary"><FileText className="h-4 w-4 text-secondary" />Requirements notes</span><span className="flex items-center gap-2 text-sm text-text-primary"><FileText className="h-4 w-4 text-secondary" />Field test checklist</span></div></div><Link href={`/project/${projectId}/docs`} className="inline-flex items-center gap-2 text-sm font-medium text-secondary hover:underline">Open the record <ArrowRight className="h-4 w-4" /></Link></div></aside>; }
+diff --git a/src/components/workspace/data.ts b/src/components/workspace/data.ts
+index 4b93bbb..c157897 100644
+--- a/src/components/workspace/data.ts
++++ b/src/components/workspace/data.ts
+@@ -1,5 +1,5 @@
+ import type { LucideIcon } from "lucide-react";
+-import { BookOpen, FileText, Flag, History, Users } from "lucide-react";
++import { FileText, History, Users } from "lucide-react";
+ 
+ export type WorkspaceActivity = { id: string; icon: LucideIcon; title: string; detail: string; time: string };
+ export type WorkspaceDocument = { id: string; title: string; status: "reviewed" | "in_progress" | "not_started"; owner: string; updated: string };
+diff --git a/src/lib/actions/auth.ts b/src/lib/actions/auth.ts
+index 577f685..371bff1 100644
+--- a/src/lib/actions/auth.ts
++++ b/src/lib/actions/auth.ts
+@@ -32,7 +32,7 @@ export async function signUp(
+     email: parsed.data.email,
+     password: parsed.data.password,
+     options: {
+-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
++      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/auth/callback`,
+     },
+   });
+ 
+@@ -97,7 +97,7 @@ export async function requestPasswordReset(
+ 
+   const supabase = await createClient();
+   await supabase.auth.resetPasswordForEmail(email, {
+-    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/reset-password`,
++    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/reset-password`,
+   });
+ 
+   // Doesn't reveal whether the email is registered — same message either way.
+diff --git a/src/lib/supabase/middleware.ts b/src/lib/supabase/middleware.ts
+index d2d6693..bdf1798 100644
+--- a/src/lib/supabase/middleware.ts
++++ b/src/lib/supabase/middleware.ts
+@@ -1,11 +1,10 @@
+ import { createServerClient } from "@supabase/ssr";
+ import { NextResponse, type NextRequest } from "next/server";
+ 
+-const PUBLIC_PATHS = ["/login", "/signup", "/reset-password", "/auth"];
++const PUBLIC_PATHS = ["/login", "/signup", "/reset-password", "/auth", "/explore", "/projects"];
+ 
+ function isPublicPath(pathname: string) {
+   if (PUBLIC_PATHS.some((p) => pathname.startsWith(p))) return true;
+-  if (pathname.startsWith("/p/")) return true; // public project viewer
+   if (pathname === "/") return true;
+   return false;
+ }

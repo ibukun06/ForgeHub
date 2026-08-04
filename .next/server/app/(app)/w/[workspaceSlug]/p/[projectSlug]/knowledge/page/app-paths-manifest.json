@@ -1,0 +1,3 @@
+{
+  "/(app)/w/[workspaceSlug]/p/[projectSlug]/knowledge/page": "app/(app)/w/[workspaceSlug]/p/[projectSlug]/knowledge/page.js"
+}
