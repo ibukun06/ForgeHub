@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
+import { generateUniqueProjectSlug } from "@/lib/slug";
 
 const schema = z.object({
   name: z.string().trim().min(1, "Project name is required").max(120),
@@ -30,7 +31,8 @@ export async function POST(request: Request) {
   const { data: duplicate } = await supabase.from("projects").select("id").eq("created_by", user.id).ilike("name", normalizedName).maybeSingle();
   if (duplicate) return NextResponse.json({ error: "You already have a project with that name." }, { status: 409 });
 
-  const { data: project, error: projectError } = await supabase.from("projects").insert({ name: parsed.data.name, description: parsed.data.description || null, project_type: parsed.data.projectType, created_by: user.id, visibility: "private" }).select("id").single();
+  const slug = await generateUniqueProjectSlug(supabase, parsed.data.name);
+  const { data: project, error: projectError } = await supabase.from("projects").insert({ name: parsed.data.name, description: parsed.data.description || null, project_type: parsed.data.projectType, created_by: user.id, visibility: "private", slug }).select("id, slug").single();
   if (projectError || !project) return NextResponse.json({ error: "We could not create the project. Try again." }, { status: 500 });
 
   const documentRows = parsed.data.documents.map((documentType) => ({ project_id: project.id, document_type: documentType, title: titles[documentType] }));
@@ -40,5 +42,5 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "The project could not finish setting itself up. Nothing was saved." }, { status: 500 });
   }
 
-  return NextResponse.json({ projectId: project.id }, { status: 201 });
+  return NextResponse.json({ projectId: project.id, slug: project.slug }, { status: 201 });
 }

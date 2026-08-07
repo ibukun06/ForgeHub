@@ -60,7 +60,7 @@ export function ProjectCreationForm() {
       const result = await response.json();
       if (!response.ok) throw new Error(result.error ?? "We could not create the project.");
       window.localStorage.removeItem(DRAFT_KEY);
-      window.location.assign(`/project/${result.projectId}/overview`);
+      window.location.assign(`/w/forgehub/p/${result.slug}/overview`);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "We could not create the project. Your draft is safe on this device.");
       setSaving(false);
