@@ -17,6 +17,7 @@ type ProjectRecord = {
   description: string | null;
   project_type: ProjectType;
   visibility: ProjectVisibility;
+  slug: string;
   created_at: string;
   updated_at: string;
 };
@@ -138,16 +139,8 @@ type ProjectGraph = {
   memberCount: number;
 };
 
-export function slugifyProjectName(name: string): string {
-  return name
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-function buildProjectHref(name: string, workspaceSlug = DEFAULT_WORKSPACE_SLUG) {
-  return `/w/${workspaceSlug}/p/${slugifyProjectName(name)}/overview`;
+function buildProjectHref(slug: string, workspaceSlug = DEFAULT_WORKSPACE_SLUG) {
+  return `/w/${workspaceSlug}/p/${slug}/overview`;
 }
 
 function titleCase(value: string) {
@@ -214,7 +207,7 @@ async function getViewerGraph(): Promise<ViewerGraph> {
 
   const { data: membershipRows } = await supabase
     .from("project_members")
-    .select("role, projects(id, name, description, project_type, visibility, created_at, updated_at)")
+    .select("role, projects(id, name, description, project_type, visibility, slug, created_at, updated_at)")
     .eq("user_id", user.id);
 
   const memberships = (membershipRows ?? []) as MembershipRow[];
@@ -278,36 +271,94 @@ async function getViewerGraph(): Promise<ViewerGraph> {
   };
 }
 
+/**
+ * Looks a project up by its real, stored slug — one indexed query,
+ * instead of the old approach of fetching a user's entire project graph
+ * (every project, every document, every decision) just to find one
+ * project. It also actually enforces `projects_select`'s real rule
+ * (published OR member) rather than silently only ever finding projects
+ * the current user is already a member of, which is what the old
+ * scan-of-getViewerGraph() approach did whether it meant to or not.
+ */
 async function getProjectGraphBySlug(projectSlug: string): Promise<ProjectGraph | null> {
-  const viewerGraph = await getViewerGraph();
-  const project = viewerGraph.projects.find(
-    (item) => slugifyProjectName(item.name) === projectSlug || item.id === projectSlug
-  );
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  const { data: project } = await supabase
+    .from("projects")
+    .select("id, name, description, project_type, visibility, slug, created_at, updated_at")
+    .eq("slug", projectSlug)
+    .maybeSingle();
 
   if (!project) {
     return null;
   }
 
-  const projectDocuments = viewerGraph.documents.filter((document) => document.project_id === project.id);
-  const projectDocumentIds = new Set(projectDocuments.map((document) => document.id));
-  const projectSections = viewerGraph.sections.filter((section) => projectDocumentIds.has(section.document_id));
-  const projectDecisions = viewerGraph.decisions.filter((decision) => decision.project_id === project.id);
-  const projectNotifications = viewerGraph.notifications.filter((notification) => notification.project_id === project.id);
-
-  const supabase = await createClient();
-  const { count } = await supabase
+  const { data: membershipRow } = await supabase
     .from("project_members")
-    .select("id", { count: "exact", head: true })
-    .eq("project_id", project.id);
+    .select("role")
+    .eq("project_id", project.id)
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  // Not a member and not published: RLS would already block the rows
+  // below, but returning null explicitly here gives a real 404 instead
+  // of a confusing "found the project, empty everything else" page.
+  if (!membershipRow && project.visibility !== "published") {
+    return null;
+  }
+
+  const [{ data: documents }, { data: decisions }, { data: notifications }, { count: memberCount }] = await Promise.all([
+    supabase
+      .from("documents")
+      .select("id, project_id, document_type, title, created_at")
+      .eq("project_id", project.id)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("decisions")
+      .select("id, project_id, decision, rationale, created_at")
+      .eq("project_id", project.id)
+      .order("created_at", { ascending: false }),
+    membershipRow
+      ? supabase
+          .from("notifications")
+          .select("id, project_id, type, read_at, created_at")
+          .eq("user_id", user.id)
+          .eq("project_id", project.id)
+          .order("created_at", { ascending: false })
+          .limit(12)
+      : Promise.resolve({ data: [] as NotificationRecord[] }),
+    supabase.from("project_members").select("id", { count: "exact", head: true }).eq("project_id", project.id),
+  ]);
+
+  const documentList = (documents ?? []) as DocumentRecord[];
+  const documentIds = documentList.map((document) => document.id);
+  const { data: sections } = documentIds.length
+    ? await supabase
+        .from("sections")
+        .select("id, document_id, prompt, status, updated_at")
+        .in("document_id", documentIds)
+        .order("updated_at", { ascending: false })
+    : { data: [] as SectionRecord[] };
 
   return {
     project,
-    role: viewerGraph.memberRoles.get(project.id) ?? "contributor",
-    documents: projectDocuments,
-    sections: projectSections,
-    decisions: projectDecisions,
-    notifications: projectNotifications,
-    memberCount: count ?? 0,
+    // "advisor" here is a display-only stand-in for a logged-in,
+    // non-member viewer of someone else's published project — not a real
+    // project_members row. No caller currently branches on this value;
+    // if one starts to, it needs an actual "viewer" concept, not this.
+    role: membershipRow?.role ?? "advisor",
+    documents: documentList,
+    sections: (sections ?? []) as SectionRecord[],
+    decisions: (decisions ?? []) as DecisionRecord[],
+    notifications: (notifications ?? []) as NotificationRecord[],
+    memberCount: memberCount ?? 0,
   };
 }
 
@@ -357,7 +408,7 @@ export async function getHomeScreenData(): Promise<HomeScreenData> {
       name: project.name,
       stage: titleCase(project.project_type),
       summary: summarizeProject(project, graph.documents, graph.sections, graph.decisions),
-      href: buildProjectHref(project.name),
+      href: buildProjectHref(project.slug),
     })),
     watchlist: graph.notifications
       .filter((notification) => notification.type === "section_stale")
@@ -422,7 +473,7 @@ export async function getProjectsScreenData(): Promise<ProjectsScreenData> {
       name: project.name,
       stage: titleCase(project.project_type),
       summary: summarizeProject(project, graph.documents, graph.sections, graph.decisions),
-      href: buildProjectHref(project.name),
+      href: buildProjectHref(project.slug),
     })),
     lanes: [
       {

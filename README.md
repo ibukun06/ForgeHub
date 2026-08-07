@@ -13,20 +13,33 @@ see the synthesis docs for context.
 - Project scaffold: Next.js (App Router) + TypeScript + Tailwind v4
 - Design system tokens wired up in `globals.css` (Part 2 of the synthesis)
 - Full database schema + RLS policies (`supabase/migrations/`) — the
-  final reconciled 11-table model from Part 3/4, including the
-  `project_members`-based role system, storage bucket policies, and the
-  Postgres-based AI rate-limit function
-- Complete auth loop: signup → email verification → onboarding → dashboard,
+  reconciled 11-table model from Part 3/4, plus a real, unique `projects.slug`
+  column (`0003_project_slugs.sql`) generated once at creation time
+- Complete auth loop: signup → email verification → onboarding → home,
   plus login, logout, and password reset
-- Dashboard reading real data (empty state + populated project grid)
+- The app-shell (`/w/[workspaceSlug]/p/[projectSlug]/*`) is the one and
+  only project workspace now. An earlier, parallel `/project/[id]/*`
+  implementation existed alongside it for a while — it's been retired;
+  its only genuinely working part (the section-by-section documentation
+  editor, autosave and all) was ported into the app-shell's Knowledge
+  tab rather than rebuilt.
+- Within the workspace: Overview (cockpit, real data), Work (task list,
+  real data), Knowledge (the real documentation editor — create a
+  section, edit it, autosave via `/api/projects/[id]/sections`) are all
+  functional. Plan, Conversation, Review, and Insights are still static
+  placeholder cards — real UI, no data behind them yet.
 
 ## What's not built yet
 
-Everything past the dashboard: project workspace (Overview/Docs/Team/
-Files/Timeline/Decisions/Advisor view), the AI drafting + Mentor chat
-surfaces, publish/portfolio flow, and notifications. These follow the
-same patterns established here (Server Components for reads, Server
-Actions for writes, RLS as defense-in-depth behind API-layer checks).
+Team management (invite, accept, roles) and the Decisions Log have
+**complete schema and RLS already** (`project_members`, `invites` +
+`accept_invite()`, `decisions`) — no frontend anywhere. Same story for
+Advisor comments (`comments`) and Publish (`publish_snapshots`):
+schema-correct, zero UI. The AI drafting + Mentor chat surfaces and
+notifications are further out — `ai_generation_logs` exists, nothing
+calls the Claude API yet. All of this follows the same patterns
+established here (Server Components for reads, Server Actions/API
+routes for writes, RLS as defense-in-depth behind API-layer checks).
 
 ## Setup
 
