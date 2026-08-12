@@ -1,9 +1,9 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { ReactNode, RefObject } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ChevronRight,
   Menu,
@@ -29,12 +29,41 @@ type AppShellProps = {
   children: ReactNode;
 };
 
+const SIDEBAR_STORAGE_KEY = "forgehub-sidebar-collapsed";
+
 export function AppShell({ user, children }: AppShellProps) {
   const pathname = usePathname();
   const shellState = useMemo(() => getShellState(pathname), [pathname]);
   const [commandOpen, setCommandOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [contextCollapsed, setContextCollapsed] = useState(false);
+  // Default to expanded on the server and on first paint — matches what
+  // was there before this existed, so nothing shifts for anyone who
+  // hasn't set a preference yet. Real value is read from localStorage
+  // after mount (see effect below), same pattern ThemeProvider already
+  // uses, to avoid a server/client hydration mismatch.
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const sidebarRef = useRef<HTMLElement | null>(null);
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem(SIDEBAR_STORAGE_KEY);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setSidebarCollapsed(stored === "true");
+  }, []);
+
+  function toggleSidebarCollapsed() {
+    setSidebarCollapsed((value) => {
+      const next = !value;
+      window.localStorage.setItem(SIDEBAR_STORAGE_KEY, String(next));
+      return next;
+    });
+  }
+
+  function closeMobileNav() {
+    setNavOpen(false);
+    menuButtonRef.current?.focus();
+  }
 
   useEffect(() => {
     function handleKeydown(event: KeyboardEvent) {
@@ -45,13 +74,39 @@ export function AppShell({ user, children }: AppShellProps) {
 
       if (event.key === "Escape") {
         setCommandOpen(false);
-        setNavOpen(false);
+        if (navOpen) {
+          closeMobileNav();
+        }
+      }
+
+      // Trap Tab inside the mobile drawer while it's open, so keyboard
+      // focus can't silently escape into the dimmed content behind it.
+      if (event.key === "Tab" && navOpen && sidebarRef.current) {
+        const focusable = sidebarRef.current.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
       }
     }
 
     window.addEventListener("keydown", handleKeydown);
     return () => window.removeEventListener("keydown", handleKeydown);
-  }, []);
+  }, [navOpen]);
+
+  // Move focus into the drawer the moment it opens, for keyboard and
+  // screen-reader users who triggered it without a mouse.
+  useEffect(() => {
+    if (navOpen) {
+      sidebarRef.current?.querySelector<HTMLElement>('a[href], button:not([disabled])')?.focus();
+    }
+  }, [navOpen]);
 
   return (
     <div className="min-h-screen bg-bg text-text-primary">
@@ -60,13 +115,21 @@ export function AppShell({ user, children }: AppShellProps) {
         user={user}
         openCommand={() => setCommandOpen(true)}
         mobileOpen={navOpen}
-        closeMobile={() => setNavOpen(false)}
+        closeMobile={closeMobileNav}
+        collapsed={sidebarCollapsed}
+        onToggleCollapsed={toggleSidebarCollapsed}
+        sidebarRef={sidebarRef}
       />
 
-      <div className="min-h-screen lg:pl-[18rem]">
+      <div
+        className={`min-h-screen transition-[padding-left] duration-200 ${
+          sidebarCollapsed ? "lg:pl-16" : "lg:pl-[18rem]"
+        }`}
+      >
         <header className="sticky top-0 z-30 border-b border-border/80 bg-bg/90 backdrop-blur-xl">
           <div className="flex items-center gap-3 px-4 py-3 sm:px-5 lg:px-6">
             <button
+              ref={menuButtonRef}
               type="button"
               onClick={() => setNavOpen(true)}
               className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-border bg-surface text-text-primary transition-colors hover:border-primary lg:hidden"
@@ -165,45 +228,77 @@ function GlobalSidebar({
   openCommand,
   mobileOpen,
   closeMobile,
+  collapsed,
+  onToggleCollapsed,
+  sidebarRef,
 }: {
   shellState: ShellState;
   user: AppShellProps["user"];
   openCommand: () => void;
   mobileOpen: boolean;
   closeMobile: () => void;
+  collapsed: boolean;
+  onToggleCollapsed: () => void;
+  sidebarRef: RefObject<HTMLElement | null>;
 }) {
   return (
     <>
       {mobileOpen ? (
+        // Same "stays dark on purpose" reasoning as the command palette's
+        // backdrop: an overlay scrim should dim the page in both themes,
+        // not invert to a pale tint in light mode.
         <button
           type="button"
           onClick={closeMobile}
-          className="fixed inset-0 z-40 bg-slate-950/45 lg:hidden"
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
           aria-label="Close navigation overlay"
         />
       ) : null}
+      {/* Width only ever collapses at the lg breakpoint and up — on
+          mobile this is a full-width overlay drawer regardless of the
+          desktop collapsed preference, so labels always stay readable
+          there. */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-[18rem] flex-col border-r border-white/8 bg-[#0f151d] text-slate-200 transition-transform duration-200 lg:translate-x-0 ${
+        ref={sidebarRef}
+        className={`fixed inset-y-0 left-0 z-50 flex w-[18rem] flex-col border-r border-border bg-bg text-text-primary transition-[transform,width] duration-200 lg:translate-x-0 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        } ${collapsed ? "lg:w-16" : "lg:w-[18rem]"}`}
       >
-        <div className="flex items-center justify-between border-b border-white/8 px-4 py-4">
-          <Link href="/home" className="flex items-center gap-3" onClick={closeMobile}>
-            <div className="rounded-2xl bg-white/5 p-2">
+        <div className="flex items-center justify-between gap-2 border-b border-border px-4 py-4">
+          <Link href="/home" className="flex min-w-0 items-center gap-3" onClick={closeMobile}>
+            <div className="shrink-0 rounded-2xl bg-input-bg p-2">
               <Logo className="h-8 w-8" />
             </div>
-            <div>
-              <p className="font-heading text-lg text-white">ForgeHub</p>
-              <p className="text-xs text-slate-400">Project operating system</p>
+            <div className={`min-w-0 ${collapsed ? "lg:hidden" : ""}`}>
+              <p className="truncate font-heading text-lg text-text-primary">ForgeHub</p>
+              <p className="truncate text-xs text-text-muted">Project operating system</p>
             </div>
           </Link>
           <button
             type="button"
             onClick={closeMobile}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/8 text-slate-400 transition-colors hover:border-white/15 hover:text-white lg:hidden"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-border text-text-muted transition-colors hover:border-primary/40 hover:text-text-primary lg:hidden"
             aria-label="Close navigation"
           >
             <X className="h-4 w-4" aria-hidden />
+          </button>
+        </div>
+
+        {/* Desktop-only collapse control — mobile has its own hamburger
+            and close button, and "collapsed" doesn't apply there. */}
+        <div className="hidden px-3 pt-3 lg:block">
+          <button
+            type="button"
+            onClick={onToggleCollapsed}
+            aria-expanded={!collapsed}
+            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            className={`flex h-9 items-center gap-2 rounded-xl border border-border text-text-muted transition-colors hover:border-primary/40 hover:text-text-primary ${
+              collapsed ? "w-full justify-center" : "w-full justify-start px-3"
+            }`}
+          >
+            {collapsed ? <PanelLeftOpen className="h-4 w-4" aria-hidden /> : <PanelLeftClose className="h-4 w-4" aria-hidden />}
+            {!collapsed && <span className="text-xs font-medium">Collapse</span>}
           </button>
         </div>
 
@@ -211,10 +306,13 @@ function GlobalSidebar({
           <button
             type="button"
             onClick={openCommand}
-            className="flex w-full items-center gap-3 rounded-2xl border border-white/8 bg-white/5 px-4 py-3 text-left text-sm text-slate-300 transition-colors hover:border-white/15 hover:bg-white/8 hover:text-white"
+            aria-label="Search, command, or ask AI"
+            className={`flex w-full items-center gap-3 rounded-2xl border border-border bg-input-bg px-4 py-3 text-left text-sm text-text-muted transition-colors hover:border-primary/40 hover:bg-surface-muted hover:text-text-primary ${
+              collapsed ? "lg:justify-center lg:px-0" : ""
+            }`}
           >
-            <Search className="h-4 w-4" aria-hidden />
-            Search, command, or ask AI
+            <Search className="h-4 w-4 shrink-0" aria-hidden />
+            <span className={collapsed ? "lg:sr-only" : ""}>Search, command, or ask AI</span>
           </button>
         </div>
 
@@ -228,19 +326,27 @@ function GlobalSidebar({
                 href={item.href}
                 onClick={closeMobile}
                 aria-current={active ? "page" : undefined}
-                className={`flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm transition-colors ${
-                  active ? "bg-white text-slate-950 shadow-lg shadow-slate-950/10" : "text-slate-300 hover:bg-white/8 hover:text-white"
-                }`}
+                className={`group relative flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm transition-colors ${
+                  active ? "bg-primary-soft font-medium text-primary" : "text-text-muted hover:bg-surface-muted hover:text-text-primary"
+                } ${collapsed ? "lg:justify-center lg:px-0" : ""}`}
               >
-                <Icon className="h-4 w-4" aria-hidden />
-                <span className="font-medium">{item.label}</span>
+                <Icon className="h-4 w-4 shrink-0" aria-hidden />
+                <span className={collapsed ? "lg:sr-only" : "font-medium"}>{item.label}</span>
+                {collapsed && (
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-full top-1/2 z-50 ml-3 hidden -translate-y-1/2 whitespace-nowrap rounded-lg border border-border bg-surface px-2.5 py-1.5 text-xs font-medium text-text-primary opacity-0 shadow-lg transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100 lg:block"
+                  >
+                    {item.label}
+                  </span>
+                )}
               </Link>
             );
           })}
         </nav>
 
-        <div className="border-t border-white/8 px-4 py-4">
-          <div className="mb-3 flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-slate-500">
+        <div className={`border-t border-border px-4 py-4 ${collapsed ? "lg:hidden" : ""}`}>
+          <div className="mb-3 flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-text-muted">
             <Sparkles className="h-3.5 w-3.5" aria-hidden />
             Favorites
           </div>
@@ -252,22 +358,31 @@ function GlobalSidebar({
                   key={item.label}
                   href={item.href}
                   onClick={closeMobile}
-                  className="flex items-center gap-3 rounded-2xl border border-white/6 bg-white/[0.03] px-3 py-2 text-sm text-slate-300 transition-colors hover:border-white/12 hover:bg-white/8 hover:text-white"
+                  className="flex items-center gap-3 rounded-2xl border border-border/60 px-3 py-2 text-sm text-text-muted transition-colors hover:border-primary/30 hover:bg-surface-muted hover:text-text-primary"
                 >
-                  <Icon className="h-4 w-4" aria-hidden />
-                  {item.label}
+                  <Icon className="h-4 w-4 shrink-0" aria-hidden />
+                  <span className="truncate">{item.label}</span>
                 </Link>
               );
             })}
           </div>
         </div>
 
-        <div className="border-t border-white/8 px-4 py-4">
-          <div className="rounded-3xl border border-white/8 bg-white/4 p-3">
-            <p className="text-xs uppercase tracking-[0.14em] text-slate-500">Signed in</p>
-            <p className="mt-2 font-medium text-white">{user.displayName}</p>
-            <p className="truncate text-sm text-slate-400">{user.email}</p>
+        <div className="border-t border-border px-4 py-4">
+          <div className={collapsed ? "lg:hidden" : ""}>
+            <div className="surface-panel-muted p-3">
+              <p className="text-xs uppercase tracking-[0.14em] text-text-muted">Signed in</p>
+              <p className="mt-2 truncate font-medium text-text-primary">{user.displayName}</p>
+              <p className="truncate text-sm text-text-muted">{user.email}</p>
+            </div>
           </div>
+          {collapsed && (
+            <div className="hidden justify-center lg:flex" title={`${user.displayName} — ${user.email}`}>
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/12 text-sm font-semibold text-primary">
+                {initials(user.displayName)}
+              </span>
+            </div>
+          )}
         </div>
       </aside>
     </>
