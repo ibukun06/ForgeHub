@@ -21,6 +21,7 @@ import {
   Waypoints,
 } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import { EditProjectDialog } from "@/components/project/EditProjectDialog";
 import type {
   HomeScreenData,
   InboxScreenData,
@@ -588,6 +589,17 @@ export function ProjectCockpitScreen({
         description="The project cockpit is the operating center of gravity: health, milestone status, blockers, active work, key docs, decisions, and AI synthesis aligned in one command bridge."
         metrics={metrics}
       />
+
+      {data?.project && (
+        <div className="flex justify-end">
+          <EditProjectDialog
+            projectId={data.project.id}
+            initialName={data.project.name}
+            initialDescription={data.project.description}
+            initialType={data.project.projectType}
+          />
+        </div>
+      )}
 
       <div className="grid gap-6 xl:grid-cols-[1.2fr_0.9fr_0.8fr]">
         <PanelCard title="Current milestone" description="The immediate outcome the project is organizing around.">
