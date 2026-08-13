@@ -109,6 +109,12 @@ export type KnowledgeScreenData = {
 };
 
 export type ProjectCockpitData = {
+  project: {
+    id: string;
+    name: string;
+    description: string | null;
+    projectType: ProjectType;
+  };
   metrics: MetricData[];
   milestoneLabel: string;
   milestoneSummary: string;
@@ -598,6 +604,12 @@ export async function getProjectCockpitData(projectSlug: string): Promise<Projec
   const latestDecision = graph.decisions[0];
 
   return {
+    project: {
+      id: graph.project.id,
+      name: graph.project.name,
+      description: graph.project.description,
+      projectType: graph.project.project_type,
+    },
     metrics: [
       {
         label: "Health",
