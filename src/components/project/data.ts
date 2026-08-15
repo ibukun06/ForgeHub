@@ -1,5 +1,6 @@
 import { MOCK_PROJECTS, type ExploreProject } from "@/components/explore/data";
 import { CATEGORIES } from "@/components/landing/data";
+import { createClient } from "@/lib/supabase/server";
 
 export type MemberRole = "team_lead" | "contributor" | "advisor";
 
@@ -253,11 +254,92 @@ function synthesizeProjectDetail(base: ExploreProject): ProjectDetail {
   };
 }
 
-export async function getProjectBySlug(slug: string): Promise<PublicProject | null> {
+export type RealPublicProject = {
+  kind: "real";
+  id: string;
+  slug: string;
+  name: string;
+  description: string | null;
+  projectType: string;
+  createdAt: string;
+  team: Array<{ userId: string; name: string; role: MemberRole }>;
+  documentation: Array<{ documentType: DocSectionType | string; title: string | null; status: SectionStatus; excerpt: string | null }>;
+};
+
+export type MockPublicProject = PublicProject & { kind: "mock" };
+
+/**
+ * Real, published, non-demo project — resolved by the actual stored
+ * projects.slug column, gated to visibility = 'published' at the query
+ * itself (not just relying on RLS to filter silently). No Decisions
+ * section: decisions_select has no "published" branch in RLS, by
+ * explicit design (Security synthesis: "never included in a publish
+ * snapshot by default") — this isn't an oversight to route around, it's
+ * respected here on purpose. Team names come from published_project_team(),
+ * a narrow security-definer function — not a direct project_members/users
+ * join, since users_select is authenticated-only and broadening it would
+ * expose email (documented PII) to anonymous readers.
+ */
+async function getRealProjectBySlug(slug: string): Promise<RealPublicProject | null> {
+  const supabase = await createClient();
+
+  const { data: project } = await supabase
+    .from("projects")
+    .select("id, name, description, project_type, slug, created_at")
+    .eq("slug", slug)
+    .eq("visibility", "published")
+    .maybeSingle();
+
+  if (!project) return null;
+
+  const [{ data: teamRows }, { data: documentRows }] = await Promise.all([
+    supabase.rpc("published_project_team", { p_project_id: project.id }),
+    supabase
+      .from("documents")
+      .select("document_type, title, sections(status, content, order)")
+      .eq("project_id", project.id)
+      .order("created_at"),
+  ]);
+
+  const team = (teamRows ?? []).map((row) => ({
+    userId: row.user_id,
+    name: row.name ?? "ForgeHub builder",
+    role: row.role as MemberRole,
+  }));
+
+  const documentation = (documentRows ?? []).map((document) => {
+    const sections = Array.isArray(document.sections) ? [...document.sections].sort((a, b) => a.order - b.order) : [];
+    const reviewed = sections.find((section) => section.status === "team_reviewed") ?? sections[0];
+    return {
+      documentType: document.document_type,
+      title: document.title,
+      status: (reviewed?.status ?? "not_started") as SectionStatus,
+      excerpt: reviewed?.content ? String(reviewed.content).slice(0, 160) : null,
+    };
+  });
+
+  return {
+    kind: "real",
+    id: project.id,
+    slug: project.slug,
+    name: project.name,
+    description: project.description,
+    projectType: project.project_type,
+    createdAt: project.created_at,
+    team,
+    documentation,
+  };
+}
+
+export async function getProjectBySlug(slug: string): Promise<MockPublicProject | RealPublicProject | null> {
   const base = MOCK_PROJECTS.find((p) => p.slug === slug);
-  if (!base) return null;
-  const detail = PROJECT_DETAILS[slug] ?? synthesizeProjectDetail(base);
-  return { ...base, ...detail };
+  if (base) {
+    const detail = PROJECT_DETAILS[slug] ?? synthesizeProjectDetail(base);
+    return { ...base, ...detail, kind: "mock" };
+  }
+  // Not one of the illustrative demo slugs — check for a real, published
+  // project at this slug before giving up.
+  return getRealProjectBySlug(slug);
 }
 
 export async function getRelatedProjects(project: ExploreProject, limit = 3): Promise<ExploreProject[]> {

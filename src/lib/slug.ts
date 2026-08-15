@@ -35,7 +35,6 @@ export async function generateUniqueProjectSlug(
   let candidate = base;
   let suffix = 2;
 
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     const { data } = await supabase.from("projects").select("id").eq("slug", candidate).maybeSingle();
     if (!data) return candidate;
