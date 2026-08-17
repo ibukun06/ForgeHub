@@ -11,6 +11,7 @@ import { DocumentationPreview } from "@/components/project/DocumentationPreview"
 import { ContributorGrid } from "@/components/project/ContributorGrid";
 import { ActivityTimeline } from "@/components/project/ActivityTimeline";
 import { RelatedProjects } from "@/components/project/RelatedProjects";
+import { RealProjectView } from "@/components/project/RealProjectView";
 import { ProjectCTA } from "@/components/project/ProjectCTA";
 
 export function generateStaticParams() {
@@ -26,13 +27,18 @@ export async function generateMetadata({
   const project = await getProjectBySlug(slug);
   if (!project) return {};
 
+  // Metadata.description wants string | undefined. Mock projects'
+  // description was never nullable, so this mismatch never existed
+  // before real (nullable) projects were added to the union.
+  const description = project.description ?? undefined;
+
   return {
     title: project.name,
-    description: project.description,
+    description,
     alternates: { canonical: getProjectUrl(project.slug) },
     openGraph: {
       title: project.name,
-      description: project.description,
+      description,
       url: getProjectUrl(project.slug),
     },
   };
@@ -42,6 +48,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const { slug } = await params;
   const project = await getProjectBySlug(slug);
   if (!project) notFound();
+
+  // Real, non-demo published project — smaller, honest view built only
+  // from fields that actually exist. See RealProjectView for why this
+  // isn't just fed through the components below.
+  if (project.kind === "real") {
+    return <RealProjectView project={project} />;
+  }
 
   const related = await getRelatedProjects(project);
 

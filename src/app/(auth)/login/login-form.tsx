@@ -21,12 +21,12 @@ export function LoginForm({ justVerified }: { justVerified: boolean }) {
       {state.error && <Alert variant="error">{state.error}</Alert>}
 
       <Field label="Email" required errors={state.fieldErrors?.email}>
-        {(id) => <Input id={id} name="email" type="email" autoComplete="email" required />}
+        {({ id, ...fieldProps }) => <Input id={id} {...fieldProps} name="email" type="email" autoComplete="email" required />}
       </Field>
 
       <Field label="Password" required errors={state.fieldErrors?.password}>
-        {(id) => (
-          <Input id={id} name="password" type="password" autoComplete="current-password" required />
+        {({ id, ...fieldProps }) => (
+          <Input id={id} {...fieldProps} name="password" type="password" autoComplete="current-password" required />
         )}
       </Field>
 

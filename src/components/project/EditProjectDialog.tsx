@@ -6,8 +6,16 @@ import { Pencil } from "lucide-react";
 import { Dialog } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+<<<<<<< ours
 import { Field } from "@/components/ui/field";
 import { Alert } from "@/components/ui/alert";
+=======
+import { Textarea } from "@/components/ui/textarea";
+import { Select } from "@/components/ui/select";
+import { Field } from "@/components/ui/field";
+import { Alert } from "@/components/ui/alert";
+import { buttonVariants } from "@/components/ui/button";
+>>>>>>> theirs
 import type { ProjectType } from "@/lib/supabase/types";
 
 const TYPES: Array<[ProjectType, string]> = [
@@ -78,9 +86,15 @@ export function EditProjectDialog({
       <button
         type="button"
         onClick={openDialog}
+<<<<<<< ours
         className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-text-primary transition-colors hover:border-primary/40"
       >
         <Pencil className="h-3.5 w-3.5" aria-hidden />
+=======
+        className={buttonVariants({ variant: "outline", size: "sm" })}
+      >
+        <Pencil className="mr-2 h-3.5 w-3.5" aria-hidden />
+>>>>>>> theirs
         Edit project
       </button>
 
@@ -94,38 +108,66 @@ export function EditProjectDialog({
           {error && <Alert variant="error">{error}</Alert>}
 
           <Field label="Project name" required>
+<<<<<<< ours
             {(id) => (
               <Input id={id} value={name} onChange={(event) => setName(event.target.value)} maxLength={120} required />
+=======
+            {({ id, ...fieldProps }) => (
+              <Input id={id} {...fieldProps} value={name} onChange={(event) => setName(event.target.value)} maxLength={120} required />
+>>>>>>> theirs
             )}
           </Field>
 
           <Field label="Description" hint={`${description.length}/500`}>
+<<<<<<< ours
             {(id) => (
               <textarea
                 id={id}
+=======
+            {({ id, ...fieldProps }) => (
+              <Textarea
+                id={id}
+                {...fieldProps}
+>>>>>>> theirs
                 value={description}
                 onChange={(event) => setDescription(event.target.value)}
                 maxLength={500}
                 rows={4}
+<<<<<<< ours
                 className="w-full rounded-lg border border-border bg-input-bg px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+=======
+>>>>>>> theirs
               />
             )}
           </Field>
 
           <Field label="Project type">
+<<<<<<< ours
             {(id) => (
               <select
                 id={id}
                 value={projectType}
                 onChange={(event) => setProjectType(event.target.value as ProjectType)}
                 className="w-full rounded-lg border border-border bg-input-bg px-3 py-2 text-sm text-text-primary focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+=======
+            {({ id, ...fieldProps }) => (
+              <Select
+                id={id}
+                {...fieldProps}
+                value={projectType}
+                onChange={(event) => setProjectType(event.target.value as ProjectType)}
+>>>>>>> theirs
               >
                 {TYPES.map(([value, label]) => (
                   <option key={value} value={value}>
                     {label}
                   </option>
                 ))}
+<<<<<<< ours
               </select>
+=======
+              </Select>
+>>>>>>> theirs
             )}
           </Field>
 

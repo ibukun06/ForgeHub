@@ -31,31 +31,33 @@ export function OnboardingForm() {
       {state.error && <Alert variant="error">{state.error}</Alert>}
 
       <Field label="Name" required errors={state.fieldErrors?.name}>
-        {(id) => <Input id={id} name="name" autoComplete="name" required />}
+        {({ id, ...fieldProps }) => <Input id={id} {...fieldProps} name="name" autoComplete="name" required />}
       </Field>
 
       <Field label="Institution" errors={state.fieldErrors?.institution} hint="Free-text — not verified in MVP.">
-        {(id) => <Input id={id} name="institution" placeholder="e.g. Redeemer's University" />}
+        {({ id, ...fieldProps }) => <Input id={id} {...fieldProps} name="institution" placeholder="e.g. Redeemer's University" />}
       </Field>
 
       <Field label="Bio" errors={state.fieldErrors?.bio}>
-        {(id) => (
+        {({ id, ...fieldProps }) => (
           <textarea
             id={id}
+            {...fieldProps}
             name="bio"
             rows={3}
-            className="w-full rounded-lg border border-border bg-input-bg px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full rounded-md border border-border bg-input-bg px-3 py-2 text-sm text-text-primary placeholder:text-text-muted transition-colors focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2 aria-[invalid=true]:border-error aria-[invalid=true]:focus-visible:outline-error"
             placeholder="A sentence or two about your technical background"
           />
         )}
       </Field>
 
       <Field label="Skills" hint="Press Enter or comma to add a skill.">
-        {(id) => (
+        {({ id, ...fieldProps }) => (
           <div>
             <input type="hidden" name="skills" value={skills.join(",")} />
             <Input
               id={id}
+              {...fieldProps}
               value={skillInput}
               onChange={(e) => setSkillInput(e.target.value)}
               onKeyDown={addSkill}
@@ -72,7 +74,7 @@ export function OnboardingForm() {
                     <button
                       type="button"
                       onClick={() => setSkills(skills.filter((s) => s !== skill))}
-                      className="text-text-muted hover:text-error"
+                      className="text-text-muted hover:text-error transition-colors focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2 rounded-full"
                       aria-label={`Remove ${skill}`}
                     >
                       <X className="h-3 w-3" />

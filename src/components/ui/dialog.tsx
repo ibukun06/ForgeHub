@@ -3,12 +3,15 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { X } from "lucide-react";
 
+<<<<<<< ours
 /**
  * Deliberately no portal library — the mobile nav drawer and the command
  * palette already do fixed-position overlays this way in this codebase,
  * so this matches rather than introducing a second pattern for the same
  * problem.
  */
+=======
+>>>>>>> theirs
 export function Dialog({
   open,
   onClose,
@@ -57,6 +60,7 @@ export function Dialog({
   if (!open) return null;
 
   return (
+<<<<<<< ours
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm">
       <button type="button" onClick={onClose} className="absolute inset-0 cursor-default" tabIndex={-1} aria-label="Close dialog" />
       <div ref={panelRef} role="dialog" aria-modal="true" aria-labelledby="dialog-title" className="surface-panel relative w-full max-w-md p-6">
@@ -66,14 +70,38 @@ export function Dialog({
               {title}
             </h2>
             {description && <p className="mt-1 text-sm text-text-muted">{description}</p>}
+=======
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm animate-in fade-in duration-200">
+      <button type="button" onClick={onClose} className="absolute inset-0 cursor-default" tabIndex={-1} aria-label="Close dialog" />
+      <div 
+        ref={panelRef} 
+        role="dialog" 
+        aria-modal="true" 
+        aria-labelledby="dialog-title" 
+        className="surface-panel relative w-full max-w-md p-6 animate-in zoom-in-95 duration-200 max-h-[calc(100vh-2rem)] overflow-y-auto"
+      >
+        <div className="mb-5 flex items-start justify-between gap-4">
+          <div>
+            <h2 id="dialog-title" className="font-heading text-xl font-semibold text-text-primary">
+              {title}
+            </h2>
+            {description && <p className="mt-1.5 text-sm text-text-muted">{description}</p>}
+>>>>>>> theirs
           </div>
           <button
             type="button"
             onClick={onClose}
+<<<<<<< ours
             className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-text-muted transition-colors hover:bg-surface-muted hover:text-text-primary"
             aria-label="Close"
           >
             <X className="h-4 w-4" aria-hidden />
+=======
+            className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-text-muted transition-colors hover:bg-surface-muted hover:text-text-primary focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2"
+            aria-label="Close"
+          >
+            <X className="h-4 w-4" aria-hidden="true" />
+>>>>>>> theirs
           </button>
         </div>
         {children}

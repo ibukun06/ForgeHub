@@ -18,8 +18,8 @@ export default function AppError({
           The shell is still intact, but this part of ForgeHub could not finish loading. You can retry immediately or move back to a stable surface.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <button type="button" onClick={reset} className={buttonVariants("primary")}>Try again</button>
-          <a href="/home" className={buttonVariants("secondary")}>Go to Home</a>
+          <button type="button" onClick={reset} className={buttonVariants({ variant: "primary" })}>Try again</button>
+          <a href="/home" className={buttonVariants({ variant: "secondary" })}>Go to Home</a>
         </div>
         {error.digest ? <p className="mt-4 text-xs text-text-muted">Diagnostic: {error.digest}</p> : null}
       </div>

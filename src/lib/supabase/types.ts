@@ -343,6 +343,10 @@ export interface Database {
         Args: { p_project_id: string };
         Returns: MemberRole;
       };
+      published_project_team: {
+        Args: { p_project_id: string };
+        Returns: { user_id: string; name: string | null; role: MemberRole }[];
+      };
     };
   };
 }

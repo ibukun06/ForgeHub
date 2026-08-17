@@ -10,10 +10,10 @@ export function ProjectCTA() {
         </h2>
         <p className="mt-3 text-text-muted">Document it from day one, not the night before it&apos;s due.</p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <Link href="/signup" className={buttonVariants("primary", "px-6 py-3 text-base")}>
+          <Link href="/signup" className={buttonVariants({ variant: "primary", className: "px-6 py-3 text-base" })}>
             Create Your Own Project
           </Link>
-          <Link href="/explore" className={buttonVariants("secondary", "px-6 py-3 text-base")}>
+          <Link href="/explore" className={buttonVariants({ variant: "secondary", className: "px-6 py-3 text-base" })}>
             Explore More Projects
           </Link>
         </div>

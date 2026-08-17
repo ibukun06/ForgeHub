@@ -52,8 +52,13 @@ export function CommandSurface({ open, onClose, shellState }: CommandSurfaceProp
     // theme-aware below: a modal backdrop should dim the page behind it
     // in both light and dark mode, not invert to a pale overlay in light
     // mode — so this stays a fixed dark value on purpose, not an oversight.
+<<<<<<< ours
     <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 px-4 py-8 backdrop-blur-sm lg:py-20">
       <div className="surface-panel w-full max-w-4xl overflow-hidden text-text-primary">
+=======
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 px-4 py-8 backdrop-blur-sm lg:py-20 animate-in fade-in duration-200">
+      <div className="surface-panel w-full max-w-4xl overflow-hidden shadow-2xl text-text-primary animate-in zoom-in-95 duration-200">
+>>>>>>> theirs
         <div className="flex items-center gap-3 border-b border-border px-4 py-4 lg:px-6">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-input-bg text-text-primary">
             <Search className="h-5 w-5" aria-hidden />
@@ -74,7 +79,11 @@ export function CommandSurface({ open, onClose, shellState }: CommandSurfaceProp
           <button
             type="button"
             onClick={onClose}
+<<<<<<< ours
             className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border text-text-muted transition-colors hover:border-primary/40 hover:text-text-primary"
+=======
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-text-muted transition-colors hover:border-primary/40 hover:text-text-primary focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2"
+>>>>>>> theirs
             aria-label="Close command surface"
           >
             <X className="h-4 w-4" aria-hidden />
@@ -90,7 +99,11 @@ export function CommandSurface({ open, onClose, shellState }: CommandSurfaceProp
                   key={mode}
                   type="button"
                   onClick={() => setActiveMode(mode)}
+<<<<<<< ours
                   className={`rounded-full px-3 py-1.5 text-sm transition-colors ${
+=======
+                  className={`rounded-full px-3 py-1.5 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2 ${
+>>>>>>> theirs
                     active
                       ? "bg-primary-soft font-medium text-primary"
                       : "bg-input-bg text-text-muted hover:bg-surface-muted hover:text-text-primary"
@@ -119,7 +132,11 @@ export function CommandSurface({ open, onClose, shellState }: CommandSurfaceProp
                     key={`${result.mode}-${result.label}`}
                     href={result.href}
                     onClick={onClose}
+<<<<<<< ours
                     className="surface-panel-muted flex items-center justify-between px-4 py-3 transition-colors hover:border-primary/40 hover:bg-surface"
+=======
+                    className="surface-panel-muted flex items-center justify-between px-4 py-3 transition-colors hover:border-primary/40 hover:bg-surface focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2 rounded-lg"
+>>>>>>> theirs
                   >
                     <div>
                       <p className="font-medium text-text-primary">{result.label}</p>
@@ -131,7 +148,11 @@ export function CommandSurface({ open, onClose, shellState }: CommandSurfaceProp
                   <button
                     key={`${result.mode}-${result.label}`}
                     type="button"
+<<<<<<< ours
                     className="surface-panel-muted flex w-full items-center justify-between px-4 py-3 text-left transition-colors hover:border-primary/40 hover:bg-surface"
+=======
+                    className="surface-panel-muted flex w-full items-center justify-between px-4 py-3 text-left transition-colors hover:border-primary/40 hover:bg-surface focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2 rounded-lg"
+>>>>>>> theirs
                   >
                     <div>
                       <p className="font-medium text-text-primary">{result.label}</p>

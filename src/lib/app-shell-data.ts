@@ -114,6 +114,11 @@ export type ProjectCockpitData = {
     name: string;
     description: string | null;
     projectType: ProjectType;
+<<<<<<< ours
+=======
+    visibility: ProjectVisibility;
+    slug: string;
+>>>>>>> theirs
   };
   metrics: MetricData[];
   milestoneLabel: string;
@@ -609,6 +614,11 @@ export async function getProjectCockpitData(projectSlug: string): Promise<Projec
       name: graph.project.name,
       description: graph.project.description,
       projectType: graph.project.project_type,
+<<<<<<< ours
+=======
+      visibility: graph.project.visibility,
+      slug: graph.project.slug,
+>>>>>>> theirs
     },
     metrics: [
       {

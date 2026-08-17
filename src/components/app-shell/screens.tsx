@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
+import { EmptyState } from "@/components/ui/empty-state";
 import {
   ArrowRight,
   BellDot,
@@ -22,6 +23,10 @@ import {
 } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { EditProjectDialog } from "@/components/project/EditProjectDialog";
+<<<<<<< ours
+=======
+import { ShareProjectDialog } from "@/components/project/ShareProjectDialog";
+>>>>>>> theirs
 import type {
   HomeScreenData,
   InboxScreenData,
@@ -295,7 +300,7 @@ export function HomeScreen({ scope, data }: { scope?: string; data?: HomeScreenD
           <PanelCard id="active-projects" title="Active projects" description="Resume the most important workstreams in one hop.">
             <div className="space-y-3">
               {projects.length ? projects.map((project) => (
-                <Link key={project.name} href={project.href} className="surface-panel-muted block p-4 transition-colors hover:border-primary/60 hover:bg-surface">
+                <Link key={project.name} href={project.href} className="surface-panel-muted block p-4 transition-all duration-200 hover:border-primary/60 hover:bg-surface hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-bg">
                   <div className="flex items-center justify-between gap-4">
                     <div>
                       <p className="font-medium text-text-primary">{project.name}</p>
@@ -362,7 +367,7 @@ export function InboxScreen({ data }: { data?: InboxScreenData }) {
             {items.length ? items.map((item, index) => (
               <div
                 key={`${item.title}-${item.source}`}
-                className={`rounded-[22px] border p-4 ${index === 0 ? "border-primary/40 bg-primary/8" : "border-border bg-bg"}`}
+                className={`rounded-xl border p-4 transition-colors ${index === 0 ? "border-primary/30 bg-primary-soft" : "border-border bg-bg"}`}
               >
                 <p className="eyebrow">{item.state}</p>
                 <p className="mt-2 font-medium text-text-primary">{item.title}</p>
@@ -391,8 +396,8 @@ export function InboxScreen({ data }: { data?: InboxScreenData }) {
               <SignalTile title="Recommended action" value={selected.action} icon={BellDot} />
             </div>
             <div className="mt-5 flex flex-wrap gap-3">
-              <button className={buttonVariants("primary")}>Take action</button>
-              <button className={buttonVariants("secondary")}>Ask AI to summarize thread</button>
+              <button className={buttonVariants({ variant: "primary" })}>Take action</button>
+              <button className={buttonVariants({ variant: "secondary" })}>Ask AI to summarize thread</button>
             </div>
           </div>
 
@@ -428,7 +433,7 @@ export function ProjectsScreen({ scope, data }: { scope?: string; data?: Project
 
       <section id="portfolio" className="grid gap-4 lg:grid-cols-3">
         {projects.length ? projects.map((project) => (
-          <Link key={project.name} href={project.href} className="surface-panel block p-5 transition-colors hover:border-primary/60 hover:bg-surface">
+          <Link key={project.name} href={project.href} className="surface-panel block p-5 transition-all duration-200 hover:border-primary/60 hover:bg-surface hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-bg">
             <div className="flex items-center justify-between gap-4">
               <FolderKanban className="h-5 w-5 text-primary" aria-hidden />
               <span className="signal-pill signal-pill-neutral text-xs text-text-muted">{project.stage}</span>
@@ -482,9 +487,9 @@ export function WorkScreen({ scope, data }: { scope?: string; data?: WorkScreenD
       <PanelCard id="saved-views" title="View system" description="Switch lenses without switching products.">
         <div className="flex flex-wrap gap-3">
           {["List", "Board", "Timeline", "Calendar", "Workload", "Table"].map((view, index) => (
-            <span key={view} className={`signal-pill ${index === 0 ? "signal-pill-brand" : "signal-pill-neutral"}`}>
+            <button type="button" key={view} className={`signal-pill focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-bg transition-colors ${index === 0 ? "signal-pill-brand" : "signal-pill-neutral hover:bg-surface hover:text-text-primary"}`}>
               {view}
-            </span>
+            </button>
           ))}
         </div>
       </PanelCard>
@@ -493,16 +498,16 @@ export function WorkScreen({ scope, data }: { scope?: string; data?: WorkScreenD
         <PanelCard id="my-work" title="Current work view" description="Detailed wireframe for dense list execution with bulk action readiness.">
           <div className="grid gap-3">
             {tasks.length ? tasks.map((task) => (
-              <div key={task.title} className="surface-panel-muted grid gap-3 p-4 md:grid-cols-[minmax(0,1fr)_120px_120px_100px] md:items-center">
+              <button type="button" key={task.title} className="group surface-panel-muted grid w-full gap-3 p-4 text-left transition-all duration-200 hover:border-primary/50 hover:bg-surface hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-bg md:grid-cols-[minmax(0,1fr)_120px_120px_100px] md:items-center">
                 <div>
-                  <p className="font-medium text-text-primary">{task.title}</p>
+                  <p className="font-medium text-text-primary transition-colors group-hover:text-primary">{task.title}</p>
                   <p className="mt-1 text-sm text-text-muted">{task.summary}</p>
                 </div>
                 <span className="signal-pill signal-pill-neutral justify-center text-xs text-text-muted">{task.status}</span>
                 <span className="text-sm text-text-muted">{task.owner}</span>
                 <span className="text-sm text-text-muted">{task.due}</span>
-              </div>
-            )) : <EmptyInlineState title="No live work items in this scope" description="When work objects connect to the current context, they will appear here with status and ownership." />}
+              </button>
+            )) : <EmptyState icon={ListTodo} title="No live work items in this scope" description="When work objects connect to the current context, they will appear here with status and ownership." />}
           </div>
         </PanelCard>
 
@@ -591,7 +596,12 @@ export function ProjectCockpitScreen({
       />
 
       {data?.project && (
+<<<<<<< ours
         <div className="flex justify-end">
+=======
+        <div className="flex flex-wrap justify-end gap-3">
+          <ShareProjectDialog projectId={data.project.id} slug={data.project.slug} initialVisibility={data.project.visibility} />
+>>>>>>> theirs
           <EditProjectDialog
             projectId={data.project.id}
             initialName={data.project.name}
@@ -800,10 +810,10 @@ function PageIntro({ title, description }: { title: string; description: string 
         <p className="mt-3 text-base text-text-muted">{description}</p>
       </div>
       <div className="flex flex-wrap gap-3">
-        <Link href="/w/forgehub/p/forgehub-redesign/overview" className={buttonVariants("secondary")}>
+        <Link href="/w/forgehub/p/forgehub-redesign/overview" className={buttonVariants({ variant: "secondary" })}>
           Open flagship project
         </Link>
-        <Link href="/knowledge#decisions" className={buttonVariants("primary")}>
+        <Link href="/knowledge#decisions" className={buttonVariants({ variant: "primary" })}>
           Review decisions
         </Link>
       </div>
@@ -836,21 +846,21 @@ function PanelCard({
 function FocusItem({ title, meta, tone }: FocusCard) {
   const toneClass =
     tone === "urgent"
-      ? "border-error/30 bg-error/10"
+      ? "border-error/30 bg-error/10 hover:border-error/50 hover:bg-error/20"
       : tone === "warning"
-        ? "border-warning/30 bg-warning/10"
-        : "border-border bg-bg";
+        ? "border-warning/30 bg-warning/10 hover:border-warning/50 hover:bg-warning/20"
+        : "surface-panel-muted hover:border-primary/50 hover:bg-surface";
 
   return (
-    <div className={`rounded-[22px] border p-4 ${toneClass}`}>
+    <button type="button" className={`group w-full rounded-xl border p-4 text-left transition-all duration-200 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-bg ${toneClass}`}>
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="font-medium text-text-primary">{title}</p>
+          <p className={`font-medium text-text-primary transition-colors ${tone === "default" ? "group-hover:text-primary" : tone === "urgent" ? "group-hover:text-error" : "group-hover:text-warning"}`}>{title}</p>
           <p className="mt-1 text-sm text-text-muted">{meta}</p>
         </div>
-        <ListTodo className="h-4 w-4 shrink-0 text-text-muted" aria-hidden />
+        <ListTodo className={`h-4 w-4 shrink-0 text-text-muted transition-colors ${tone === "default" ? "group-hover:text-primary" : tone === "urgent" ? "group-hover:text-error" : "group-hover:text-warning"}`} aria-hidden />
       </div>
-    </div>
+    </button>
   );
 }
 
@@ -866,7 +876,7 @@ function MetricCard({
   inverted?: boolean;
 }) {
   return (
-    <div className={`rounded-3xl border px-4 py-3 ${inverted ? "border-white/12 bg-white/6" : "border-border bg-bg"}`}>
+    <div className={`rounded-2xl border px-4 py-3 ${inverted ? "border-white/12 bg-white/6" : "border-border bg-bg"}`}>
       <p className={`text-xs uppercase tracking-[0.16em] ${inverted ? "text-slate-300/80" : "text-text-muted"}`}>{label}</p>
       <p className={`mt-2 font-heading text-2xl ${inverted ? "text-white" : "text-text-primary"}`}>{value}</p>
       <p className={`mt-1 text-sm ${inverted ? "text-slate-200/85" : "text-text-muted"}`}>{hint}</p>
@@ -945,12 +955,15 @@ function MiniTimeline({ items }: { items: string[] }) {
   return (
     <div className="space-y-3">
       {items.map((item, index) => (
-        <div key={item} className="flex gap-3">
+        <div key={item} className="group flex gap-3">
           <div className="flex flex-col items-center">
-            <div className="mt-1 h-2.5 w-2.5 rounded-full bg-primary" />
-            {index < items.length - 1 ? <div className="mt-2 h-full w-px bg-border" /> : null}
+            <div className="relative mt-1 flex h-3 w-3 items-center justify-center">
+              <div className="absolute h-full w-full rounded-full bg-primary/20 ring-1 ring-primary/30" />
+              <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+            </div>
+            {index < items.length - 1 ? <div className="mt-2 h-full w-px bg-primary/20" /> : null}
           </div>
-          <div className="surface-panel-muted flex-1 p-4 text-sm text-text-muted">{item}</div>
+          <div className="surface-panel-muted flex-1 p-4 text-sm text-text-muted transition-all duration-200 group-hover:border-primary/50 group-hover:bg-surface group-hover:text-text-primary group-hover:shadow-md">{item}</div>
         </div>
       ))}
     </div>
@@ -959,9 +972,9 @@ function MiniTimeline({ items }: { items: string[] }) {
 
 function EmptyInlineState({ title, description }: { title: string; description: string }) {
   return (
-    <div className="surface-panel-muted p-5 text-sm text-text-muted">
-      <p className="font-medium text-text-primary">{title}</p>
-      <p className="mt-1">{description}</p>
+    <div className="rounded-xl border border-border/60 bg-surface-muted/50 px-4 py-5 text-center">
+      <p className="text-sm font-medium text-text-muted">{title}</p>
+      <p className="mt-1 text-xs text-text-muted/70">{description}</p>
     </div>
   );
 }

@@ -17,7 +17,7 @@ export function SignUpForm() {
       {state.error && <Alert variant="error">{state.error}</Alert>}
 
       <Field label="Email" required errors={state.fieldErrors?.email}>
-        {(id) => <Input id={id} name="email" type="email" autoComplete="email" required />}
+        {({ id, ...fieldProps }) => <Input id={id} {...fieldProps} name="email" type="email" autoComplete="email" required />}
       </Field>
 
       <Field
@@ -26,8 +26,8 @@ export function SignUpForm() {
         errors={state.fieldErrors?.password}
         hint="At least 8 characters, with a number and a special character."
       >
-        {(id) => (
-          <Input id={id} name="password" type="password" autoComplete="new-password" required />
+        {({ id, ...fieldProps }) => (
+          <Input id={id} {...fieldProps} name="password" type="password" autoComplete="new-password" required />
         )}
       </Field>
 

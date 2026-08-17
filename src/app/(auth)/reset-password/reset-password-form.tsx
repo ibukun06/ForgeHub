@@ -29,7 +29,7 @@ export function ResetPasswordForm() {
     <form action={formAction} className="flex flex-col gap-4">
       {state.error && <Alert variant="error">{state.error}</Alert>}
       <Field label="Email" required>
-        {(id) => <Input id={id} name="email" type="email" autoComplete="email" required />}
+        {({ id, ...fieldProps }) => <Input id={id} {...fieldProps} name="email" type="email" autoComplete="email" required />}
       </Field>
       <Button type="submit" loading={pending} className="w-full">
         {pending ? "Sending…" : "Send reset link"}

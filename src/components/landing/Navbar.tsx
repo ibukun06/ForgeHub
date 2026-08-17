@@ -40,7 +40,7 @@ export function Navbar() {
           <Link href="/login" className="text-sm text-text-muted transition-colors hover:text-text-primary">
             Log in
           </Link>
-          <Link href="/signup" className={buttonVariants("primary")}>
+          <Link href="/signup" className={buttonVariants({ variant: "primary" })}>
             Start Forging
           </Link>
         </div>
@@ -75,7 +75,7 @@ export function Navbar() {
               </Link>
               <ThemeToggle />
             </div>
-            <Link href="/signup" className={buttonVariants("primary", "w-full justify-center")}>
+            <Link href="/signup" className={buttonVariants({ variant: "primary", className: "w-full justify-center" })}>
               Start Forging
             </Link>
           </nav>

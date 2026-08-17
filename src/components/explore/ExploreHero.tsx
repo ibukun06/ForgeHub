@@ -30,7 +30,7 @@ export function ExploreHero({ children }: { children?: React.ReactNode }) {
         </div>
 
         <div className="mt-8">
-          <Link href="/signup" className={buttonVariants("primary")}>
+          <Link href="/signup" className={buttonVariants({ variant: "primary" })}>
             Start Building
           </Link>
         </div>
