@@ -61,14 +61,14 @@ export function ProjectHero({ project }: { project: PublicProject }) {
         <div className="mt-8 flex flex-wrap gap-3">
           <FollowButton />
           <ShareButton title={project.name} url={getProjectUrl(project.slug)} />
-          <a href="#documentation" className={buttonVariants("secondary")}>
+          <a href="#documentation" className={buttonVariants({ variant: "secondary" })}>
             View Documentation
           </a>
           <button
             type="button"
             disabled
             title="Coming soon — team join requests aren't built yet"
-            className={`${buttonVariants("secondary")} cursor-not-allowed opacity-60`}
+            className={`${buttonVariants({ variant: "secondary" })} cursor-not-allowed opacity-60`}
           >
             Join Project <span className="ml-1 text-[10px] uppercase tracking-wide">Soon</span>
           </button>

@@ -11,8 +11,8 @@ export default function AppNotFound() {
           The route may no longer exist, you may not have access to it, or the current scope could not be resolved from the available project data.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <Link href="/home" className={buttonVariants("primary")}>Open Home</Link>
-          <Link href="/projects" className={buttonVariants("secondary")}>Browse Projects</Link>
+          <Link href="/home" className={buttonVariants({ variant: "primary" })}>Open Home</Link>
+          <Link href="/projects" className={buttonVariants({ variant: "secondary" })}>Browse Projects</Link>
         </div>
       </div>
     </div>

@@ -23,7 +23,7 @@ export function DocumentationPreview({ documentation }: { documentation: DocPrev
         </p>
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {documentation.map((doc) => (
-            <div key={doc.type} className="rounded-lg border border-border bg-surface p-5">
+            <div key={doc.type} className="surface-panel-muted p-5">
               <div className="flex items-center justify-between">
                 <span className="flex items-center gap-2 font-heading text-sm font-semibold text-text-primary">
                   <FileText className="h-4 w-4 text-secondary" aria-hidden /> {DOC_TYPE_LABELS[doc.type]}

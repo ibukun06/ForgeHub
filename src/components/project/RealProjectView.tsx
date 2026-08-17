@@ -71,7 +71,7 @@ export function RealProjectView({ project }: { project: RealPublicProject }) {
           )}
 
           <div className="mt-8">
-            <Link href="/explore" className={buttonVariants("secondary")}>
+            <Link href="/explore" className={buttonVariants({ variant: "secondary" })}>
               Explore more projects
             </Link>
           </div>
@@ -103,7 +103,7 @@ export function RealProjectView({ project }: { project: RealPublicProject }) {
             <h2 className="font-heading text-2xl font-bold text-text-primary">Documentation</h2>
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {project.documentation.map((doc, index) => (
-                <div key={`${doc.documentType}-${index}`} className="rounded-lg border border-border bg-surface p-5">
+                <div key={`${doc.documentType}-${index}`} className="surface-panel-muted p-5">
                   <div className="flex items-center justify-between gap-3">
                     <span className="flex items-center gap-2 font-heading text-sm font-semibold text-text-primary">
                       <FileText className="h-4 w-4 shrink-0 text-secondary" aria-hidden />
@@ -126,7 +126,7 @@ export function RealProjectView({ project }: { project: RealPublicProject }) {
           <h2 className="font-heading text-2xl font-bold text-text-primary sm:text-3xl">Building something like this?</h2>
           <p className="mt-3 text-text-muted">Document it from day one, not the night before it&apos;s due.</p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Link href="/signup" className={buttonVariants("primary", "px-6 py-3 text-base")}>
+            <Link href="/signup" className={buttonVariants({ variant: "primary", size: "lg" })}>
               Create Your Own Project
             </Link>
           </div>

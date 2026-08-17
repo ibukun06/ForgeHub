@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Copy, Globe, Lock, Share2 } from "lucide-react";
+import { Copy, Globe, Lock, Share2 } from "lucide-react";
 import { Dialog } from "@/components/ui/dialog";
 import { Alert } from "@/components/ui/alert";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/toast";
 import { getProjectUrl } from "@/lib/urls";
 import type { ProjectVisibility } from "@/lib/supabase/types";
 
@@ -20,7 +23,7 @@ export function ShareProjectDialog({ projectId, slug, initialVisibility }: { pro
   const [visibility, setVisibility] = useState<ProjectVisibility>(initialVisibility);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
-  const [copied, setCopied] = useState(false);
+  const { toast } = useToast();
 
   const published = visibility === "published";
   const publicPath = getProjectUrl(slug);
@@ -48,8 +51,7 @@ export function ShareProjectDialog({ projectId, slug, initialVisibility }: { pro
   async function copyLink() {
     const fullUrl = `${window.location.origin}${publicPath}`;
     await navigator.clipboard.writeText(fullUrl);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    toast("Link copied to clipboard", "success");
   }
 
   return (
@@ -57,9 +59,9 @@ export function ShareProjectDialog({ projectId, slug, initialVisibility }: { pro
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-text-primary transition-colors hover:border-primary/40"
+        className={buttonVariants({ variant: "outline", size: "sm" })}
       >
-        <Share2 className="h-3.5 w-3.5" aria-hidden />
+        <Share2 className="mr-2 h-3.5 w-3.5" aria-hidden />
         Share
       </button>
 
@@ -77,8 +79,8 @@ export function ShareProjectDialog({ projectId, slug, initialVisibility }: { pro
             onClick={toggleVisibility}
             disabled={saving}
             aria-pressed={published}
-            className={`flex items-center justify-between gap-3 rounded-lg border px-4 py-3 text-left text-sm transition-colors disabled:opacity-60 ${
-              published ? "border-success/30 bg-success-bg text-success" : "border-border bg-input-bg text-text-primary"
+            className={`flex items-center justify-between gap-3 rounded-lg border px-4 py-3 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 disabled:opacity-60 ${
+              published ? "border-success/30 bg-success-bg text-success" : "border-border bg-input-bg text-text-primary hover:border-primary/50 hover:bg-surface"
             }`}
           >
             <span className="flex items-center gap-2 font-medium">
@@ -93,22 +95,21 @@ export function ShareProjectDialog({ projectId, slug, initialVisibility }: { pro
               <label htmlFor="share-link" className="text-sm font-medium text-text-primary">
                 Public link
               </label>
-              <div className="mt-2 flex gap-2">
-                <input
+              <div className="mt-2 flex flex-col sm:flex-row gap-2">
+                <Input
                   id="share-link"
                   readOnly
                   value={typeof window !== "undefined" ? `${window.location.origin}${publicPath}` : publicPath}
                   onFocus={(event) => event.currentTarget.select()}
-                  className="w-full rounded-lg border border-border bg-input-bg px-3 py-2 text-sm text-text-primary outline-none focus:border-primary"
                 />
-                <button
+                <Button
                   type="button"
                   onClick={copyLink}
-                  className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-hover"
+                  variant="primary"
                 >
-                  {copied ? <Check className="h-4 w-4" aria-hidden /> : <Copy className="h-4 w-4" aria-hidden />}
-                  {copied ? "Copied" : "Copy"}
-                </button>
+                  <Copy className="mr-2 h-4 w-4" aria-hidden />
+                  Copy
+                </Button>
               </div>
             </div>
           )}

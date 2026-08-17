@@ -11,7 +11,7 @@ interface LogoProps {
   tone?: string;
 }
 
-export const Logo: React.FC<LogoProps> = ({ className = "", variant, tone, ...rest }) => {
+export const Logo: React.FC<LogoProps> = ({ className = "" }) => {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 

@@ -132,7 +132,7 @@ export function AppShell({ user, children }: AppShellProps) {
               ref={menuButtonRef}
               type="button"
               onClick={() => setNavOpen(true)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-border bg-surface text-text-primary transition-colors hover:border-primary lg:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface text-text-primary transition-colors hover:border-primary lg:hidden focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2"
               aria-label="Open navigation"
             >
               <Menu className="h-5 w-5" aria-hidden />
@@ -141,7 +141,7 @@ export function AppShell({ user, children }: AppShellProps) {
             <button
               type="button"
               onClick={() => setContextCollapsed((value) => !value)}
-              className="hidden h-10 w-10 items-center justify-center rounded-2xl border border-border bg-surface text-text-primary transition-colors hover:border-primary xl:inline-flex"
+              className="hidden h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface text-text-primary transition-colors hover:border-primary xl:inline-flex focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2"
               aria-label={contextCollapsed ? "Expand context rail" : "Collapse context rail"}
             >
               {contextCollapsed ? (
@@ -179,7 +179,7 @@ export function AppShell({ user, children }: AppShellProps) {
             <button
               type="button"
               onClick={() => setCommandOpen(true)}
-              className="hidden items-center gap-2 rounded-2xl border border-border bg-surface px-3 py-2 text-sm text-text-muted transition-colors hover:border-primary hover:text-text-primary md:inline-flex"
+              className="hidden items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-muted transition-colors hover:border-primary hover:text-text-primary md:inline-flex focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2"
             >
               <Search className="h-4 w-4" aria-hidden />
               Search, command, or ask AI
@@ -188,13 +188,13 @@ export function AppShell({ user, children }: AppShellProps) {
 
             <Link
               href="/work#quick-create"
-              className="hidden items-center gap-2 rounded-2xl bg-primary px-3.5 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-hover sm:inline-flex"
+              className="hidden items-center gap-2 rounded-lg bg-primary px-3.5 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-hover sm:inline-flex focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2"
             >
               <Plus className="h-4 w-4" aria-hidden />
               Create
             </Link>
             <ThemeToggle />
-            <div className="hidden items-center gap-3 rounded-2xl border border-border bg-surface px-3 py-2 text-sm shadow-sm sm:flex">
+            <div className="hidden items-center gap-3 rounded-lg border border-border bg-surface px-3 py-2 text-sm shadow-sm sm:flex">
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary/12 text-sm font-semibold text-primary">
                 {initials(user.displayName)}
               </span>
@@ -260,13 +260,13 @@ function GlobalSidebar({
           there. */}
       <aside
         ref={sidebarRef}
-        className={`fixed inset-y-0 left-0 z-50 flex w-[18rem] flex-col border-r border-border bg-bg text-text-primary transition-[transform,width] duration-200 lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-[85vw] max-w-[18rem] flex-col border-r border-border bg-bg text-text-primary transition-[transform,width] duration-200 lg:translate-x-0 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         } ${collapsed ? "lg:w-16" : "lg:w-[18rem]"}`}
       >
         <div className="flex items-center justify-between gap-2 border-b border-border px-4 py-4">
           <Link href="/home" className="flex min-w-0 items-center gap-3" onClick={closeMobile}>
-            <div className="shrink-0 rounded-2xl bg-input-bg p-2">
+            <div className="shrink-0 rounded-lg bg-input-bg p-2">
               <Logo className="h-8 w-8" />
             </div>
             <div className={`min-w-0 ${collapsed ? "lg:hidden" : ""}`}>
@@ -277,7 +277,7 @@ function GlobalSidebar({
           <button
             type="button"
             onClick={closeMobile}
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-border text-text-muted transition-colors hover:border-primary/40 hover:text-text-primary lg:hidden"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border text-text-muted transition-colors hover:border-primary/40 hover:text-text-primary lg:hidden focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2"
             aria-label="Close navigation"
           >
             <X className="h-4 w-4" aria-hidden />
@@ -307,7 +307,7 @@ function GlobalSidebar({
             type="button"
             onClick={openCommand}
             aria-label="Search, command, or ask AI"
-            className={`flex w-full items-center gap-3 rounded-2xl border border-border bg-input-bg px-4 py-3 text-left text-sm text-text-muted transition-colors hover:border-primary/40 hover:bg-surface-muted hover:text-text-primary ${
+            className={`flex w-full items-center gap-3 rounded-lg border border-border bg-input-bg px-4 py-3 text-left text-sm text-text-muted transition-colors hover:border-primary/40 hover:bg-surface-muted hover:text-text-primary focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2 ${
               collapsed ? "lg:justify-center lg:px-0" : ""
             }`}
           >
@@ -326,7 +326,7 @@ function GlobalSidebar({
                 href={item.href}
                 onClick={closeMobile}
                 aria-current={active ? "page" : undefined}
-                className={`group relative flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm transition-colors ${
+                className={`group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2 ${
                   active ? "bg-primary-soft font-medium text-primary" : "text-text-muted hover:bg-surface-muted hover:text-text-primary"
                 } ${collapsed ? "lg:justify-center lg:px-0" : ""}`}
               >
@@ -358,7 +358,7 @@ function GlobalSidebar({
                   key={item.label}
                   href={item.href}
                   onClick={closeMobile}
-                  className="flex items-center gap-3 rounded-2xl border border-border/60 px-3 py-2 text-sm text-text-muted transition-colors hover:border-primary/30 hover:bg-surface-muted hover:text-text-primary"
+                  className="flex items-center gap-3 rounded-lg border border-border/60 px-3 py-2 text-sm text-text-muted transition-colors hover:border-primary/30 hover:bg-surface-muted hover:text-text-primary focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2"
                 >
                   <Icon className="h-4 w-4 shrink-0" aria-hidden />
                   <span className="truncate">{item.label}</span>
@@ -455,7 +455,7 @@ function MobileTabBar({ openCommand }: { openCommand: () => void }) {
             <Link
               key={item.key}
               href={item.href}
-              className={`flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[11px] ${
+              className={`flex flex-col items-center gap-1 rounded-lg px-2 py-2 text-[11px] focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2 ${
                 active ? "text-primary" : "text-text-muted"
               }`}
             >
@@ -468,7 +468,7 @@ function MobileTabBar({ openCommand }: { openCommand: () => void }) {
         <button
           type="button"
           onClick={openCommand}
-          className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-white shadow-[0_18px_36px_rgba(36,70,107,0.28)]"
+          className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-white shadow-lg focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2"
           aria-label="Open command surface"
         >
           <Search className="h-5 w-5" aria-hidden />
@@ -481,7 +481,7 @@ function MobileTabBar({ openCommand }: { openCommand: () => void }) {
             <Link
               key={item.key}
               href={item.href}
-              className={`flex flex-col items-center gap-1 rounded-2xl px-2 py-2 text-[11px] ${
+              className={`flex flex-col items-center gap-1 rounded-lg px-2 py-2 text-[11px] focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2 ${
                 active ? "text-primary" : "text-text-muted"
               }`}
             >

@@ -1,33 +1,63 @@
 import { type ReactNode, useId } from "react";
 
+export type FieldRenderProps = {
+  id: string;
+  "aria-invalid"?: boolean;
+  "aria-describedby"?: string;
+};
+
 type FieldProps = {
   label: string;
-  children: (id: string) => ReactNode;
+  children: (props: FieldRenderProps) => ReactNode;
   errors?: string[];
   hint?: string;
   required?: boolean;
 };
 
 /**
- * Errors render directly below the field, in red, specific — never a
- * generic "invalid input" (App Flow §2's stated pattern for /login,
- * generalized to every form in the app).
+ * Renders a label, the input (via render prop), and any hints or errors.
  */
 export function Field({ label, children, errors, hint, required }: FieldProps) {
   const id = useId();
+  const hintId = `${id}-hint`;
+  const errorId = `${id}-error`;
+  const hasError = errors && errors.length > 0;
+
+  const describedBy = [
+    hasError ? errorId : undefined,
+    hint && !hasError ? hintId : undefined,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <div className="flex flex-col gap-1.5">
       <label htmlFor={id} className="text-sm font-medium text-text-primary">
         {label}
-        {required && <span className="text-error"> *</span>}
+        {required && <span className="text-error" aria-hidden="true"> *</span>}
       </label>
-      {children(id)}
-      {hint && !errors?.length && <p className="text-xs text-text-muted">{hint}</p>}
-      {errors?.map((err) => (
-        <p key={err} className="text-xs text-error">
-          {err}
+      
+      {children({
+        id,
+        "aria-invalid": hasError ? true : undefined,
+        "aria-describedby": describedBy || undefined,
+      })}
+      
+      {hint && !hasError && (
+        <p id={hintId} className="text-xs text-text-muted">
+          {hint}
         </p>
-      ))}
+      )}
+      
+      {hasError && (
+        <div id={errorId}>
+          {errors.map((err) => (
+            <p key={err} className="text-xs text-error font-medium mt-1">
+              {err}
+            </p>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

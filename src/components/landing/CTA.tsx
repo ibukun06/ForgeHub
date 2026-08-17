@@ -10,10 +10,10 @@ export function CTA() {
         </h2>
         <p className="mt-4 text-text-muted">Forge it into reality — start with a single idea.</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Link href="/signup" className={buttonVariants("primary", "px-6 py-3 text-base")}>
+          <Link href="/signup" className={buttonVariants({ variant: "primary", className: "px-6 py-3 text-base" })}>
             Forge Your First Project
           </Link>
-          <Link href="/explore" className={buttonVariants("secondary", "px-6 py-3 text-base")}>
+          <Link href="/explore" className={buttonVariants({ variant: "secondary", className: "px-6 py-3 text-base" })}>
             Explore Community Projects
           </Link>
         </div>
