@@ -43,6 +43,7 @@ export function DocumentationEditor({ projectId, documents, initialDocumentId }:
       } catch { setSaveState("error"); }
     }, 900);
     return () => window.clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content, activeSection?.id, activeDocument?.id, projectId]);
 
   async function createSection() {

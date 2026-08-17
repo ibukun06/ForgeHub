@@ -23,10 +23,7 @@ import {
 } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { EditProjectDialog } from "@/components/project/EditProjectDialog";
-<<<<<<< ours
-=======
 import { ShareProjectDialog } from "@/components/project/ShareProjectDialog";
->>>>>>> theirs
 import type {
   HomeScreenData,
   InboxScreenData,
@@ -596,12 +593,8 @@ export function ProjectCockpitScreen({
       />
 
       {data?.project && (
-<<<<<<< ours
-        <div className="flex justify-end">
-=======
         <div className="flex flex-wrap justify-end gap-3">
           <ShareProjectDialog projectId={data.project.id} slug={data.project.slug} initialVisibility={data.project.visibility} />
->>>>>>> theirs
           <EditProjectDialog
             projectId={data.project.id}
             initialName={data.project.name}

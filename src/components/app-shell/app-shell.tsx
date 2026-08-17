@@ -260,21 +260,13 @@ function GlobalSidebar({
           there. */}
       <aside
         ref={sidebarRef}
-<<<<<<< ours
-        className={`fixed inset-y-0 left-0 z-50 flex w-[18rem] flex-col border-r border-border bg-bg text-text-primary transition-[transform,width] duration-200 lg:translate-x-0 ${
-=======
         className={`fixed inset-y-0 left-0 z-50 flex w-[85vw] max-w-[18rem] flex-col border-r border-border bg-bg text-text-primary transition-[transform,width] duration-200 lg:translate-x-0 ${
->>>>>>> theirs
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         } ${collapsed ? "lg:w-16" : "lg:w-[18rem]"}`}
       >
         <div className="flex items-center justify-between gap-2 border-b border-border px-4 py-4">
           <Link href="/home" className="flex min-w-0 items-center gap-3" onClick={closeMobile}>
-<<<<<<< ours
-            <div className="shrink-0 rounded-2xl bg-input-bg p-2">
-=======
             <div className="shrink-0 rounded-lg bg-input-bg p-2">
->>>>>>> theirs
               <Logo className="h-8 w-8" />
             </div>
             <div className={`min-w-0 ${collapsed ? "lg:hidden" : ""}`}>
@@ -285,11 +277,7 @@ function GlobalSidebar({
           <button
             type="button"
             onClick={closeMobile}
-<<<<<<< ours
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-border text-text-muted transition-colors hover:border-primary/40 hover:text-text-primary lg:hidden"
-=======
             className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border text-text-muted transition-colors hover:border-primary/40 hover:text-text-primary lg:hidden focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2"
->>>>>>> theirs
             aria-label="Close navigation"
           >
             <X className="h-4 w-4" aria-hidden />
@@ -319,11 +307,7 @@ function GlobalSidebar({
             type="button"
             onClick={openCommand}
             aria-label="Search, command, or ask AI"
-<<<<<<< ours
-            className={`flex w-full items-center gap-3 rounded-2xl border border-border bg-input-bg px-4 py-3 text-left text-sm text-text-muted transition-colors hover:border-primary/40 hover:bg-surface-muted hover:text-text-primary ${
-=======
             className={`flex w-full items-center gap-3 rounded-lg border border-border bg-input-bg px-4 py-3 text-left text-sm text-text-muted transition-colors hover:border-primary/40 hover:bg-surface-muted hover:text-text-primary focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2 ${
->>>>>>> theirs
               collapsed ? "lg:justify-center lg:px-0" : ""
             }`}
           >
@@ -342,11 +326,7 @@ function GlobalSidebar({
                 href={item.href}
                 onClick={closeMobile}
                 aria-current={active ? "page" : undefined}
-<<<<<<< ours
-                className={`group relative flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm transition-colors ${
-=======
                 className={`group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2 ${
->>>>>>> theirs
                   active ? "bg-primary-soft font-medium text-primary" : "text-text-muted hover:bg-surface-muted hover:text-text-primary"
                 } ${collapsed ? "lg:justify-center lg:px-0" : ""}`}
               >
@@ -378,11 +358,7 @@ function GlobalSidebar({
                   key={item.label}
                   href={item.href}
                   onClick={closeMobile}
-<<<<<<< ours
-                  className="flex items-center gap-3 rounded-2xl border border-border/60 px-3 py-2 text-sm text-text-muted transition-colors hover:border-primary/30 hover:bg-surface-muted hover:text-text-primary"
-=======
                   className="flex items-center gap-3 rounded-lg border border-border/60 px-3 py-2 text-sm text-text-muted transition-colors hover:border-primary/30 hover:bg-surface-muted hover:text-text-primary focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2"
->>>>>>> theirs
                 >
                   <Icon className="h-4 w-4 shrink-0" aria-hidden />
                   <span className="truncate">{item.label}</span>
