@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Clock, Users } from "lucide-react";
 import { CATEGORIES } from "@/components/landing/data";
 import { buttonVariants } from "@/components/ui/button";
