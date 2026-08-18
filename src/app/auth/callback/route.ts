@@ -7,9 +7,19 @@ export async function GET(request: Request) {
 
   if (code) {
     const supabase = await createClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) {
-      return NextResponse.redirect(`${origin}/onboarding`);
+    const { data: sessionData, error } = await supabase.auth.exchangeCodeForSession(code);
+
+    if (!error && sessionData.user) {
+      // Check profile completeness — route to onboarding if the user
+      // hasn't set their display name yet, otherwise to dashboard.
+      const { data: profile } = await supabase
+        .from("users")
+        .select("name")
+        .eq("id", sessionData.user.id)
+        .single();
+
+      const destination = profile?.name ? "/dashboard" : "/onboarding";
+      return NextResponse.redirect(`${origin}${destination}`);
     }
   }
 

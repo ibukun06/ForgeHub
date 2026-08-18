@@ -8,7 +8,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <Logo variant="solid" className="h-8 w-auto" />
         ForgeHub
       </Link>
-      <div className="w-full max-w-sm rounded-lg border border-border bg-surface p-6">
+      <div className="w-full max-w-[26rem] rounded-lg border border-border bg-surface p-6">
         {children}
       </div>
     </div>

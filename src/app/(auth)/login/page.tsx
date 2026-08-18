@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LoginForm } from "./login-form";
+import { OAuthButtons, AuthDivider } from "@/components/auth/oauth-buttons";
 
 export default async function LoginPage({
   searchParams,
@@ -14,6 +15,9 @@ export default async function LoginPage({
         <h1 className="text-xl font-semibold text-text-primary">Log in</h1>
         <p className="mt-1 text-sm text-text-muted">Continue forging your engineering story.</p>
       </div>
+
+      <OAuthButtons />
+      <AuthDivider />
 
       <LoginForm justVerified={verify === "1"} />
 

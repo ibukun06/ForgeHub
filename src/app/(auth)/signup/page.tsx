@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SignUpForm } from "./signup-form";
+import { OAuthButtons, AuthDivider } from "@/components/auth/oauth-buttons";
 
 export default function SignUpPage() {
   return (
@@ -10,6 +11,9 @@ export default function SignUpPage() {
           Free for individuals — no card required.
         </p>
       </div>
+
+      <OAuthButtons />
+      <AuthDivider />
 
       <SignUpForm />
 
