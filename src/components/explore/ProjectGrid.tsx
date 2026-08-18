@@ -1,4 +1,5 @@
 import type { ExploreProject } from "./data";
+import Link from "next/link";
 import { ProjectCard } from "./ProjectCard";
 
 export function ProjectGrid({ projects }: { projects: ExploreProject[] }) {
@@ -6,9 +7,9 @@ export function ProjectGrid({ projects }: { projects: ExploreProject[] }) {
     return (
       <div id="results" className="mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 lg:px-8">
         <p className="text-text-muted">No projects match those filters yet.</p>
-        <a href="/explore" className="mt-2 inline-block text-sm text-primary hover:text-primary-hover">
+        <Link href="/explore" className="mt-2 inline-block text-sm text-primary hover:text-primary-hover">
           Clear all filters
-        </a>
+        </Link>
       </div>
     );
   }

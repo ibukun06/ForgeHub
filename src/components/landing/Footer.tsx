@@ -25,14 +25,14 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#categories" className="hover:text-text-primary">
-                  Categories
-                </a>
+                <Link href="#categories" className="hover:text-text-primary">
+                  Browse Categories
+                </Link>
               </li>
               <li>
-                <a href="#how-it-works" className="hover:text-text-primary">
+                <Link href="#how-it-works" className="hover:text-text-primary">
                   How it works
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

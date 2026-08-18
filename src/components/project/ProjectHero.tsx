@@ -61,9 +61,9 @@ export function ProjectHero({ project }: { project: PublicProject }) {
         <div className="mt-8 flex flex-wrap gap-3">
           <FollowButton />
           <ShareButton title={project.name} url={getProjectUrl(project.slug)} />
-          <a href="#documentation" className={buttonVariants({ variant: "secondary" })}>
-            View Documentation
-          </a>
+          <Link href="#documentation" className={buttonVariants({ variant: "secondary" })}>
+            View Docs
+          </Link>
           <button
             type="button"
             disabled

@@ -36,6 +36,7 @@ export type ProjectSectionKey =
   | "plan"
   | "work"
   | "knowledge"
+  | "decisions"
   | "conversation"
   | "review"
   | "insights";
@@ -100,6 +101,7 @@ export const PROJECT_SPINE: ProjectSpineItem[] = [
   { key: "plan", label: "Plan", icon: Map },
   { key: "work", label: "Work", icon: KanbanSquare },
   { key: "knowledge", label: "Knowledge", icon: BookMarked },
+  { key: "decisions", label: "Decisions", icon: BookOpen },
   { key: "conversation", label: "Conversation", icon: MessageCircleMore },
   { key: "review", label: "Review", icon: ShieldCheck },
   { key: "insights", label: "Insights", icon: Activity },
