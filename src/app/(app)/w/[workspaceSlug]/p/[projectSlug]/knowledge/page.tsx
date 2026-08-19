@@ -30,14 +30,24 @@ export default async function ProjectKnowledgePage({
   params,
   searchParams,
 }: {
-  params: Promise<{ projectSlug: string }>;
+  params: Promise<{ workspaceSlug: string; projectSlug: string }>;
   searchParams: Promise<{ document?: string }>;
 }) {
-  const { projectSlug } = await params;
+  const { workspaceSlug, projectSlug } = await params;
   const { document: selectedDocument } = await searchParams;
   const supabase = await createClient();
 
-  const { data: project } = await supabase.from("projects").select("id").eq("slug", projectSlug).maybeSingle();
+  let targetWorkspaceId: string | undefined;
+  const { data: ws } = await supabase.from("workspaces").select("id").eq("slug", workspaceSlug).maybeSingle();
+  if (ws) {
+    targetWorkspaceId = ws.id;
+  }
+
+  let query = supabase.from("projects").select("id").eq("slug", projectSlug);
+  if (targetWorkspaceId) {
+    query = query.eq("workspace_id", targetWorkspaceId);
+  }
+  const { data: project } = await query.maybeSingle();
 
   if (!project) {
     notFound();

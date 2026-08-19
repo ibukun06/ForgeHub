@@ -8,6 +8,7 @@ const schema = z.object({
   description: z.string().max(500),
   projectType: z.enum(["hardware", "software", "research", "multidisciplinary", "other"]),
   documents: z.array(z.enum(["problem_statement", "requirements", "architecture", "testing_plan", "decisions_log"])).min(1),
+  workspaceSlug: z.string().optional(),
 });
 
 const titles: Record<string, string> = {
@@ -31,8 +32,19 @@ export async function POST(request: Request) {
   const { data: duplicate } = await supabase.from("projects").select("id").eq("created_by", user.id).ilike("name", normalizedName).maybeSingle();
   if (duplicate) return NextResponse.json({ error: "You already have a project with that name." }, { status: 409 });
 
+  let workspaceId: string | undefined;
+  if (parsed.data.workspaceSlug) {
+    const { data: ws } = await supabase.from("workspaces").select("id").eq("slug", parsed.data.workspaceSlug).maybeSingle();
+    workspaceId = ws?.id;
+  }
+  if (!workspaceId) {
+    const { data: ws } = await supabase.from("workspace_members").select("workspace_id").eq("user_id", user.id).limit(1).maybeSingle();
+    workspaceId = ws?.workspace_id;
+  }
+  if (!workspaceId) return NextResponse.json({ error: "No workspace available." }, { status: 400 });
+
   const slug = await generateUniqueProjectSlug(supabase, parsed.data.name);
-  const { data: project, error: projectError } = await supabase.from("projects").insert({ name: parsed.data.name, description: parsed.data.description || null, project_type: parsed.data.projectType, created_by: user.id, visibility: "private", slug }).select("id, slug").single();
+  const { data: project, error: projectError } = await supabase.from("projects").insert({ name: parsed.data.name, description: parsed.data.description || null, project_type: parsed.data.projectType, created_by: user.id, visibility: "private", slug, workspace_id: workspaceId }).select("id, slug").single();
   if (projectError || !project) return NextResponse.json({ error: "We could not create the project. Try again." }, { status: 500 });
 
   const documentRows = parsed.data.documents.map((documentType) => ({ project_id: project.id, document_type: documentType, title: titles[documentType] }));

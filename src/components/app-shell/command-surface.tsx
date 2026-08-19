@@ -23,6 +23,7 @@ const STATIC_RESULTS: CommandResult[] = [
   { label: "ForgeHub redesign cockpit", href: "/w/forgehub/p/forgehub-redesign/overview", mode: "Find" },
   { label: "My work — timeline view", href: "/work#timeline", mode: "Find" },
   { label: "Decision log", href: "/knowledge#decisions", mode: "Find" },
+  { label: "Create a new project", href: "/projects/new", mode: "Create" },
   { label: "Create a new task", href: "/work#my-work", mode: "Create" },
   { label: "Create a decision record", href: "/knowledge#decisions", mode: "Create" },
   { label: "Summarize what changed since yesterday", mode: "Ask" },

@@ -14,6 +14,8 @@ export type ProjectType = "hardware" | "software" | "research" | "multidisciplin
 export type ProjectVisibility = "private" | "published";
 export type MemberRole = "team_lead" | "contributor" | "advisor";
 export type InviteRole = "contributor" | "advisor";
+export type WorkspaceType = "personal" | "team" | "organization" | "education";
+export type WorkspaceRole = "owner" | "admin" | "member" | "guest";
 export type DocumentType =
   | "problem_statement"
   | "requirements"
@@ -52,6 +54,62 @@ export interface Database {
         Update: Partial<Database["public"]["Tables"]["users"]["Row"]>;
         Relationships: [];
       };
+      workspaces: {
+        Row: {
+          id: string;
+          name: string;
+          slug: string;
+          workspace_type: WorkspaceType;
+          created_by: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["workspaces"]["Row"]> & {
+          name: string;
+          slug: string;
+          created_by: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["workspaces"]["Row"]>;
+        Relationships: [
+          {
+            foreignKeyName: "workspaces_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      workspace_members: {
+        Row: {
+          id: string;
+          workspace_id: string;
+          user_id: string;
+          role: WorkspaceRole;
+          joined_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["workspace_members"]["Row"]> & {
+          workspace_id: string;
+          user_id: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["workspace_members"]["Row"]>;
+        Relationships: [
+          {
+            foreignKeyName: "workspace_members_workspace_id_fkey";
+            columns: ["workspace_id"];
+            isOneToOne: false;
+            referencedRelation: "workspaces";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "workspace_members_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       projects: {
         Row: {
           id: string;
@@ -61,6 +119,7 @@ export interface Database {
           created_by: string;
           visibility: ProjectVisibility;
           slug: string;
+          workspace_id: string;
           created_at: string;
           updated_at: string;
         };
@@ -69,6 +128,7 @@ export interface Database {
           project_type: ProjectType;
           created_by: string;
           slug: string;
+          workspace_id: string;
         };
         Update: Partial<Database["public"]["Tables"]["projects"]["Row"]>;
         Relationships: [
@@ -77,6 +137,13 @@ export interface Database {
             columns: ["created_by"];
             isOneToOne: false;
             referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "projects_workspace_id_fkey";
+            columns: ["workspace_id"];
+            isOneToOne: false;
+            referencedRelation: "workspaces";
             referencedColumns: ["id"];
           },
         ];
@@ -333,6 +400,10 @@ export interface Database {
       };
       check_ai_rate_limit: {
         Args: { p_user_id: string; p_limit?: number; p_window?: string };
+        Returns: boolean;
+      };
+      is_workspace_member: {
+        Args: { p_workspace_id: string };
         Returns: boolean;
       };
       is_project_member: {

@@ -15,6 +15,7 @@ import {
   KanbanSquare,
   ListTodo,
   MessageSquareMore,
+  Plus,
   Scale,
   ShieldCheck,
   Target,
@@ -307,7 +308,7 @@ export function HomeScreen({ scope, data }: { scope?: string; data?: HomeScreenD
                   </div>
                   <p className="signal-pill signal-pill-neutral mt-3 text-xs text-text-muted">{project.stage}</p>
                 </Link>
-              )) : <EmptyInlineState title="No active projects yet" description="Create a project to populate your command center and project cockpit." />}
+              )) : <EmptyInlineState title="No active projects yet" description="Create a project to populate your command center and project cockpit." actionLabel="Create project" actionHref="/projects/new" />}
             </div>
           </PanelCard>
 
@@ -331,8 +332,8 @@ export function HomeScreen({ scope, data }: { scope?: string; data?: HomeScreenD
 
           <PanelCard id="quick-capture" title="Quick capture" description="Create new work and knowledge without breaking context.">
             <div className="grid gap-3">
-              <ActionTile title="New task" description="Add work with assignee, date, and priority defaults from the current scope." />
-              <ActionTile title="New doc" description="Start a brief, decision record, or research note linked to this workspace or project." />
+              <ActionTile title="New project" description="Create a structured project with guided documentation from the start." href="/projects/new" />
+              <ActionTile title="New doc" description="Start a brief, decision record, or research note linked to this workspace or project." href={projects.length ? `${projects[0].href.replace('/overview', '/knowledge')}` : "/projects/new"} />
               <ActionTile title="AI summary" description="Turn recent changes into a clean brief, standup, or stakeholder update." />
             </div>
           </PanelCard>
@@ -428,6 +429,14 @@ export function ProjectsScreen({ scope, data }: { scope?: string; data?: Project
         metrics={metrics}
       />
 
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <p className="text-sm text-text-muted">{projects.length ? `${projects.length} active project${projects.length === 1 ? '' : 's'}` : 'No projects yet'}</p>
+        <Link href="/projects/new" className={buttonVariants({ variant: "primary" })}>
+          <Plus className="mr-2 h-4 w-4" aria-hidden />
+          New project
+        </Link>
+      </div>
+
       <section id="portfolio" className="grid gap-4 lg:grid-cols-3">
         {projects.length ? projects.map((project) => (
           <Link key={project.name} href={project.href} className="surface-panel block p-5 transition-all duration-200 hover:border-primary/60 hover:bg-surface hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-bg">
@@ -442,7 +451,7 @@ export function ProjectsScreen({ scope, data }: { scope?: string; data?: Project
               <ArrowRight className="h-4 w-4" aria-hidden />
             </p>
           </Link>
-        )) : <div className="surface-panel col-span-full p-6"><EmptyInlineState title="No projects yet" description="Create a project to start using the portfolio and cockpit model." /></div>}
+        )) : <div className="surface-panel col-span-full p-6"><EmptyInlineState title="No projects yet" description="Create a project to start using the portfolio and cockpit model." actionLabel="Create your first project" actionHref="/projects/new" /></div>}
       </section>
 
       <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
@@ -454,7 +463,7 @@ export function ProjectsScreen({ scope, data }: { scope?: string; data?: Project
 
         <PanelCard id="project-kits" title="Project kits" description="Opinionated starting structures, not generic templates.">
           <div className="grid gap-3">
-            {kits.length ? kits.map((kit) => <ActionTile key={kit.title} title={kit.title} description={kit.description} />) : <EmptyInlineState title="No project kits yet" description="Template storage will surface real kits here once it is wired into the platform." />}
+            {kits.length ? kits.map((kit) => <ActionTile key={kit.title} title={kit.title} description={kit.description} href={`/projects/new?template=${kit.title.toLowerCase().replace(/\s+/g, '-')}`} />) : <EmptyInlineState title="No project kits yet" description="Template storage will surface real kits here once it is wired into the platform." />}
           </div>
         </PanelCard>
       </div>
@@ -504,7 +513,9 @@ export function WorkScreen({ scope, data }: { scope?: string; data?: WorkScreenD
                 <span className="text-sm text-text-muted">{task.owner}</span>
                 <span className="text-sm text-text-muted">{task.due}</span>
               </button>
-            )) : <EmptyState icon={ListTodo} title="No live work items in this scope" description="When work objects connect to the current context, they will appear here with status and ownership." />}
+            )) : <EmptyState icon={ListTodo} title="No live work items in this scope" description="Create a project to start tracking work items and documentation tasks.">
+              <Link href="/projects/new" className={buttonVariants({ variant: "primary", size: "sm" })}>Create project</Link>
+            </EmptyState>}
           </div>
         </PanelCard>
 
@@ -899,15 +910,31 @@ function ActionTile({
   title,
   description,
   id,
+  href,
 }: {
   title: string;
   description: string;
   id?: string;
+  href?: string;
 }) {
-  return (
-    <div id={id} className="surface-panel-muted p-4">
+  const content = (
+    <>
       <p className="font-medium text-text-primary">{title}</p>
       <p className="mt-1 text-sm text-text-muted">{description}</p>
+    </>
+  );
+
+  if (href) {
+    return (
+      <Link id={id} href={href} className="surface-panel-muted block p-4 transition-all duration-200 hover:border-primary/60 hover:bg-surface hover:shadow-md">
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <div id={id} className="surface-panel-muted p-4">
+      {content}
     </div>
   );
 }
@@ -963,11 +990,17 @@ function MiniTimeline({ items }: { items: string[] }) {
   );
 }
 
-function EmptyInlineState({ title, description }: { title: string; description: string }) {
+function EmptyInlineState({ title, description, actionLabel, actionHref }: { title: string; description: string; actionLabel?: string; actionHref?: string }) {
   return (
     <div className="rounded-xl border border-border/60 bg-surface-muted/50 px-4 py-5 text-center">
       <p className="text-sm font-medium text-text-muted">{title}</p>
       <p className="mt-1 text-xs text-text-muted/70">{description}</p>
+      {actionLabel && actionHref && (
+        <Link href={actionHref} className={`mt-3 inline-flex ${buttonVariants({ variant: "primary", size: "sm" })}`}>
+          <Plus className="mr-1.5 h-3.5 w-3.5" aria-hidden />
+          {actionLabel}
+        </Link>
+      )}
     </div>
   );
 }

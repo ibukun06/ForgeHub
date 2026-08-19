@@ -40,13 +40,13 @@ export default async function WorkspaceSectionPage({
 
   switch (section) {
     case "home":
-      return <HomeScreen scope={scope} data={await getHomeScreenData()} />;
+      return <HomeScreen scope={scope} data={await getHomeScreenData(workspaceSlug)} />;
     case "projects":
-      return <ProjectsScreen scope={scope} data={await getProjectsScreenData()} />;
+      return <ProjectsScreen scope={scope} data={await getProjectsScreenData(workspaceSlug)} />;
     case "work":
-      return <WorkScreen scope={scope} data={await getWorkScreenData()} />;
+      return <WorkScreen scope={scope} data={await getWorkScreenData(workspaceSlug)} />;
     case "knowledge":
-      return <KnowledgeScreen scope={scope} data={await getKnowledgeScreenData()} />;
+      return <KnowledgeScreen scope={scope} data={await getKnowledgeScreenData(workspaceSlug)} />;
     case "conversations":
       return (
         <PlaceholderScreen

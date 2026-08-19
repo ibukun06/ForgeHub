@@ -8,7 +8,7 @@ export default async function ProjectOverviewPage({
   params: Promise<{ workspaceSlug: string; projectSlug: string }>;
 }) {
   const { workspaceSlug, projectSlug } = await params;
-  const data = await getProjectCockpitData(projectSlug);
+  const data = await getProjectCockpitData(projectSlug, workspaceSlug);
 
   if (!data) {
     notFound();

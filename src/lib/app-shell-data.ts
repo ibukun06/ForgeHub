@@ -147,7 +147,7 @@ type ProjectGraph = {
   memberCount: number;
 };
 
-function buildProjectHref(slug: string, workspaceSlug = DEFAULT_WORKSPACE_SLUG) {
+function buildProjectHref(slug: string, workspaceSlug: string) {
   return `/w/${workspaceSlug}/p/${slug}/overview`;
 }
 
@@ -203,7 +203,7 @@ function summarizeProject(project: ProjectRecord, documents: DocumentRecord[], s
   return `${projectDocs.length} docs · ${reviewedCount}/${projectSections.length || 1} reviewed · ${decisionCount} decisions logged · ${openCount} sections still active.`;
 }
 
-async function getViewerGraph(): Promise<ViewerGraph> {
+async function getViewerGraph(workspaceSlug?: string): Promise<ViewerGraph> {
   const supabase = await createClient();
   const {
     data: { user },
@@ -213,9 +213,16 @@ async function getViewerGraph(): Promise<ViewerGraph> {
     redirect("/login");
   }
 
+  let targetWorkspaceId: string | undefined;
+  if (workspaceSlug) {
+    const { data: ws } = await supabase.from("workspaces").select("id").eq("slug", workspaceSlug).maybeSingle();
+    if (!ws) redirect("/home");
+    targetWorkspaceId = ws.id;
+  }
+
   const { data: membershipRows } = await supabase
     .from("project_members")
-    .select("role, projects(id, name, description, project_type, visibility, slug, created_at, updated_at)")
+    .select("role, projects(id, name, description, project_type, visibility, slug, created_at, updated_at, workspace_id)")
     .eq("user_id", user.id);
 
   const memberships = (membershipRows ?? []) as MembershipRow[];
@@ -225,6 +232,7 @@ async function getViewerGraph(): Promise<ViewerGraph> {
   for (const membership of memberships) {
     const projectValue = Array.isArray(membership.projects) ? membership.projects[0] : membership.projects;
     if (!projectValue) continue;
+    if (targetWorkspaceId && (projectValue as any).workspace_id !== targetWorkspaceId) continue;
     dedupedProjects.set(projectValue.id, projectValue);
     memberRoles.set(projectValue.id, membership.role);
   }
@@ -288,7 +296,7 @@ async function getViewerGraph(): Promise<ViewerGraph> {
  * the current user is already a member of, which is what the old
  * scan-of-getViewerGraph() approach did whether it meant to or not.
  */
-async function getProjectGraphBySlug(projectSlug: string): Promise<ProjectGraph | null> {
+async function getProjectGraphBySlug(projectSlug: string, workspaceSlug?: string): Promise<ProjectGraph | null> {
   const supabase = await createClient();
   const {
     data: { user },
@@ -298,11 +306,23 @@ async function getProjectGraphBySlug(projectSlug: string): Promise<ProjectGraph 
     redirect("/login");
   }
 
-  const { data: project } = await supabase
+  let targetWorkspaceId: string | undefined;
+  if (workspaceSlug) {
+    const { data: ws } = await supabase.from("workspaces").select("id").eq("slug", workspaceSlug).maybeSingle();
+    if (!ws) return null;
+    targetWorkspaceId = ws.id;
+  }
+
+  let query = supabase
     .from("projects")
-    .select("id, name, description, project_type, visibility, slug, created_at, updated_at")
-    .eq("slug", projectSlug)
-    .maybeSingle();
+    .select("id, name, description, project_type, visibility, slug, created_at, updated_at, workspace_id")
+    .eq("slug", projectSlug);
+
+  if (targetWorkspaceId) {
+    query = query.eq("workspace_id", targetWorkspaceId);
+  }
+
+  const { data: project } = await query.maybeSingle();
 
   if (!project) {
     return null;
@@ -370,8 +390,8 @@ async function getProjectGraphBySlug(projectSlug: string): Promise<ProjectGraph 
   };
 }
 
-export async function getHomeScreenData(): Promise<HomeScreenData> {
-  const graph = await getViewerGraph();
+export async function getHomeScreenData(workspaceSlug: string): Promise<HomeScreenData> {
+  const graph = await getViewerGraph(workspaceSlug);
   const documentById = new Map(graph.documents.map((document) => [document.id, document]));
   const projectById = new Map(graph.projects.map((project) => [project.id, project]));
   const unreadNotifications = graph.notifications.filter((notification) => !notification.read_at);
@@ -416,7 +436,7 @@ export async function getHomeScreenData(): Promise<HomeScreenData> {
       name: project.name,
       stage: titleCase(project.project_type),
       summary: summarizeProject(project, graph.documents, graph.sections, graph.decisions),
-      href: buildProjectHref(project.slug),
+      href: buildProjectHref(project.slug, workspaceSlug),
     })),
     watchlist: graph.notifications
       .filter((notification) => notification.type === "section_stale")
@@ -436,8 +456,8 @@ export async function getHomeScreenData(): Promise<HomeScreenData> {
   };
 }
 
-export async function getInboxScreenData(): Promise<InboxScreenData> {
-  const graph = await getViewerGraph();
+export async function getInboxScreenData(workspaceSlug: string): Promise<InboxScreenData> {
+  const graph = await getViewerGraph(workspaceSlug);
   const projectById = new Map(graph.projects.map((project) => [project.id, project]));
   const items = graph.notifications.slice(0, 6).map((notification) => ({
     title: notificationLabel(notification.type),
@@ -466,8 +486,8 @@ export async function getInboxScreenData(): Promise<InboxScreenData> {
   };
 }
 
-export async function getProjectsScreenData(): Promise<ProjectsScreenData> {
-  const graph = await getViewerGraph();
+export async function getProjectsScreenData(workspaceSlug: string): Promise<ProjectsScreenData> {
+  const graph = await getViewerGraph(workspaceSlug);
   const publishedCount = graph.projects.filter((project) => project.visibility === "published").length;
   const staleCount = graph.notifications.filter((notification) => notification.type === "section_stale").length;
 
@@ -481,7 +501,7 @@ export async function getProjectsScreenData(): Promise<ProjectsScreenData> {
       name: project.name,
       stage: titleCase(project.project_type),
       summary: summarizeProject(project, graph.documents, graph.sections, graph.decisions),
-      href: buildProjectHref(project.slug),
+      href: buildProjectHref(project.slug, workspaceSlug),
     })),
     lanes: [
       {
@@ -505,8 +525,8 @@ export async function getProjectsScreenData(): Promise<ProjectsScreenData> {
   };
 }
 
-export async function getWorkScreenData(projectSlug?: string): Promise<WorkScreenData> {
-  const projectGraph = projectSlug ? await getProjectGraphBySlug(projectSlug) : null;
+export async function getWorkScreenData(workspaceSlug: string, projectSlug?: string): Promise<WorkScreenData> {
+  const projectGraph = projectSlug ? await getProjectGraphBySlug(projectSlug, workspaceSlug) : null;
   const graph = projectGraph
     ? {
         projects: [projectGraph.project],
@@ -515,7 +535,7 @@ export async function getWorkScreenData(projectSlug?: string): Promise<WorkScree
         decisions: projectGraph.decisions,
         notifications: projectGraph.notifications,
       }
-    : await getViewerGraph();
+    : await getViewerGraph(workspaceSlug);
 
   const documentById = new Map(graph.documents.map((document) => [document.id, document]));
   const projectById = new Map(graph.projects.map((project) => [project.id, project]));
@@ -549,8 +569,8 @@ export async function getWorkScreenData(projectSlug?: string): Promise<WorkScree
   };
 }
 
-export async function getKnowledgeScreenData(projectSlug?: string): Promise<KnowledgeScreenData> {
-  const projectGraph = projectSlug ? await getProjectGraphBySlug(projectSlug) : null;
+export async function getKnowledgeScreenData(workspaceSlug: string, projectSlug?: string): Promise<KnowledgeScreenData> {
+  const projectGraph = projectSlug ? await getProjectGraphBySlug(projectSlug, workspaceSlug) : null;
   const graph = projectGraph
     ? {
         projects: [projectGraph.project],
@@ -558,7 +578,7 @@ export async function getKnowledgeScreenData(projectSlug?: string): Promise<Know
         sections: projectGraph.sections,
         decisions: projectGraph.decisions,
       }
-    : await getViewerGraph();
+    : await getViewerGraph(workspaceSlug);
 
   return {
     metrics: [
@@ -596,8 +616,8 @@ export async function getKnowledgeScreenData(projectSlug?: string): Promise<Know
   };
 }
 
-export async function getProjectCockpitData(projectSlug: string): Promise<ProjectCockpitData | null> {
-  const graph = await getProjectGraphBySlug(projectSlug);
+export async function getProjectCockpitData(projectSlug: string, workspaceSlug: string): Promise<ProjectCockpitData | null> {
+  const graph = await getProjectGraphBySlug(projectSlug, workspaceSlug);
   if (!graph) return null;
 
   const reviewedCount = graph.sections.filter((section) => section.status === "team_reviewed").length;
