@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { relativeTime } from "@/lib/format";
 import { createClient } from "@/lib/supabase/server";
+import { generateProjectBrief } from "@/lib/ai/gemini";
 import type {
   MemberRole,
   NotificationType,
@@ -108,7 +109,7 @@ export type HomeScreenData = {
 };
 
 export type InboxScreenData = {
-  items: Array<{ title: string; source: string; state: string }>;
+  items: Array<{ id: string; title: string; source: string; state: string }>;
   selected: {
     title: string;
     summary: string;
@@ -127,7 +128,7 @@ export type ProjectsScreenData = {
 
 export type WorkScreenData = {
   metrics: MetricData[];
-  tasks: Array<{ title: string; status: string; owner: string; due: string; summary: string }>;
+  tasks: Array<{ id: string; title: string; status: string; owner: string; due: string; summary: string }>;
   timelineItems: string[];
   aiItems: string[];
 };
@@ -247,7 +248,7 @@ async function getViewerGraph(workspaceSlug?: string): Promise<ViewerGraph> {
   let targetWorkspaceId: string | undefined;
   if (workspaceSlug) {
     const { data: ws } = await supabase.from("workspaces").select("id").eq("slug", workspaceSlug).maybeSingle();
-    if (!ws) redirect("/home");
+    if (!ws) redirect("/inbox");
     targetWorkspaceId = ws.id;
   }
 
@@ -491,6 +492,7 @@ export async function getInboxScreenData(workspaceSlug: string = DEFAULT_WORKSPA
   const graph = await getViewerGraph(workspaceSlug);
   const projectById = new Map(graph.projects.map((project) => [project.id, project]));
   const items = graph.notifications.slice(0, 6).map((notification) => ({
+    id: notification.id,
     title: notificationLabel(notification.type),
     source: `${projectById.get(notification.project_id ?? "")?.name ?? "Workspace"} · ${relativeTime(notification.created_at)}`,
     state: notification.read_at ? "Read" : "Action required",
@@ -573,9 +575,16 @@ export async function getWorkScreenData(workspaceSlug: string = DEFAULT_WORKSPAC
   const tasks = graph.sections.slice(0, 6).map((section) => {
     const document = documentById.get(section.document_id);
     const project = document ? projectById.get(document.project_id) : null;
+    
+    let boardStatus = "Backlog";
+    if (section.status === "in_progress") boardStatus = "In progress";
+    if (section.status === "ai_draft") boardStatus = "Review";
+    if (section.status === "team_reviewed") boardStatus = "Done";
+
     return {
+      id: section.id,
       title: section.prompt || document?.title || "Documentation task",
-      status: sectionStatusLabel(section.status),
+      status: boardStatus,
       owner: project?.name ?? "Project team",
       due: relativeTime(section.updated_at),
       summary: `${document?.title ?? "Document"} still needs movement before the next review cycle.`,
@@ -687,11 +696,12 @@ export async function getProjectCockpitData(projectSlug: string, workspaceSlug: 
     workInMotion: blockerSections[0]?.prompt || graph.documents[0]?.title || "Review the active documentation set.",
     keyDependency: latestDecision ? `Latest decision: ${latestDecision.decision}` : "Define the next milestone decision before scaling implementation.",
     blockers: blockerSections.map((section) => `${section.prompt || "A documentation section"} is still ${sectionStatusLabel(section.status).toLowerCase()} (${relativeTime(section.updated_at)}).`),
-    aiBrief: [
-      `Project updated ${relativeTime(graph.project.updated_at)} and currently sits in a ${blockerSections.length > 0 ? "watch" : "stable"} state.`,
-      `Most active focus: ${blockerSections[0]?.prompt || graph.documents[0]?.title || "review open documentation work"}.`,
-      `Next likely leadership action: ${latestDecision ? `review the implications of “${latestDecision.decision}.”` : "create a new decision record to resolve an open constraint."}`,
-    ],
+    aiBrief: await generateProjectBrief(
+      graph.project.name,
+      graph.documents.map(d => ({ title: d.title || 'Untitled', kind: d.document_type })),
+      graph.decisions.map(d => ({ decision: d.decision, rationale: d.rationale })),
+      graph.sections.map(s => ({ title: s.prompt || 'Untitled', status: sectionStatusLabel(s.status) }))
+    ),
     decisions: graph.decisions.slice(0, 3).map((decision) => ({
       title: decision.decision,
       status: relativeTime(decision.created_at),

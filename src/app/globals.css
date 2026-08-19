@@ -1,128 +1,128 @@
 @import "tailwindcss";
 
 :root {
-  /* Backgrounds & Surfaces */
-  --color-bg: #f4f6f9;
-  --color-surface: #ffffff;
-  --color-surface-muted: #f8fafc;
-  --color-surface-elevated: #ffffff;
-  --color-input-bg: #eef1f5;
+  /* Backgrounds & Surfaces (Light) */
+  --color-bg: hsl(0, 0%, 100%);
+  --color-surface: hsl(0, 0%, 98%);
+  --color-surface-muted: hsl(0, 0%, 95%);
+  --color-surface-elevated: hsl(0, 0%, 100%);
+  --color-input-bg: hsl(0, 0%, 92%);
   
   /* Borders */
-  --color-border: #dce2e9;
-  --color-border-strong: #c7d2df;
+  --color-border: hsl(224, 20%, 90%);
+  --color-border-strong: hsl(224, 20%, 80%);
   
-  /* Brand Primary (Blue/Slate) */
-  --color-primary: #24466b;
-  --color-primary-hover: #1c3757;
-  --color-primary-active: #152a42;
-  --color-primary-soft: rgb(36 70 107 / 0.09);
+  /* Brand Primary */
+  --color-primary: hsl(250, 100%, 65%);
+  --color-primary-hover: hsl(250, 100%, 60%);
+  --color-primary-active: hsl(250, 100%, 55%);
+  --color-primary-soft: hsla(250, 100%, 65%, 0.1);
   
-  /* Brand Secondary (Orange) */
-  --color-secondary: #e8692c;
-  --color-secondary-hover: #d65c22;
-  --color-secondary-active: #c2521c;
-  --color-secondary-soft: rgb(232 105 44 / 0.12);
+  /* Brand Secondary */
+  --color-secondary: hsl(200, 100%, 50%);
+  --color-secondary-hover: hsl(200, 100%, 45%);
+  --color-secondary-active: hsl(200, 100%, 40%);
+  --color-secondary-soft: hsla(200, 100%, 50%, 0.12);
   
   /* Text */
-  --color-text-primary: #16202c;
-  --color-text-muted: #5a6b7e;
-  --color-text-inverse: #ffffff;
+  --color-text-primary: hsl(224, 71%, 10%);
+  --color-text-muted: hsl(224, 20%, 45%);
+  --color-text-inverse: hsl(0, 0%, 98%);
   
-  /* Semantic (Success) */
-  --color-success: #1e8e5a;
-  --color-success-bg: rgb(30 142 90 / 0.1);
-  --color-success-border: rgb(30 142 90 / 0.25);
+  /* Semantic */
+  --color-success: hsl(150, 80%, 40%);
+  --color-success-bg: hsla(150, 80%, 40%, 0.1);
+  --color-success-border: hsla(150, 80%, 40%, 0.25);
   
-  /* Semantic (Warning) */
-  --color-warning: #b5750b;
-  --color-warning-bg: rgb(181 117 11 / 0.1);
-  --color-warning-border: rgb(181 117 11 / 0.25);
+  --color-warning: hsl(40, 100%, 50%);
+  --color-warning-bg: hsla(40, 100%, 50%, 0.1);
+  --color-warning-border: hsla(40, 100%, 50%, 0.25);
   
-  /* Semantic (Error/Destructive) */
-  --color-error: #c6373f;
-  --color-error-hover: #b03138;
-  --color-error-active: #9a2b31;
-  --color-error-bg: rgb(198 55 63 / 0.1);
-  --color-error-border: rgb(198 55 63 / 0.25);
+  --color-error: hsl(350, 80%, 55%);
+  --color-error-hover: hsl(350, 80%, 50%);
+  --color-error-active: hsl(350, 80%, 45%);
+  --color-error-bg: hsla(350, 80%, 60%, 0.1);
+  --color-error-border: hsla(350, 80%, 60%, 0.25);
   
   /* Typography */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-roboto-mono), ui-monospace, SFMono-Regular, monospace;
   
   /* Radius Scale */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 22px; /* standard card */
-  --radius-2xl: 30px; /* main panel */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
   --radius-full: 9999px;
   
-  /* Shadow Scale (Elevation) */
-  --shadow-sm: 0 2px 4px rgb(18 32 51 / 0.04);
-  --shadow-md: 0 4px 12px rgb(18 32 51 / 0.06);
-  --shadow-lg: 0 16px 34px rgb(18 32 51 / 0.08); /* panel */
-  --shadow-xl: 0 20px 48px rgb(18 32 51 / 0.12); /* floating/modal */
-  --shadow-2xl: 0 28px 72px rgb(18 32 51 / 0.22); /* hero */
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  
+  --shadow-glass: inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
 
-  --gradient-page: radial-gradient(circle at top, rgb(36 70 107 / 0.08), transparent 38%);
+  --gradient-page: radial-gradient(circle at top, hsla(250, 100%, 65%, 0.05), transparent 38%);
 }
 
 .dark {
-  /* Backgrounds & Surfaces */
-  --color-bg: #111720;
-  --color-surface: #18212b;
-  --color-surface-muted: #1d2733;
-  --color-surface-elevated: #202b37;
-  --color-input-bg: #232c36;
+  /* Obsidian Glass - Backgrounds & Surfaces */
+  --color-bg: hsl(224, 71%, 4%);
+  --color-surface: hsl(224, 71%, 8%);
+  --color-surface-muted: hsl(224, 71%, 12%);
+  --color-surface-elevated: hsl(224, 71%, 16%);
+  --color-input-bg: hsl(224, 71%, 10%);
   
   /* Borders */
-  --color-border: #303b47;
-  --color-border-strong: #415060;
+  --color-border: hsl(224, 20%, 20%);
+  --color-border-strong: hsl(224, 20%, 30%);
   
   /* Brand Primary */
-  --color-primary: #8eb8e0;
-  --color-primary-hover: #a5c7e7;
-  --color-primary-active: #7ca4cb;
-  --color-primary-soft: rgb(142 184 224 / 0.16);
+  --color-primary: hsl(250, 100%, 75%);
+  --color-primary-hover: hsl(250, 100%, 80%);
+  --color-primary-active: hsl(250, 100%, 85%);
+  --color-primary-soft: hsla(250, 100%, 75%, 0.15);
   
   /* Brand Secondary */
-  --color-secondary: #f08a45;
-  --color-secondary-hover: #f39d62;
-  --color-secondary-active: #f5b080;
-  --color-secondary-soft: rgb(240 138 69 / 0.18);
+  --color-secondary: hsl(200, 100%, 70%);
+  --color-secondary-hover: hsl(200, 100%, 75%);
+  --color-secondary-active: hsl(200, 100%, 80%);
+  --color-secondary-soft: hsla(200, 100%, 70%, 0.15);
   
   /* Text */
-  --color-text-primary: #f2f5f8;
-  --color-text-muted: #9ba9b8;
-  --color-text-inverse: #111720;
+  --color-text-primary: hsl(0, 0%, 98%);
+  --color-text-muted: hsl(224, 20%, 65%);
+  --color-text-inverse: hsl(224, 71%, 4%);
   
-  /* Semantic (Success) */
-  --color-success: #43d39a;
-  --color-success-bg: rgb(67 211 154 / 0.12);
-  --color-success-border: rgb(67 211 154 / 0.3);
+  /* Semantic */
+  --color-success: hsl(150, 80%, 50%);
+  --color-success-bg: hsla(150, 80%, 50%, 0.15);
+  --color-success-border: hsla(150, 80%, 50%, 0.3);
   
-  /* Semantic (Warning) */
-  --color-warning: #f4c35e;
-  --color-warning-bg: rgb(244 195 94 / 0.12);
-  --color-warning-border: rgb(244 195 94 / 0.3);
+  --color-warning: hsl(40, 100%, 50%);
+  --color-warning-bg: hsla(40, 100%, 50%, 0.15);
+  --color-warning-border: hsla(40, 100%, 50%, 0.3);
   
-  /* Semantic (Error/Destructive) */
-  --color-error: #ff8585;
-  --color-error-hover: #ff9999;
-  --color-error-active: #ffadad;
-  --color-error-bg: rgb(255 133 133 / 0.12);
-  --color-error-border: rgb(255 133 133 / 0.3);
+  --color-error: hsl(350, 80%, 60%);
+  --color-error-hover: hsl(350, 80%, 65%);
+  --color-error-active: hsl(350, 80%, 70%);
+  --color-error-bg: hsla(350, 80%, 60%, 0.15);
+  --color-error-border: hsla(350, 80%, 60%, 0.3);
   
   /* Shadows */
-  --shadow-sm: 0 2px 4px rgb(0 0 0 / 0.16);
-  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.20);
-  --shadow-lg: 0 18px 36px rgb(0 0 0 / 0.24);
-  --shadow-xl: 0 24px 60px rgb(0 0 0 / 0.28);
-  --shadow-2xl: 0 32px 80px rgb(0 0 0 / 0.38);
+  --shadow-sm: 0 2px 4px rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 16px 32px rgb(0 0 0 / 0.5);
+  --shadow-xl: 0 24px 48px rgb(0 0 0 / 0.6);
+  --shadow-2xl: 0 32px 64px rgb(0 0 0 / 0.7);
 
-  --gradient-page: radial-gradient(circle at top, rgb(142 184 224 / 0.12), transparent 32%);
+  --shadow-glass: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+
+  --gradient-page: radial-gradient(circle at top, hsla(250, 100%, 75%, 0.08), transparent 32%);
 }
 
 @theme inline {
@@ -172,12 +172,14 @@
   --radius-lg: var(--radius-lg);
   --radius-xl: var(--radius-xl);
   --radius-2xl: var(--radius-2xl);
+  --radius-full: var(--radius-full);
   
   --shadow-sm: var(--shadow-sm);
   --shadow-md: var(--shadow-md);
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+  --shadow-glass: var(--shadow-glass);
 }
 
 * {
@@ -220,36 +222,37 @@ button:disabled {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--color-secondary) 30%, transparent);
+  background: color-mix(in srgb, var(--color-primary) 30%, transparent);
   color: var(--color-text-primary);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-secondary);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
-/* Base surface utility classes (soon to be replaced/augmented by standard components) */
+/* Base surface utility classes */
 .surface-panel {
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-2xl);
+  border-radius: var(--radius-xl);
   background: color-mix(in srgb, var(--color-surface) 92%, transparent);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg), var(--shadow-glass);
 }
 
 .surface-panel-muted {
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   background: color-mix(in srgb, var(--color-surface-muted) 88%, transparent);
+  box-shadow: var(--shadow-sm), var(--shadow-glass);
 }
 
 .surface-hero {
   border: 1px solid color-mix(in srgb, white 12%, transparent);
   border-radius: calc(var(--radius-2xl) + 2px);
   background:
-    radial-gradient(circle at top right, rgb(240 138 69 / 0.2), transparent 32%),
-    linear-gradient(135deg, #14263a 0%, #1b3552 46%, #2a5176 100%);
-  box-shadow: var(--shadow-2xl);
+    radial-gradient(circle at top right, hsla(250, 100%, 75%, 0.2), transparent 32%),
+    linear-gradient(135deg, hsl(224, 71%, 6%) 0%, hsl(224, 71%, 10%) 100%);
+  box-shadow: var(--shadow-2xl), var(--shadow-glass);
 }
 
 .eyebrow {
@@ -269,6 +272,7 @@ button:disabled {
   padding: 0.36rem 0.72rem;
   font-size: 0.78rem;
   font-weight: 500;
+  box-shadow: var(--shadow-sm), var(--shadow-glass);
 }
 
 .signal-pill-neutral {
@@ -276,7 +280,7 @@ button:disabled {
 }
 
 .signal-pill-brand {
-  border-color: color-mix(in srgb, var(--color-primary) 22%, var(--color-border));
+  border-color: color-mix(in srgb, var(--color-primary) 30%, var(--color-border));
   background: var(--color-primary-soft);
   color: var(--color-primary);
 }

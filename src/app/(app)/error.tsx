@@ -20,7 +20,7 @@ export default function AppError({
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <button type="button" onClick={reset} className={buttonVariants({ variant: "primary" })}>Try again</button>
-          <Link href="/home" className={buttonVariants({ variant: "secondary" })}>Go to Home</Link>
+          <Link href="/inbox" className={buttonVariants({ variant: "secondary" })}>Go to Inbox</Link>
         </div>
         {error.digest ? <p className="mt-4 text-xs text-text-muted">Diagnostic: {error.digest}</p> : null}
       </div>

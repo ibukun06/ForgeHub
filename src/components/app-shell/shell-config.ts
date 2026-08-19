@@ -1,45 +1,29 @@
 import type { LucideIcon } from "lucide-react";
 import {
-  Activity,
   Bell,
   BookMarked,
-  BookOpen,
   BriefcaseBusiness,
-  ChartColumnBig,
   Compass,
   FolderKanban,
-  Home,
   KanbanSquare,
   LayoutDashboard,
   LibraryBig,
   Map,
-  MessageCircleMore,
   MessagesSquare,
-  Settings2,
-  ShieldCheck,
-  Sparkles,
 } from "lucide-react";
 
 export type ShellAreaKey =
-  | "home"
   | "inbox"
-  | "projects"
   | "work"
-  | "knowledge"
-  | "conversations"
-  | "reports"
-  | "templates"
-  | "admin";
+  | "projects"
+  | "knowledge";
 
 export type ProjectSectionKey =
   | "overview"
-  | "plan"
-  | "work"
-  | "knowledge"
-  | "decisions"
-  | "conversation"
-  | "review"
-  | "insights";
+  | "roadmap"
+  | "board"
+  | "docs"
+  | "chat";
 
 export type ContextItem = {
   label: string;
@@ -85,32 +69,23 @@ export type ShellState = {
 };
 
 export const PRIMARY_NAV: NavItem[] = [
-  { key: "home", label: "Home", href: "/home", icon: Home, shortLabel: "Home" },
   { key: "inbox", label: "Inbox", href: "/inbox", icon: Bell, shortLabel: "Inbox" },
-  { key: "projects", label: "Projects", href: "/projects", icon: FolderKanban, shortLabel: "Projects" },
   { key: "work", label: "Work", href: "/work", icon: BriefcaseBusiness, shortLabel: "Work" },
+  { key: "projects", label: "Projects", href: "/projects", icon: FolderKanban, shortLabel: "Projects" },
   { key: "knowledge", label: "Knowledge", href: "/knowledge", icon: LibraryBig, shortLabel: "Knowledge" },
-  { key: "conversations", label: "Conversations", href: "/conversations", icon: MessagesSquare, shortLabel: "Chats" },
-  { key: "reports", label: "Reports", href: "/reports", icon: ChartColumnBig, shortLabel: "Reports" },
-  { key: "templates", label: "Templates", href: "/templates", icon: Sparkles, shortLabel: "Templates" },
-  { key: "admin", label: "Admin", href: "/admin", icon: Settings2, shortLabel: "Admin" },
 ];
 
 export const PROJECT_SPINE: ProjectSpineItem[] = [
   { key: "overview", label: "Overview", icon: LayoutDashboard },
-  { key: "plan", label: "Plan", icon: Map },
-  { key: "work", label: "Work", icon: KanbanSquare },
-  { key: "knowledge", label: "Knowledge", icon: BookMarked },
-  { key: "decisions", label: "Decisions", icon: BookOpen },
-  { key: "conversation", label: "Conversation", icon: MessageCircleMore },
-  { key: "review", label: "Review", icon: ShieldCheck },
-  { key: "insights", label: "Insights", icon: Activity },
+  { key: "roadmap", label: "Roadmap", icon: Map },
+  { key: "board", label: "Board", icon: KanbanSquare },
+  { key: "docs", label: "Docs", icon: BookMarked },
+  { key: "chat", label: "Chat", icon: MessagesSquare },
 ];
 
 export const FAVORITE_LINKS: FavoriteLink[] = [
   { label: "ForgeHub Redesign", href: "/w/forgehub/p/forgehub-redesign/overview", icon: Compass },
   { label: "Execution board", href: "/work#board", icon: KanbanSquare },
-  { label: "Decision log", href: "/knowledge#decisions", icon: BookOpen },
 ];
 
 export const COMMAND_MODE_TABS = ["Find", "Do", "Ask", "Create"] as const;
@@ -125,13 +100,6 @@ export function prettyLabel(slug?: string): string {
 
 function topLevelContext(area: ShellAreaKey): ContextItem[] {
   switch (area) {
-    case "home":
-      return [
-        { label: "Today focus", href: "/home#today-focus", hint: "Priority work and approvals" },
-        { label: "Active projects", href: "/home#active-projects", hint: "Resume critical work" },
-        { label: "AI daily brief", href: "/home#ai-brief", hint: "Context and recommendations" },
-        { label: "Quick capture", href: "/home#quick-capture", hint: "Task, doc, decision, note" },
-      ];
     case "inbox":
       return [
         { label: "Action required", href: "/inbox#action-required", hint: "Approvals, blockers, mentions" },
@@ -160,40 +128,11 @@ function topLevelContext(area: ShellAreaKey): ContextItem[] {
         { label: "Research", href: "/knowledge#research", hint: "Evidence and synthesis" },
         { label: "Collections", href: "/knowledge#collections", hint: "Organized knowledge clusters" },
       ];
-    case "conversations":
-      return [
-        { label: "Project channels", href: "/conversations", hint: "Work-centered collaboration" },
-        { label: "Directs", href: "/conversations", hint: "Fast private coordination" },
-        { label: "Announcements", href: "/conversations", hint: "Low-noise broadcast layer" },
-      ];
-    case "reports":
-      return [
-        { label: "Executive overview", href: "/reports", hint: "Topline portfolio signals" },
-        { label: "Project health", href: "/reports", hint: "Risk, confidence, trend" },
-        { label: "Delivery forecast", href: "/reports", hint: "Readiness and drift" },
-      ];
-    case "templates":
-      return [
-        { label: "Workspace kits", href: "/templates", hint: "Prebuilt operating systems" },
-        { label: "Project templates", href: "/templates", hint: "Repeatable delivery structures" },
-        { label: "Knowledge patterns", href: "/templates", hint: "Docs, decisions, research" },
-      ];
-    case "admin":
-      return [
-        { label: "Permissions", href: "/admin", hint: "People, teams, roles" },
-        { label: "Governance", href: "/admin", hint: "Visibility, policy, compliance" },
-        { label: "Automation", href: "/admin", hint: "Cross-workspace flows" },
-      ];
   }
 }
 
 function topLevelUtilities(area: ShellAreaKey): UtilitySection[] {
   switch (area) {
-    case "home":
-      return [
-        { title: "AI brief", items: ["Summarize what changed since yesterday", "Draft standup from current priorities", "Flag any work at risk this week"] },
-        { title: "Quick actions", items: ["Create task", "Start note", "Open latest project", "Review pending approvals"] },
-      ];
     case "inbox":
       return [
         { title: "AI triage", items: ["Cluster related notifications", "Summarize long threads", "Explain why this item is urgent"] },
@@ -213,11 +152,6 @@ function topLevelUtilities(area: ShellAreaKey): UtilitySection[] {
       return [
         { title: "AI knowledge", items: ["Summarize long doc", "Extract action items", "Answer with citations"] },
         { title: "Knowledge actions", items: ["Create decision log", "Import research", "Link task to doc"] },
-      ];
-    default:
-      return [
-        { title: "ForgeHub OS", items: ["Open command surface", "Create new artifact", "Switch workspace"] },
-        { title: "Current scope", items: ["Review linked work", "Inspect recent activity", "Ask AI for a summary"] },
       ];
   }
 }
@@ -247,7 +181,7 @@ export function getShellState(pathname: string): ShellState {
       projectSlug,
       projectSection,
       breadcrumbs: [
-        { label: prettyLabel(workspaceSlug), href: `/w/${workspaceSlug}/home` },
+        { label: prettyLabel(workspaceSlug), href: `/w/${workspaceSlug}/inbox` },
         { label: prettyLabel(projectSlug), href: `/w/${workspaceSlug}/p/${projectSlug}/overview` },
         { label: prettyLabel(projectSection) },
       ],
@@ -275,21 +209,21 @@ export function getShellState(pathname: string): ShellState {
 
   if (segments[0] === "w") {
     const workspaceSlug = segments[1];
-    const section = (segments[2] as ShellAreaKey | undefined) ?? "home";
+    const section = (segments[2] as ShellAreaKey | undefined) ?? "inbox";
     const activeArea: ShellAreaKey = PRIMARY_NAV.some((item) => item.key === section)
       ? section
-      : "home";
+      : "inbox";
 
     return {
       activeArea,
       pageTitle: prettyLabel(workspaceSlug),
-      scopeLabel: `${PRIMARY_NAV.find((item) => item.key === activeArea)?.label ?? "Home"} · workspace scope`,
+      scopeLabel: `${PRIMARY_NAV.find((item) => item.key === activeArea)?.label ?? "Inbox"} · workspace scope`,
       workspaceSlug,
       breadcrumbs: [
-        { label: prettyLabel(workspaceSlug), href: `/w/${workspaceSlug}/home` },
+        { label: prettyLabel(workspaceSlug), href: `/w/${workspaceSlug}/inbox` },
         { label: PRIMARY_NAV.find((item) => item.key === activeArea)?.label ?? "" },
       ],
-      contextItems: PRIMARY_NAV.filter((item) => item.key !== "inbox").map((item) => ({
+      contextItems: PRIMARY_NAV.map((item) => ({
         label: item.label,
         href: `/w/${workspaceSlug}/${item.key}`,
         hint: item.key === activeArea ? "Current workspace lens" : "Navigate within this workspace",
@@ -298,17 +232,17 @@ export function getShellState(pathname: string): ShellState {
     };
   }
 
-  const activeArea = (segments[0] as ShellAreaKey | undefined) ?? "home";
+  const activeArea = (segments[0] as ShellAreaKey | undefined) ?? "inbox";
   const normalizedArea: ShellAreaKey = PRIMARY_NAV.some((item) => item.key === activeArea)
     ? activeArea
-    : "home";
-  const label = PRIMARY_NAV.find((item) => item.key === normalizedArea)?.label ?? "Home";
+    : "inbox";
+  const label = PRIMARY_NAV.find((item) => item.key === normalizedArea)?.label ?? "Inbox";
 
   return {
     activeArea: normalizedArea,
     pageTitle: label,
-    scopeLabel: normalizedArea === "home" ? "Personal command center" : `${label} · global view`,
-    breadcrumbs: normalizedArea === "home" ? [{ label: "Home" }] : [{ label }],
+    scopeLabel: `${label} · global view`,
+    breadcrumbs: [{ label }],
     contextItems: topLevelContext(normalizedArea),
     utilitySections: topLevelUtilities(normalizedArea),
   };

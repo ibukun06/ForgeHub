@@ -34,6 +34,10 @@ import type {
   WorkScreenData,
 } from "@/lib/app-shell-data";
 import { prettyLabel } from "./shell-config";
+import { KanbanBoard } from "@/components/workspace/kanban-board";
+import { InboxQueue } from "@/components/workspace/inbox-queue";
+import { InboxSelectedPanel } from "@/components/workspace/inbox-selected-panel";
+import { initials } from "@/lib/format";
 
 type FocusTone = "urgent" | "warning" | "default";
 
@@ -361,18 +365,7 @@ export function InboxScreen({ data }: { data?: InboxScreenData }) {
 
       <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)_320px]">
         <PanelCard id="action-required" title="Action required" description="Triage queue with urgency first, chronology second.">
-          <div className="space-y-3">
-            {items.length ? items.map((item, index) => (
-              <div
-                key={`${item.title}-${item.source}`}
-                className={`rounded-xl border p-4 transition-colors ${index === 0 ? "border-primary/30 bg-primary-soft" : "border-border bg-bg"}`}
-              >
-                <p className="eyebrow">{item.state}</p>
-                <p className="mt-2 font-medium text-text-primary">{item.title}</p>
-                <p className="mt-1 text-sm text-text-muted">{item.source}</p>
-              </div>
-            )) : <EmptyInlineState title="Inbox is clear" description="No approvals, mentions, or updates need attention right now." />}
-          </div>
+          <InboxQueue initialItems={items} />
 
           <div className="mt-6 grid gap-3" id="approvals">
             <ActionTile title="Approvals" description="Review queues stay visible without forcing you out of Inbox." />
@@ -382,22 +375,7 @@ export function InboxScreen({ data }: { data?: InboxScreenData }) {
         </PanelCard>
 
         <PanelCard id="project-updates" title="Selected item" description="Inspect source context without losing your place in the queue.">
-          <div className="surface-panel-muted p-5">
-            <div className="flex items-center gap-2 text-sm text-primary">
-              <ShieldCheck className="h-4 w-4" aria-hidden />
-              {selected.source}
-            </div>
-            <h2 className="mt-3 font-heading text-2xl text-text-primary">{selected.title}</h2>
-            <p className="mt-3 text-text-muted">{selected.summary}</p>
-            <div className="mt-5 grid gap-3 md:grid-cols-2">
-              <SignalTile title="Source" value={selected.source} icon={FileStack} />
-              <SignalTile title="Recommended action" value={selected.action} icon={BellDot} />
-            </div>
-            <div className="mt-5 flex flex-wrap gap-3">
-              <button className={buttonVariants({ variant: "primary" })}>Take action</button>
-              <button className={buttonVariants({ variant: "secondary" })}>Ask AI to summarize thread</button>
-            </div>
-          </div>
+          <InboxSelectedPanel selected={selected} />
 
           <div className="mt-5 grid gap-3 md:grid-cols-3">
             <ActionTile title="Mark read" description="Preserve source context while clearing the item from the active queue." />
@@ -492,7 +470,7 @@ export function WorkScreen({ scope, data }: { scope?: string; data?: WorkScreenD
 
       <PanelCard id="saved-views" title="View system" description="Switch lenses without switching products.">
         <div className="flex flex-wrap gap-3">
-          {["List", "Board", "Timeline", "Calendar", "Workload", "Table"].map((view, index) => (
+          {["Board", "List", "Timeline", "Calendar", "Workload", "Table"].map((view, index) => (
             <button type="button" key={view} className={`signal-pill focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-bg transition-colors ${index === 0 ? "signal-pill-brand" : "signal-pill-neutral hover:bg-surface hover:text-text-primary"}`}>
               {view}
             </button>
@@ -500,35 +478,15 @@ export function WorkScreen({ scope, data }: { scope?: string; data?: WorkScreenD
         </div>
       </PanelCard>
 
-      <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
-        <PanelCard id="my-work" title="Current work view" description="Detailed wireframe for dense list execution with bulk action readiness.">
-          <div className="grid gap-3">
-            {tasks.length ? tasks.map((task) => (
-              <button type="button" key={task.title} className="group surface-panel-muted grid w-full gap-3 p-4 text-left transition-all duration-200 hover:border-primary/50 hover:bg-surface hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-bg md:grid-cols-[minmax(0,1fr)_120px_120px_100px] md:items-center">
-                <div>
-                  <p className="font-medium text-text-primary transition-colors group-hover:text-primary">{task.title}</p>
-                  <p className="mt-1 text-sm text-text-muted">{task.summary}</p>
-                </div>
-                <span className="signal-pill signal-pill-neutral justify-center text-xs text-text-muted">{task.status}</span>
-                <span className="text-sm text-text-muted">{task.owner}</span>
-                <span className="text-sm text-text-muted">{task.due}</span>
-              </button>
-            )) : <EmptyState icon={ListTodo} title="No live work items in this scope" description="Create a project to start tracking work items and documentation tasks.">
-              <Link href="/projects/new" className={buttonVariants({ variant: "primary", size: "sm" })}>Create project</Link>
-            </EmptyState>}
-          </div>
-        </PanelCard>
-
-        <div className="space-y-6">
-          <PanelCard id="timeline" title="Timeline & dependencies" description="Calendar-aware sequencing without becoming a separate app.">
-            {timelineItems.length ? <MiniTimeline items={timelineItems} /> : <EmptyInlineState title="No timeline data yet" description="Milestones and dependencies will appear here as soon as the current scope has enough scheduling data." />}
-          </PanelCard>
-
-          <PanelCard id="workload" title="AI execution assist" description="Preview-first automation and planning support.">
-            <AssistList items={aiItems.length ? aiItems : ["No execution suggestions available yet."]} />
-          </PanelCard>
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-xl font-heading text-text-primary">Project Board</h2>
+        <div className="flex gap-2">
+          <button className="signal-pill signal-pill-neutral hover:bg-surface-elevated">Filter</button>
+          <button className="signal-pill signal-pill-neutral hover:bg-surface-elevated">Sort</button>
         </div>
       </div>
+
+      <KanbanBoard initialTasks={tasks} />
     </div>
   );
 }

@@ -53,7 +53,7 @@ export function CommandSurface({ open, onClose, shellState }: CommandSurfaceProp
     // theme-aware below: a modal backdrop should dim the page behind it
     // in both light and dark mode, not invert to a pale overlay in light
     // mode — so this stays a fixed dark value on purpose, not an oversight.
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 px-4 py-8 backdrop-blur-sm lg:py-20 animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 px-4 py-8 backdrop-blur-xl lg:py-20 animate-in fade-in duration-200">
       <div className="surface-panel w-full max-w-4xl overflow-hidden shadow-2xl text-text-primary animate-in zoom-in-95 duration-200">
         <div className="flex items-center gap-3 border-b border-border px-4 py-4 lg:px-6">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-input-bg text-text-primary">
