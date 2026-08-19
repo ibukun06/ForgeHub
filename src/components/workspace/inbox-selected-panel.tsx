@@ -2,7 +2,7 @@
 
 import React, { useState, useTransition } from "react";
 import { ShieldCheck, FileStack, BellDot, Loader2, Sparkles } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button-variants";
+import { buttonVariants } from "@/components/ui/button";
 import { generateInboxSummary } from "@/lib/ai/gemini";
 
 type SelectedPanelProps = {

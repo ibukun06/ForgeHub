@@ -42,6 +42,12 @@ export function AppShell({ user, children }: AppShellProps) {
   const menuButtonRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
+    if (pathname.startsWith("/w/") || pathname.startsWith("/projects/") || pathname.startsWith("/dashboard")) {
+      document.cookie = `forgehub_last_location=${pathname}; path=/; max-age=${60 * 60 * 24 * 7}`;
+    }
+  }, [pathname]);
+
+  useEffect(() => {
     const stored = window.localStorage.getItem(SIDEBAR_STORAGE_KEY);
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSidebarCollapsed(stored === "true");

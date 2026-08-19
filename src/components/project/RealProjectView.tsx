@@ -4,6 +4,8 @@ import { buttonVariants } from "@/components/ui/button";
 import { initials, relativeTime } from "@/lib/format";
 import { DOC_TYPE_LABELS, type DocSectionType, type SectionStatus } from "./data";
 import type { RealPublicProject } from "./data";
+import { ShareButton } from "./ShareButton";
+import { getProfileUrl, getProjectUrl } from "@/lib/urls";
 
 const TYPE_LABELS: Record<string, string> = {
   hardware: "Hardware",
@@ -59,21 +61,23 @@ export function RealProjectView({ project }: { project: RealPublicProject }) {
           {project.team.length > 0 && (
             <div className="mt-6 flex items-center -space-x-2" aria-label="Team members">
               {project.team.slice(0, 6).map((member) => (
-                <span
+                <Link
                   key={member.userId}
+                  href={getProfileUrl(member.userId)}
                   title={`${member.name} — ${ROLE_LABELS[member.role] ?? member.role}`}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-bg bg-primary font-heading text-xs font-semibold text-white"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-bg bg-primary font-heading text-xs font-semibold text-white hover:ring-2 hover:ring-primary hover:ring-offset-2 hover:ring-offset-bg transition-all"
                 >
                   {initials(member.name)}
-                </span>
+                </Link>
               ))}
             </div>
           )}
 
-          <div className="mt-8">
+          <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link href="/explore" className={buttonVariants({ variant: "secondary" })}>
               Explore more projects
             </Link>
+            <ShareButton title={project.name} url={getProjectUrl(project.slug)} />
           </div>
         </div>
       </section>
@@ -84,13 +88,13 @@ export function RealProjectView({ project }: { project: RealPublicProject }) {
             <h2 className="font-heading text-2xl font-bold text-text-primary">Team</h2>
             <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
               {project.team.map((member) => (
-                <div key={member.userId} className="flex flex-col items-center rounded-lg border border-border bg-surface p-5 text-center">
+                <Link key={member.userId} href={getProfileUrl(member.userId)} className="flex flex-col items-center rounded-lg border border-border bg-surface p-5 text-center hover:border-primary transition-colors">
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary font-heading text-sm font-semibold text-white">
                     {initials(member.name)}
                   </span>
                   <h3 className="mt-3 font-heading text-sm font-semibold text-text-primary">{member.name}</h3>
                   <span className="mt-0.5 text-xs text-secondary">{ROLE_LABELS[member.role] ?? member.role}</span>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

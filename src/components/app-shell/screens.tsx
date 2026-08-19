@@ -3,18 +3,22 @@ import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
 import {
   ArrowRight,
+  Bell,
   Bot,
+  BriefcaseBusiness,
   CalendarClock,
   CheckCircle2,
   CircleEllipsis,
   Flag,
   FolderKanban,
   KanbanSquare,
+  LibraryBig,
   ListTodo,
   MessageSquareMore,
   Plus,
   Scale,
   ShieldCheck,
+  Sparkles,
   Target,
   Users,
   Waypoints,
@@ -257,6 +261,17 @@ export function HomeScreen({ scope, data }: { scope?: string; data?: HomeScreenD
   const watchlist = data ? data.watchlist : DEFAULT_HOME_WATCHLIST;
   const schedule = data ? data.schedule : DEFAULT_HOME_SCHEDULE;
 
+  if (projects.length === 0 && focusItems.length === 0 && approvals.length === 0) {
+    return (
+      <GlobalEmptyState
+        title="Welcome to ForgeHub"
+        description="Your command center is currently clear. Start by creating a project to begin capturing decisions, tracking milestones, and accelerating delivery."
+        actionLabel="Create your first project"
+        actionHref="/projects/new"
+      />
+    );
+  }
+
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
       <ScreenHero
@@ -340,6 +355,18 @@ export function InboxScreen({ data }: { data?: InboxScreenData }) {
   const selected = data?.selected ?? DEFAULT_INBOX_SELECTED;
   const triage = data ? data.triage : DEFAULT_INBOX_TRIAGE;
 
+  if (items.length === 0) {
+    return (
+      <GlobalEmptyState
+        icon={Bell}
+        title="Inbox Zero"
+        description="Your attention queue is completely clear. Approvals, mentions, and project updates will appear here when they need your input."
+        actionLabel="Explore active projects"
+        actionHref="/projects"
+      />
+    );
+  }
+
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
       <PageIntro
@@ -381,6 +408,18 @@ export function ProjectsScreen({ scope, data }: { scope?: string; data?: Project
   const projects = data ? data.projects : ACTIVE_PROJECTS;
   const lanes = data ? data.lanes : DEFAULT_PROJECT_LANES;
   const kits = data ? data.kits : DEFAULT_PROJECT_KITS;
+
+  if (projects.length === 0) {
+    return (
+      <GlobalEmptyState
+        icon={FolderKanban}
+        title="Portfolio Empty"
+        description="There are no active projects in your workspace. Start a new project to establish a command center for your next initiative."
+        actionLabel="Create your first project"
+        actionHref="/projects/new"
+      />
+    );
+  }
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -441,6 +480,18 @@ export function WorkScreen({ scope, data }: { scope?: string; data?: WorkScreenD
   ];
   const tasks = data ? data.tasks : DEFAULT_WORK_TASKS;
 
+  if (tasks.length === 0 && !scope) {
+    return (
+      <GlobalEmptyState
+        icon={BriefcaseBusiness}
+        title="Execution Queue Clear"
+        description="You have no active work assignments. As projects generate tasks and reviews, your centralized execution board will populate here."
+        actionLabel="Browse portfolio"
+        actionHref="/projects"
+      />
+    );
+  }
+
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
       <ScreenHero
@@ -478,6 +529,18 @@ export function KnowledgeScreen({ scope, data }: { scope?: string; data?: Knowle
   const docs = data ? data.docs : KNOWLEDGE_DOCS;
   const libraryItems = data ? data.libraryItems : DEFAULT_LIBRARY_ITEMS;
   const aiItems = data ? data.aiItems : DEFAULT_KNOWLEDGE_AI;
+
+  if (docs.length === 0 && !scope) {
+    return (
+      <GlobalEmptyState
+        icon={LibraryBig}
+        title="Knowledge Base Empty"
+        description="Your workspace has no durable knowledge yet. Project briefs, decision records, and research notes will aggregate here automatically."
+        actionLabel="Start a new project"
+        actionHref="/projects/new"
+      />
+    );
+  }
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -533,6 +596,37 @@ export function ProjectCockpitScreen({
   const aiBrief = data ? data.aiBrief : DEFAULT_COCKPIT_BRIEF;
   const decisions = data ? data.decisions : DEFAULT_COCKPIT_DECISIONS;
   const artifacts = data ? data.artifacts : KNOWLEDGE_DOCS;
+
+  if (artifacts.length === 0 && decisions.length === 0 && blockers.length === 0) {
+    return (
+      <div className="space-y-6 pb-20 lg:pb-6">
+        <ScreenHero
+          eyebrow={`${workspaceName} workspace`}
+          title={projectName}
+          description="The project cockpit is the operating center of gravity: health, milestone status, blockers, active work, key docs, decisions, and AI synthesis aligned in one command bridge."
+          metrics={metrics}
+        />
+        {data?.project && (
+          <div className="flex flex-wrap justify-end gap-3">
+            <ShareProjectDialog projectId={data.project.id} slug={data.project.slug} initialVisibility={data.project.visibility} />
+            <EditProjectDialog
+              projectId={data.project.id}
+              initialName={data.project.name}
+              initialDescription={data.project.description}
+              initialType={data.project.projectType}
+            />
+          </div>
+        )}
+        <GlobalEmptyState
+          icon={Target}
+          title="Project Empty"
+          description="This project has no documentation, decisions, or tracked milestones yet. Kick off your first phase by drafting a project brief or inviting team members."
+          actionLabel="Open Knowledge Base"
+          actionHref={`/w/${workspaceSlug}/p/${projectSlug}/docs`}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -926,6 +1020,37 @@ function MiniTimeline({ items }: { items: string[] }) {
           <div className="surface-panel-muted flex-1 p-4 text-sm text-text-muted transition-all duration-200 group-hover:border-primary/50 group-hover:bg-surface group-hover:text-text-primary group-hover:shadow-md">{item}</div>
         </div>
       ))}
+    </div>
+  );
+}
+
+export function GlobalEmptyState({
+  icon: Icon,
+  title,
+  description,
+  actionLabel,
+  actionHref,
+}: {
+  icon?: React.ElementType;
+  title: string;
+  description: string;
+  actionLabel?: string;
+  actionHref?: string;
+}) {
+  return (
+    <div className="flex flex-col items-center justify-center py-24 text-center">
+      <div className="relative mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-surface-muted border border-border shadow-inner">
+        {Icon ? <Icon className="h-10 w-10 text-primary opacity-80" /> : <Sparkles className="h-10 w-10 text-primary opacity-80" />}
+        <div className="absolute inset-0 rounded-full ring-1 ring-primary/20 ring-offset-2 ring-offset-bg blur-sm"></div>
+      </div>
+      <h2 className="font-heading text-2xl text-text-primary mb-2">{title}</h2>
+      <p className="text-text-muted max-w-md mx-auto mb-8">{description}</p>
+      {actionLabel && actionHref && (
+        <Link href={actionHref} className={buttonVariants({ variant: "primary", size: "lg" })}>
+          <Plus className="mr-2 h-4 w-4" />
+          {actionLabel}
+        </Link>
+      )}
     </div>
   );
 }

@@ -10,6 +10,7 @@ import {
   LibraryBig,
   Map,
   MessagesSquare,
+  Users,
 } from "lucide-react";
 
 export type ShellAreaKey =
@@ -23,7 +24,8 @@ export type ProjectSectionKey =
   | "roadmap"
   | "board"
   | "docs"
-  | "chat";
+  | "chat"
+  | "team";
 
 export type ContextItem = {
   label: string;
@@ -81,6 +83,7 @@ export const PROJECT_SPINE: ProjectSpineItem[] = [
   { key: "board", label: "Board", icon: KanbanSquare },
   { key: "docs", label: "Docs", icon: BookMarked },
   { key: "chat", label: "Chat", icon: MessagesSquare },
+  { key: "team", label: "Team", icon: Users },
 ];
 
 export const FAVORITE_LINKS: FavoriteLink[] = [
