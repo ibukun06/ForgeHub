@@ -1,13 +1,14 @@
 /**
- * Hand-written to match supabase/migrations/0001_init.sql.
+ * Originally hand-written to match supabase/migrations/0001_init.sql through 0005_workspaces.sql.
  *
- * Once this project is linked to a real Supabase project, regenerate with:
- *   npx supabase gen types typescript --project-id <ref> > src/lib/supabase/types.ts
- * and this file becomes disposable.
+ * To prevent Database Drift, this project now includes the Supabase CLI in devDependencies.
  *
- * Note: `Relationships` is only filled in for joins actually used so far
- * (project_members → projects/users). Add entries here as new embedded
- * selects are introduced, or regenerate against the live project.
+ * Whenever the database schema is updated, regenerate these types by running:
+ *   npm run db:types
+ *   (or `npm run db:types:linked` if you are pulling from the live remote project).
+ *
+ * Note: If you add new manual `Relationships` in the generated output for specific joins,
+ * be sure to preserve them, or update the live project so the generator includes them automatically.
  */
 
 export type ProjectType = "hardware" | "software" | "research" | "multidisciplinary" | "other";

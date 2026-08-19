@@ -1,8 +1,27 @@
-cat > .gitignore <<'EOF'
-node_modules
+# Dependencies
+node_modules/
+
+# Next.js build
 .next/
+
+# Environment variables
 .env
 .env.local
 .env.*
 !.env.example
-EOF
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Debug
+npm-debug.log*
+
+# Vercel
+.vercel

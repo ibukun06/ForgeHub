@@ -20,9 +20,16 @@ export async function createClient() {
         },
         setAll(cookiesToSet) {
           try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            );
+            const isSessionOnly = cookieStore.get("forgehub_session_pref")?.value === "session";
+            cookiesToSet.forEach(({ name, value, options }) => {
+              if (isSessionOnly) {
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { maxAge, expires, ...restOptions } = options;
+                cookieStore.set(name, value, restOptions);
+              } else {
+                cookieStore.set(name, value, options);
+              }
+            });
           } catch {
             // Called from a Server Component that can't set cookies —
             // safe to ignore as long as middleware.ts is refreshing
