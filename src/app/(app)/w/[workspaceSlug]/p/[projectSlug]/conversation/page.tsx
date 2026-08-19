@@ -46,24 +46,40 @@ export default async function ProjectConversationPage({
 
   // Typecasting to match the Component structure
   // In a production setup, we'd define generic helper types to unwrap Supabase results.
-  const formattedComments = (comments ?? []).map((comment: any) => ({
-    id: comment.id,
-    content: comment.content,
-    resolved: comment.resolved,
-    created_at: comment.created_at,
-    author: {
-      name: comment.author?.name || null,
-      email: comment.author?.email || "unknown",
-    },
+  type CommentRow = {
+    id: string;
+    content: string;
+    resolved: boolean;
+    created_at: string;
+    author: { name: string | null; email: string } | null;
     section: {
-      id: comment.section.id,
-      prompt: comment.section.prompt,
-      document: {
-        title: comment.section.document.title || comment.section.document.document_type,
-        type: comment.section.document.document_type,
+      id: string;
+      prompt: string | null;
+      document: { title: string | null; document_type: string };
+    };
+  };
+
+  const formattedComments = (comments ?? []).map((c) => {
+    const comment = c as unknown as CommentRow;
+    return {
+      id: comment.id,
+      content: comment.content,
+      resolved: comment.resolved,
+      created_at: comment.created_at,
+      author: {
+        name: comment.author?.name || null,
+        email: comment.author?.email || "unknown",
       },
-    },
-  }));
+      section: {
+        id: comment.section.id,
+        prompt: comment.section.prompt,
+        document: {
+          title: comment.section.document.title || comment.section.document.document_type,
+          type: comment.section.document.document_type,
+        },
+      },
+    };
+  });
 
   return (
     <div className="flex h-full flex-col p-4 md:p-8">

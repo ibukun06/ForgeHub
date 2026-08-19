@@ -28,7 +28,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     .eq("id", commentId)
     .single();
 
-  if (!comment || (comment.sections as any).documents.project_id !== projectId) {
+  if (!comment || (comment.sections as { documents: { project_id: string } }).documents.project_id !== projectId) {
     return NextResponse.json({ error: "Invalid comment." }, { status: 400 });
   }
 

@@ -1,0 +1,411 @@
+- generic [active] [ref=f7e1]:
+  - banner [ref=f7e2]:
+    - generic [ref=f7e3]:
+      - link "ForgeHub" [ref=f7e4] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=f7e5]:
+        - link "Explore" [ref=f7e6] [cursor=pointer]:
+          - /url: /explore
+        - link "Categories" [ref=f7e7] [cursor=pointer]:
+          - /url: /explore#categories
+        - link "How it works" [ref=f7e8] [cursor=pointer]:
+          - /url: /#how-it-works
+      - generic [ref=f7e9]:
+        - button "Switch to light mode" [ref=f7e10] [cursor=pointer]
+        - link "Log in" [ref=f7e17] [cursor=pointer]:
+          - /url: /login
+        - link "Start Forging" [ref=f7e18] [cursor=pointer]:
+          - /url: /signup
+  - main [ref=f7e19]:
+    - generic [ref=f7e21]:
+      - heading "Discover what builders are creating." [level=1] [ref=f7e22]
+      - paragraph [ref=f7e23]: Real engineering projects, documented as they happen — browse by category, technology, or see what's trending right now.
+      - generic [ref=f7e25]:
+        - textbox "Search ForgeHub projects" [ref=f7e29]:
+          - /placeholder: Search projects, technologies, creators, universities…
+        - button "Search" [ref=f7e30] [cursor=pointer]
+      - generic [ref=f7e31]:
+        - generic [ref=f7e32]: "Trending:"
+        - link "React" [ref=f7e33] [cursor=pointer]:
+          - /url: /explore?technology=React
+        - link "Next.js" [ref=f7e34] [cursor=pointer]:
+          - /url: /explore?technology=Next.js
+        - link "Python" [ref=f7e35] [cursor=pointer]:
+          - /url: /explore?technology=Python
+        - link "Arduino" [ref=f7e36] [cursor=pointer]:
+          - /url: /explore?technology=Arduino
+        - link "ROS" [ref=f7e37] [cursor=pointer]:
+          - /url: /explore?technology=ROS
+        - link "MATLAB" [ref=f7e38] [cursor=pointer]:
+          - /url: /explore?technology=MATLAB
+      - link "Start Building" [ref=f7e40] [cursor=pointer]:
+        - /url: /signup
+    - generic [ref=f7e42]:
+      - generic [ref=f7e43]:
+        - generic [ref=f7e44]: Category
+        - generic [ref=f7e45]:
+          - link "Mechanical" [ref=f7e46] [cursor=pointer]:
+            - /url: /explore?category=mechanical
+          - link "Electrical & Electronics" [ref=f7e47] [cursor=pointer]:
+            - /url: /explore?category=electrical
+          - link "Software" [ref=f7e48] [cursor=pointer]:
+            - /url: /explore?category=software
+          - link "Robotics & Mechatronics" [ref=f7e49] [cursor=pointer]:
+            - /url: /explore?category=robotics
+          - link "AI & Data" [ref=f7e50] [cursor=pointer]:
+            - /url: /explore?category=ai-data
+          - link "Renewable Energy" [ref=f7e51] [cursor=pointer]:
+            - /url: /explore?category=renewable
+      - generic [ref=f7e52]:
+        - generic [ref=f7e53]: Team size
+        - generic [ref=f7e54]:
+          - link "Solo" [ref=f7e55] [cursor=pointer]:
+            - /url: /explore?teamSize=solo
+          - link "2–4 people" [ref=f7e56] [cursor=pointer]:
+            - /url: /explore?teamSize=small
+          - link "5+ people" [ref=f7e57] [cursor=pointer]:
+            - /url: /explore?teamSize=large
+      - generic [ref=f7e58]:
+        - generic [ref=f7e59]: Status
+        - generic [ref=f7e60]:
+          - link "Just started" [ref=f7e61] [cursor=pointer]:
+            - /url: /explore?status=just-started
+          - link "In progress" [ref=f7e62] [cursor=pointer]:
+            - /url: /explore?status=in-progress
+          - link "Near complete" [ref=f7e63] [cursor=pointer]:
+            - /url: /explore?status=near-complete
+          - link "Completed" [ref=f7e64] [cursor=pointer]:
+            - /url: /explore?status=completed
+      - generic [ref=f7e65]:
+        - generic [ref=f7e66]: Sort
+        - combobox "Sort projects" [ref=f7e67]:
+          - option "Most recent" [selected]
+          - option "Most popular"
+          - option "Most viewed"
+          - option "Featured"
+    - generic [ref=f7e68]:
+      - paragraph [ref=f7e69]: 10 projects
+      - generic [ref=f7e70]:
+        - link "Civil & Structural Seismic-Resilient Footbridge Model A scaled footbridge model testing base-isolation dampers under simulated seismic load. Kenji T. · University of Tokyo In progress MATLAB Structural Analysis Scale Modeling 3 7 98" [ref=f7e71] [cursor=pointer]:
+          - /url: /projects/seismic-resilient-footbridge-model
+          - generic [ref=f7e77]:
+            - generic [ref=f7e78]: Civil & Structural
+            - heading "Seismic-Resilient Footbridge Model" [level=3] [ref=f7e80]
+            - paragraph [ref=f7e81]: A scaled footbridge model testing base-isolation dampers under simulated seismic load.
+            - paragraph [ref=f7e82]: Kenji T. · University of Tokyo
+            - generic [ref=f7e83]: In progress
+            - generic [ref=f7e87]:
+              - generic [ref=f7e88]: MATLAB
+              - generic [ref=f7e89]: Structural Analysis
+              - generic [ref=f7e90]: Scale Modeling
+            - generic [ref=f7e91]:
+              - generic [ref=f7e92]: "3"
+              - generic [ref=f7e98]: "7"
+              - generic [ref=f7e101]: "98"
+        - link "Research Portable Water Quality Sensor A handheld sensor rig for testing turbidity, pH, and conductivity in rural water sources. Grace M. · Independent research pair In progress Embedded Systems Sensors IoT 2 9 143" [ref=f7e105] [cursor=pointer]:
+          - /url: /projects/portable-water-quality-sensor
+          - generic [ref=f7e109]:
+            - generic [ref=f7e110]: Research
+            - heading "Portable Water Quality Sensor" [level=3] [ref=f7e112]
+            - paragraph [ref=f7e113]: A handheld sensor rig for testing turbidity, pH, and conductivity in rural water sources.
+            - paragraph [ref=f7e114]: Grace M. · Independent research pair
+            - generic [ref=f7e115]: In progress
+            - generic [ref=f7e119]:
+              - generic [ref=f7e120]: Embedded Systems
+              - generic [ref=f7e121]: Sensors
+              - generic [ref=f7e122]: IoT
+            - generic [ref=f7e123]:
+              - generic [ref=f7e124]: "2"
+              - generic [ref=f7e130]: "9"
+              - generic [ref=f7e133]: "143"
+        - link "Electrical & Electronics Campus Smart Irrigation Controller A soil-moisture-driven irrigation controller cutting campus landscaping water use by a third. Nadia H. · Cairo University In progress Arduino IoT Sensors 2 11 132" [ref=f7e137] [cursor=pointer]:
+          - /url: /projects/campus-smart-irrigation-controller
+          - generic [ref=f7e141]:
+            - generic [ref=f7e142]: Electrical & Electronics
+            - heading "Campus Smart Irrigation Controller" [level=3] [ref=f7e144]
+            - paragraph [ref=f7e145]: A soil-moisture-driven irrigation controller cutting campus landscaping water use by a third.
+            - paragraph [ref=f7e146]: Nadia H. · Cairo University
+            - generic [ref=f7e147]: In progress
+            - generic [ref=f7e151]:
+              - generic [ref=f7e152]: Arduino
+              - generic [ref=f7e153]: IoT
+              - generic [ref=f7e154]: Sensors
+            - generic [ref=f7e155]:
+              - generic [ref=f7e156]: "2"
+              - generic [ref=f7e162]: "11"
+              - generic [ref=f7e165]: "132"
+        - link "Software Open-Source Lab Inventory Tracker A barcode-based inventory system so shared lab equipment stops disappearing between semesters. Wei L. · National University of Singapore Near complete React Next.js Postgres 2 12 176" [ref=f7e169] [cursor=pointer]:
+          - /url: /projects/open-source-lab-inventory-tracker
+          - generic [ref=f7e175]:
+            - generic [ref=f7e176]: Software
+            - heading "Open-Source Lab Inventory Tracker" [level=3] [ref=f7e178]
+            - paragraph [ref=f7e179]: A barcode-based inventory system so shared lab equipment stops disappearing between semesters.
+            - paragraph [ref=f7e180]: Wei L. · National University of Singapore
+            - generic [ref=f7e181]: Near complete
+            - generic [ref=f7e185]:
+              - generic [ref=f7e186]: React
+              - generic [ref=f7e187]: Next.js
+              - generic [ref=f7e188]: Postgres
+            - generic [ref=f7e189]:
+              - generic [ref=f7e190]: "2"
+              - generic [ref=f7e196]: "12"
+              - generic [ref=f7e199]: "176"
+        - link "AI & Data AI Circuit Fault Detector A model trained on thermal imaging to flag failing components on a PCB before they fail. Tomás R. · Technical University of Munich In progress Python ML PCB Design 3 15 201" [ref=f7e203] [cursor=pointer]:
+          - /url: /projects/ai-circuit-fault-detector
+          - generic [ref=f7e217]:
+            - generic [ref=f7e218]: AI & Data
+            - heading "AI Circuit Fault Detector" [level=3] [ref=f7e220]
+            - paragraph [ref=f7e221]: A model trained on thermal imaging to flag failing components on a PCB before they fail.
+            - paragraph [ref=f7e222]: Tomás R. · Technical University of Munich
+            - generic [ref=f7e223]: In progress
+            - generic [ref=f7e227]:
+              - generic [ref=f7e228]: Python
+              - generic [ref=f7e229]: ML
+              - generic [ref=f7e230]: PCB Design
+            - generic [ref=f7e231]:
+              - generic [ref=f7e232]: "3"
+              - generic [ref=f7e238]: "15"
+              - generic [ref=f7e241]: "201"
+        - link "Mechanical Featured Regenerative Braking Go-Kart A student-built electric go-kart recovering braking energy back into the battery pack. Liam F. · University of Michigan In progress Motor Control CAD Battery Management 6 28 355" [ref=f7e245] [cursor=pointer]:
+          - /url: /projects/regenerative-braking-go-kart
+          - generic [ref=f7e258]:
+            - generic [ref=f7e259]:
+              - generic [ref=f7e260]: Mechanical
+              - generic [ref=f7e261]: Featured
+            - heading "Regenerative Braking Go-Kart" [level=3] [ref=f7e262]
+            - paragraph [ref=f7e263]: A student-built electric go-kart recovering braking energy back into the battery pack.
+            - paragraph [ref=f7e264]: Liam F. · University of Michigan
+            - generic [ref=f7e265]: In progress
+            - generic [ref=f7e269]:
+              - generic [ref=f7e270]: Motor Control
+              - generic [ref=f7e271]: CAD
+              - generic [ref=f7e272]: Battery Management
+            - generic [ref=f7e273]:
+              - generic [ref=f7e274]: "6"
+              - generic [ref=f7e280]: "28"
+              - generic [ref=f7e283]: "355"
+        - link "Robotics & Mechatronics Featured Autonomous Trash-Sorting Robot A vision-guided robotic arm that sorts recyclables from general waste on a moving belt. Amara O. · Lagos State University Near complete Arduino Computer Vision CAD 4 24 340" [ref=f7e287] [cursor=pointer]:
+          - /url: /projects/autonomous-trash-sorting-robot
+          - generic [ref=f7e292]:
+            - generic [ref=f7e293]:
+              - generic [ref=f7e294]: Robotics & Mechatronics
+              - generic [ref=f7e295]: Featured
+            - heading "Autonomous Trash-Sorting Robot" [level=3] [ref=f7e296]
+            - paragraph [ref=f7e297]: A vision-guided robotic arm that sorts recyclables from general waste on a moving belt.
+            - paragraph [ref=f7e298]: Amara O. · Lagos State University
+            - generic [ref=f7e299]: Near complete
+            - generic [ref=f7e303]:
+              - generic [ref=f7e304]: Arduino
+              - generic [ref=f7e305]: Computer Vision
+              - generic [ref=f7e306]: CAD
+            - generic [ref=f7e307]:
+              - generic [ref=f7e308]: "4"
+              - generic [ref=f7e314]: "24"
+              - generic [ref=f7e317]: "340"
+        - link "Aerospace Featured Lightweight UAV Wing Structure A carbon-fiber wing rib design cutting airframe weight by 18% over the previous prototype. Sofia B. · Politecnico di Torino In progress SolidWorks Composites Aerodynamics 4 21 264" [ref=f7e321] [cursor=pointer]:
+          - /url: /projects/lightweight-uav-wing-structure
+          - generic [ref=f7e328]:
+            - generic [ref=f7e329]:
+              - generic [ref=f7e330]: Aerospace
+              - generic [ref=f7e331]: Featured
+            - heading "Lightweight UAV Wing Structure" [level=3] [ref=f7e332]
+            - paragraph [ref=f7e333]: A carbon-fiber wing rib design cutting airframe weight by 18% over the previous prototype.
+            - paragraph [ref=f7e334]: Sofia B. · Politecnico di Torino
+            - generic [ref=f7e335]: In progress
+            - generic [ref=f7e339]:
+              - generic [ref=f7e340]: SolidWorks
+              - generic [ref=f7e341]: Composites
+              - generic [ref=f7e342]: Aerodynamics
+            - generic [ref=f7e343]:
+              - generic [ref=f7e344]: "4"
+              - generic [ref=f7e350]: "21"
+              - generic [ref=f7e353]: "264"
+        - link "Biomedical Featured Low-Cost Prosthetic Hand A 3D-printed, servo-driven prosthetic hand designed for under $150 in parts. Priya N. · IIT Bombay In progress 3D Printing Servo Control CAD 3 31 512" [ref=f7e357] [cursor=pointer]:
+          - /url: /projects/low-cost-prosthetic-hand
+          - generic [ref=f7e362]:
+            - generic [ref=f7e363]:
+              - generic [ref=f7e364]: Biomedical
+              - generic [ref=f7e365]: Featured
+            - heading "Low-Cost Prosthetic Hand" [level=3] [ref=f7e366]
+            - paragraph [ref=f7e367]: A 3D-printed, servo-driven prosthetic hand designed for under $150 in parts.
+            - paragraph [ref=f7e368]: Priya N. · IIT Bombay
+            - generic [ref=f7e369]: In progress
+            - generic [ref=f7e373]:
+              - generic [ref=f7e374]: 3D Printing
+              - generic [ref=f7e375]: Servo Control
+              - generic [ref=f7e376]: CAD
+            - generic [ref=f7e377]:
+              - generic [ref=f7e378]: "3"
+              - generic [ref=f7e384]: "31"
+              - generic [ref=f7e387]: "512"
+        - link "Renewable Energy Campus Solar Micro-Grid A small-scale solar micro-grid feeding three campus buildings, with live power monitoring. Daniel K. · University of Nairobi Near complete Solar Power Electronics Data Logging 5 18 289" [ref=f7e391] [cursor=pointer]:
+          - /url: /projects/campus-solar-micro-grid
+          - generic [ref=f7e399]:
+            - generic [ref=f7e400]: Renewable Energy
+            - heading "Campus Solar Micro-Grid" [level=3] [ref=f7e402]
+            - paragraph [ref=f7e403]: A small-scale solar micro-grid feeding three campus buildings, with live power monitoring.
+            - paragraph [ref=f7e404]: Daniel K. · University of Nairobi
+            - generic [ref=f7e405]: Near complete
+            - generic [ref=f7e409]:
+              - generic [ref=f7e410]: Solar
+              - generic [ref=f7e411]: Power Electronics
+              - generic [ref=f7e412]: Data Logging
+            - generic [ref=f7e413]:
+              - generic [ref=f7e414]: "5"
+              - generic [ref=f7e420]: "18"
+              - generic [ref=f7e423]: "289"
+    - generic [ref=f7e428]:
+      - heading "Browse by category" [level=2] [ref=f7e429]
+      - generic [ref=f7e430]:
+        - link "Mechanical 1 project" [ref=f7e431] [cursor=pointer]:
+          - /url: /explore?category=mechanical
+          - generic [ref=f7e443]: Mechanical
+          - generic [ref=f7e444]: 1 project
+        - link "Electrical & Electronics 1 project" [ref=f7e445] [cursor=pointer]:
+          - /url: /explore?category=electrical
+          - generic [ref=f7e448]: Electrical & Electronics
+          - generic [ref=f7e449]: 1 project
+        - link "Software 1 project" [ref=f7e450] [cursor=pointer]:
+          - /url: /explore?category=software
+          - generic [ref=f7e455]: Software
+          - generic [ref=f7e456]: 1 project
+        - link "Robotics & Mechatronics 1 project" [ref=f7e457] [cursor=pointer]:
+          - /url: /explore?category=robotics
+          - generic [ref=f7e461]: Robotics & Mechatronics
+          - generic [ref=f7e462]: 1 project
+        - link "AI & Data 1 project" [ref=f7e463] [cursor=pointer]:
+          - /url: /explore?category=ai-data
+          - generic [ref=f7e476]: AI & Data
+          - generic [ref=f7e477]: 1 project
+        - link "Renewable Energy 1 project" [ref=f7e478] [cursor=pointer]:
+          - /url: /explore?category=renewable
+          - generic [ref=f7e485]: Renewable Energy
+          - generic [ref=f7e486]: 1 project
+        - link "Aerospace 1 project" [ref=f7e487] [cursor=pointer]:
+          - /url: /explore?category=aerospace
+          - generic [ref=f7e493]: Aerospace
+          - generic [ref=f7e494]: 1 project
+        - link "Civil & Structural 1 project" [ref=f7e495] [cursor=pointer]:
+          - /url: /explore?category=civil
+          - generic [ref=f7e500]: Civil & Structural
+          - generic [ref=f7e501]: 1 project
+        - link "Biomedical 1 project" [ref=f7e502] [cursor=pointer]:
+          - /url: /explore?category=biomedical
+          - generic [ref=f7e506]: Biomedical
+          - generic [ref=f7e507]: 1 project
+        - link "Research 1 project" [ref=f7e508] [cursor=pointer]:
+          - /url: /explore?category=research
+          - generic [ref=f7e511]: Research
+          - generic [ref=f7e512]: 1 project
+    - generic [ref=f7e514]:
+      - heading "Trending technologies" [level=2] [ref=f7e515]
+      - generic [ref=f7e516]:
+        - link "React" [ref=f7e517] [cursor=pointer]:
+          - /url: /explore?technology=React
+        - link "Next.js" [ref=f7e518] [cursor=pointer]:
+          - /url: /explore?technology=Next.js
+        - link "Python" [ref=f7e519] [cursor=pointer]:
+          - /url: /explore?technology=Python
+        - link "Arduino" [ref=f7e520] [cursor=pointer]:
+          - /url: /explore?technology=Arduino
+        - link "ROS" [ref=f7e521] [cursor=pointer]:
+          - /url: /explore?technology=ROS
+        - link "MATLAB" [ref=f7e522] [cursor=pointer]:
+          - /url: /explore?technology=MATLAB
+        - link "TensorFlow" [ref=f7e523] [cursor=pointer]:
+          - /url: /explore?technology=TensorFlow
+        - link "SolidWorks" [ref=f7e524] [cursor=pointer]:
+          - /url: /explore?technology=SolidWorks
+    - generic [ref=f7e526]:
+      - heading "Featured builders" [level=2] [ref=f7e527]
+      - generic [ref=f7e528]:
+        - link "AO Amara O. Mechatronics Engineering student Lagos State University CAD Computer Vision Arduino 142 followers 3 projects" [ref=f7e529] [cursor=pointer]:
+          - /url: /profile/amara-o
+          - generic [ref=f7e530]: AO
+          - heading "Amara O." [level=3] [ref=f7e531]
+          - paragraph [ref=f7e532]: Mechatronics Engineering student
+          - paragraph [ref=f7e533]: Lagos State University
+          - generic [ref=f7e534]:
+            - generic [ref=f7e535]: CAD
+            - generic [ref=f7e536]: Computer Vision
+            - generic [ref=f7e537]: Arduino
+          - generic [ref=f7e538]:
+            - generic [ref=f7e539]: 142 followers
+            - generic [ref=f7e540]: 3 projects
+        - link "PN Priya N. Biomedical design engineer IIT Bombay 3D Printing Prosthetics CAD 98 followers 2 projects" [ref=f7e541] [cursor=pointer]:
+          - /url: /profile/priya-n
+          - generic [ref=f7e542]: PN
+          - heading "Priya N." [level=3] [ref=f7e543]
+          - paragraph [ref=f7e544]: Biomedical design engineer
+          - paragraph [ref=f7e545]: IIT Bombay
+          - generic [ref=f7e546]:
+            - generic [ref=f7e547]: 3D Printing
+            - generic [ref=f7e548]: Prosthetics
+            - generic [ref=f7e549]: CAD
+          - generic [ref=f7e550]:
+            - generic [ref=f7e551]: 98 followers
+            - generic [ref=f7e552]: 2 projects
+        - link "SB Sofia B. Aerospace structures researcher Politecnico di Torino Composites SolidWorks Aerodynamics 76 followers 4 projects" [ref=f7e553] [cursor=pointer]:
+          - /url: /profile/sofia-b
+          - generic [ref=f7e554]: SB
+          - heading "Sofia B." [level=3] [ref=f7e555]
+          - paragraph [ref=f7e556]: Aerospace structures researcher
+          - paragraph [ref=f7e557]: Politecnico di Torino
+          - generic [ref=f7e558]:
+            - generic [ref=f7e559]: Composites
+            - generic [ref=f7e560]: SolidWorks
+            - generic [ref=f7e561]: Aerodynamics
+          - generic [ref=f7e562]:
+            - generic [ref=f7e563]: 76 followers
+            - generic [ref=f7e564]: 4 projects
+        - link "LF Liam F. Electric vehicle systems lead University of Michigan Motor Control Battery Systems CAD 210 followers 5 projects" [ref=f7e565] [cursor=pointer]:
+          - /url: /profile/liam-f
+          - generic [ref=f7e566]: LF
+          - heading "Liam F." [level=3] [ref=f7e567]
+          - paragraph [ref=f7e568]: Electric vehicle systems lead
+          - paragraph [ref=f7e569]: University of Michigan
+          - generic [ref=f7e570]:
+            - generic [ref=f7e571]: Motor Control
+            - generic [ref=f7e572]: Battery Systems
+            - generic [ref=f7e573]: CAD
+          - generic [ref=f7e574]:
+            - generic [ref=f7e575]: 210 followers
+            - generic [ref=f7e576]: 5 projects
+    - generic [ref=f7e578]:
+      - heading "Ready to build something incredible?" [level=2] [ref=f7e579]
+      - paragraph [ref=f7e580]: Your project could be the next one featured here.
+      - generic [ref=f7e581]:
+        - link "Start Your First Project" [ref=f7e582] [cursor=pointer]:
+          - /url: /signup
+        - link "Create an Account" [ref=f7e583] [cursor=pointer]:
+          - /url: /signup
+  - contentinfo [ref=f7e584]:
+    - generic [ref=f7e585]:
+      - generic [ref=f7e586]:
+        - link "ForgeHub" [ref=f7e587] [cursor=pointer]:
+          - /url: /
+        - paragraph [ref=f7e588]: The workspace where engineering builds get documented, not lost.
+      - generic [ref=f7e589]:
+        - generic [ref=f7e590]:
+          - heading "Product" [level=3] [ref=f7e591]
+          - list [ref=f7e592]:
+            - listitem [ref=f7e593]:
+              - link "Explore" [ref=f7e594] [cursor=pointer]:
+                - /url: /explore
+            - listitem [ref=f7e595]:
+              - link "Browse Categories" [ref=f7e596] [cursor=pointer]:
+                - /url: "#categories"
+            - listitem [ref=f7e597]:
+              - link "How it works" [ref=f7e598] [cursor=pointer]:
+                - /url: "#how-it-works"
+        - generic [ref=f7e599]:
+          - heading "Account" [level=3] [ref=f7e600]
+          - list [ref=f7e601]:
+            - listitem [ref=f7e602]:
+              - link "Log in" [ref=f7e603] [cursor=pointer]:
+                - /url: /login
+            - listitem [ref=f7e604]:
+              - link "Sign up" [ref=f7e605] [cursor=pointer]:
+                - /url: /signup
+    - paragraph [ref=f7e606]: © 2026 ForgeHub.
+  - button "Open Next.js Dev Tools" [ref=f7e612] [cursor=pointer]

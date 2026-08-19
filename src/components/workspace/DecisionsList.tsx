@@ -19,7 +19,7 @@ export function DecisionsList({ decisions }: { decisions: DecisionItem[] }) {
         </div>
         <p className="mt-4 font-heading text-lg font-semibold text-text-primary">No decisions logged yet.</p>
         <p className="mt-2 text-sm leading-relaxed text-text-muted">
-          Record major engineering choices, why you made them, and what you discarded. This becomes the project's institutional memory.
+          Record major engineering choices, why you made them, and what you discarded. This becomes the project&apos;s institutional memory.
         </p>
       </div>
     );

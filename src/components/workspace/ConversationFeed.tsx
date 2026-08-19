@@ -33,7 +33,7 @@ export function CommentItem({ projectId, comment }: { projectId: string; comment
       if (!response.ok) throw new Error();
       setResolved(true);
       router.refresh();
-    } catch (e) {
+    } catch {
       // Revert if failed
       setResolving(false);
     }
@@ -72,7 +72,7 @@ export function CommentItem({ projectId, comment }: { projectId: string; comment
         </header>
 
         <div className="mt-1 rounded border-l-2 border-border pl-3 text-xs text-text-muted">
-          On {comment.section.document.title}: "{comment.section.prompt}"
+          On {comment.section.document.title}: &quot;{comment.section.prompt}&quot;
         </div>
         
         <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-text-primary">
