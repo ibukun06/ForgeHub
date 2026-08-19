@@ -9,7 +9,7 @@ import type {
   SectionStatus,
 } from "@/lib/supabase/types";
 
-const DEFAULT_WORKSPACE_SLUG = "forgehub";
+export const DEFAULT_WORKSPACE_SLUG = "forgehub";
 
 type ProjectRecord = {
   id: string;
@@ -20,6 +20,7 @@ type ProjectRecord = {
   slug: string;
   created_at: string;
   updated_at: string;
+  workspace_id: string;
 };
 
 type MembershipRow = {
@@ -63,6 +64,36 @@ export type MetricData = {
   label: string;
   value: string;
   hint: string;
+};
+
+export type InsightsScreenData = {
+  metrics: MetricData[];
+  deliveryConfidence: number;
+  risks: string[];
+  workload: Array<{ member: string; assignedCount: number }>;
+};
+
+export type PlanScreenData = {
+  milestones: Array<{
+    id: string;
+    title: string;
+    status: "Completed" | "In progress" | "Not started" | string;
+    sections: Array<{
+      id: string;
+      prompt: string;
+      status: "Reviewed" | string;
+    }>;
+  }>;
+};
+
+export type ReviewScreenData = {
+  pendingReviews: Array<{
+    id: string;
+    status: string;
+    documentTitle: string;
+    prompt: string;
+    updated_at: string;
+  }>;
 };
 
 export type FocusTone = "urgent" | "warning" | "default";
@@ -232,7 +263,7 @@ async function getViewerGraph(workspaceSlug?: string): Promise<ViewerGraph> {
   for (const membership of memberships) {
     const projectValue = Array.isArray(membership.projects) ? membership.projects[0] : membership.projects;
     if (!projectValue) continue;
-    if (targetWorkspaceId && (projectValue as any).workspace_id !== targetWorkspaceId) continue;
+    if (targetWorkspaceId && projectValue.workspace_id !== targetWorkspaceId) continue;
     dedupedProjects.set(projectValue.id, projectValue);
     memberRoles.set(projectValue.id, membership.role);
   }
@@ -390,7 +421,7 @@ async function getProjectGraphBySlug(projectSlug: string, workspaceSlug?: string
   };
 }
 
-export async function getHomeScreenData(workspaceSlug: string): Promise<HomeScreenData> {
+export async function getHomeScreenData(workspaceSlug: string = DEFAULT_WORKSPACE_SLUG): Promise<HomeScreenData> {
   const graph = await getViewerGraph(workspaceSlug);
   const documentById = new Map(graph.documents.map((document) => [document.id, document]));
   const projectById = new Map(graph.projects.map((project) => [project.id, project]));
@@ -456,7 +487,7 @@ export async function getHomeScreenData(workspaceSlug: string): Promise<HomeScre
   };
 }
 
-export async function getInboxScreenData(workspaceSlug: string): Promise<InboxScreenData> {
+export async function getInboxScreenData(workspaceSlug: string = DEFAULT_WORKSPACE_SLUG): Promise<InboxScreenData> {
   const graph = await getViewerGraph(workspaceSlug);
   const projectById = new Map(graph.projects.map((project) => [project.id, project]));
   const items = graph.notifications.slice(0, 6).map((notification) => ({
@@ -486,7 +517,7 @@ export async function getInboxScreenData(workspaceSlug: string): Promise<InboxSc
   };
 }
 
-export async function getProjectsScreenData(workspaceSlug: string): Promise<ProjectsScreenData> {
+export async function getProjectsScreenData(workspaceSlug: string = DEFAULT_WORKSPACE_SLUG): Promise<ProjectsScreenData> {
   const graph = await getViewerGraph(workspaceSlug);
   const publishedCount = graph.projects.filter((project) => project.visibility === "published").length;
   const staleCount = graph.notifications.filter((notification) => notification.type === "section_stale").length;
@@ -525,7 +556,7 @@ export async function getProjectsScreenData(workspaceSlug: string): Promise<Proj
   };
 }
 
-export async function getWorkScreenData(workspaceSlug: string, projectSlug?: string): Promise<WorkScreenData> {
+export async function getWorkScreenData(workspaceSlug: string = DEFAULT_WORKSPACE_SLUG, projectSlug?: string): Promise<WorkScreenData> {
   const projectGraph = projectSlug ? await getProjectGraphBySlug(projectSlug, workspaceSlug) : null;
   const graph = projectGraph
     ? {
@@ -569,7 +600,7 @@ export async function getWorkScreenData(workspaceSlug: string, projectSlug?: str
   };
 }
 
-export async function getKnowledgeScreenData(workspaceSlug: string, projectSlug?: string): Promise<KnowledgeScreenData> {
+export async function getKnowledgeScreenData(workspaceSlug: string = DEFAULT_WORKSPACE_SLUG, projectSlug?: string): Promise<KnowledgeScreenData> {
   const projectGraph = projectSlug ? await getProjectGraphBySlug(projectSlug, workspaceSlug) : null;
   const graph = projectGraph
     ? {

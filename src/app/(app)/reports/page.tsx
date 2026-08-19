@@ -13,6 +13,7 @@ export default async function LegacyRedirectPage() {
     .limit(1)
     .maybeSingle();
     
-  const slug = (ws?.workspaces as any)?.slug ?? "forgehub";
+  const workspaces = ws?.workspaces as { slug: string } | { slug: string }[] | null;
+  const slug = (Array.isArray(workspaces) ? workspaces[0]?.slug : workspaces?.slug) ?? "forgehub";
   redirect(`/w/${slug}/reports`);
 }
