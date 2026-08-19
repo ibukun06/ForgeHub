@@ -2,7 +2,7 @@
 
 import React, { startTransition, useOptimistic } from "react";
 import { SwipeableInboxItem, type InboxItemData } from "./swipeable-inbox-item";
-import { EmptyInlineState } from "@/components/ui/empty-state";
+import { EmptyState } from "@/components/ui/empty-state";
 import { clearNotification } from "@/lib/actions/work";
 
 export function InboxQueue({ initialItems }: { initialItems: Omit<InboxItemData, "isFirst">[] }) {
@@ -32,7 +32,7 @@ export function InboxQueue({ initialItems }: { initialItems: Omit<InboxItemData,
   };
 
   if (optimisticItems.length === 0) {
-    return <EmptyInlineState title="Inbox is clear" description="No approvals, mentions, or updates need attention right now." />;
+    return <EmptyState title="Inbox is clear" description="No approvals, mentions, or updates need attention right now." />;
   }
 
   return (

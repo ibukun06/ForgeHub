@@ -50,7 +50,7 @@ export function TeamManagement({
     <div className="grid gap-6 xl:grid-cols-[1fr_320px]">
       <div className="space-y-6">
         <ActiveMembers members={members} isLead={isLead} projectId={projectId} currentUserId={currentUserId} />
-        {isLead {isLead && <PendingInvites invites={invites} projectId={projectId} />}{isLead && <PendingInvites invites={invites} projectId={projectId} />} <PendingInvites invites={invites} />}
+        {isLead ? <PendingInvites invites={invites} /> : null}
       </div>
       <div className="space-y-6">
         {isLead && <InvitePanel projectId={projectId} />}
