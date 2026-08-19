@@ -187,7 +187,7 @@ export function AppShell({ user, children }: AppShellProps) {
             </button>
 
             <Link
-              href="/work#quick-create"
+              href="/projects/new"
               className="hidden items-center gap-2 rounded-lg bg-primary px-3.5 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-hover sm:inline-flex focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2"
             >
               <Plus className="h-4 w-4" aria-hidden />

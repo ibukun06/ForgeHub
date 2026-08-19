@@ -225,12 +225,12 @@ export function ProjectCreationForm() {
               {saving ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />
-                  Creating workspace…
+                  Creating project…
                 </>
               ) : (
                 <>
                   <Check className="mr-2 h-4 w-4" aria-hidden />
-                  Create workspace
+                  Create project
                 </>
               )}
             </button>
@@ -240,8 +240,8 @@ export function ProjectCreationForm() {
       <aside className="border-t border-border pt-6 text-sm text-text-muted lg:border-l lg:border-t-0 lg:pl-6">
         <p className="font-heading font-semibold text-text-primary">Start with a useful record.</p>
         <p className="mt-3">The first document set is a working hypothesis, not a contract. Your project stays private until you choose to publish it.</p>
-        <Link href="/dashboard" className="mt-5 inline-block text-secondary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2">
-          Back to dashboard
+        <Link href="/projects" className="mt-5 inline-block text-secondary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2">
+          Back to projects
         </Link>
       </aside>
     </form>
