@@ -65,7 +65,7 @@ export function InboxSelectedPanel({ selected }: SelectedPanelProps) {
   );
 }
 
-function SignalTile({ title, value, icon: Icon }: { title: string; value: string; icon: any }) {
+function SignalTile({ title, value, icon: Icon }: { title: string; value: string; icon: React.ElementType }) {
   return (
     <div className="flex flex-col gap-1.5 rounded-lg border border-border bg-bg p-3 shadow-sm">
       <span className="flex items-center gap-2 text-xs font-medium text-text-muted">

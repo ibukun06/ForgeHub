@@ -233,7 +233,6 @@ function GlobalSidebar({
   sidebarRef: RefObject<HTMLElement | null>;
 }) {
   const textContainerClass = `md:hidden ${!collapsed ? "lg:block" : ""}`;
-  const flexContainerClass = `md:hidden ${!collapsed ? "lg:flex" : ""}`;
 
   return (
     <>

@@ -248,8 +248,13 @@ async function getViewerGraph(workspaceSlug?: string): Promise<ViewerGraph> {
   let targetWorkspaceId: string | undefined;
   if (workspaceSlug) {
     const { data: ws } = await supabase.from("workspaces").select("id").eq("slug", workspaceSlug).maybeSingle();
-    if (!ws) redirect("/inbox");
-    targetWorkspaceId = ws.id;
+    if (!ws) {
+      if (workspaceSlug !== DEFAULT_WORKSPACE_SLUG) {
+        redirect("/inbox");
+      }
+    } else {
+      targetWorkspaceId = ws.id;
+    }
   }
 
   const { data: membershipRows } = await supabase

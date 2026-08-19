@@ -1,15 +1,12 @@
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
-import { EmptyState } from "@/components/ui/empty-state";
 import {
   ArrowRight,
-  BellDot,
   Bot,
   CalendarClock,
   CheckCircle2,
   CircleEllipsis,
-  FileStack,
   Flag,
   FolderKanban,
   KanbanSquare,
@@ -37,7 +34,6 @@ import { prettyLabel } from "./shell-config";
 import { KanbanBoard } from "@/components/workspace/kanban-board";
 import { InboxQueue } from "@/components/workspace/inbox-queue";
 import { InboxSelectedPanel } from "@/components/workspace/inbox-selected-panel";
-import { initials } from "@/lib/format";
 
 type FocusTone = "urgent" | "warning" | "default";
 
@@ -456,8 +452,6 @@ export function WorkScreen({ scope, data }: { scope?: string; data?: WorkScreenD
     { label: "AI suggestions", value: "3", hint: "Assignee, due-date, and backlog cues" },
   ];
   const tasks = data ? data.tasks : DEFAULT_WORK_TASKS;
-  const timelineItems = data ? data.timelineItems : DEFAULT_WORK_TIMELINE;
-  const aiItems = data ? data.aiItems : DEFAULT_WORK_AI;
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">

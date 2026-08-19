@@ -62,7 +62,7 @@ export function KanbanBoard({ initialTasks }: KanbanBoardProps) {
     }
   );
 
-  const columnsId = useMemo(() => COLUMNS.map((c) => c.id), []);
+
 
   const sensors = useSensors(
     useSensor(PointerSensor, {

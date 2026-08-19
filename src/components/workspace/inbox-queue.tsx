@@ -5,7 +5,7 @@ import { SwipeableInboxItem, type InboxItemData } from "./swipeable-inbox-item";
 import { EmptyInlineState } from "@/components/ui/empty-state";
 import { clearNotification } from "@/lib/actions/work";
 
-export function InboxQueue({ initialItems }: { initialItems: any[] }) {
+export function InboxQueue({ initialItems }: { initialItems: Omit<InboxItemData, "isFirst">[] }) {
   // We only show items that are NOT cleared.
   const activeItems = initialItems.filter(item => item.state !== "Read").map((item, i) => ({
     ...item,

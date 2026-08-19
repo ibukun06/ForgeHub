@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Check, Edit3, MoreHorizontal, MessageSquare, History } from "lucide-react";
+import { Check, Edit3, MessageSquare } from "lucide-react";
 import { initials } from "@/lib/format";
 
 export function DocEditor() {
@@ -28,7 +28,7 @@ export function DocEditor() {
       {/* Document Body */}
       <div className="prose prose-invert prose-lg max-w-none prose-p:leading-[1.7] prose-p:text-slate-200/90 prose-headings:text-text-primary prose-a:text-primary hover:prose-a:text-primary/80">
         <p>
-          The primary objective of this phase is to move past wireframes and establish the exact high-fidelity tokens that will govern the application. We are standardizing on the "Obsidian Glass" aesthetic.
+          The primary objective of this phase is to move past wireframes and establish the exact high-fidelity tokens that will govern the application. We are standardizing on the &quot;Obsidian Glass&quot; aesthetic.
         </p>
         
         <p>
@@ -136,7 +136,7 @@ export function DocEditor() {
                   </div>
                   <div>
                     <p className="text-sm text-text-primary"><span className="font-medium">Ibukunoluwa</span> commented</p>
-                    <p className="mt-1 text-sm text-text-muted">"Make sure to check the command surface backdrop as well."</p>
+                    <p className="mt-1 text-sm text-text-muted">&quot;Make sure to check the command surface backdrop as well.&quot;</p>
                     <p className="mt-1 text-xs text-text-muted">Yesterday at 4:30 PM</p>
                   </div>
                 </div>
