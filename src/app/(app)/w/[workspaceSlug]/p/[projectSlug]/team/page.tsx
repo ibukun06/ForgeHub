@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { TeamManagement } from "@/components/project/TeamManagement";
-import { ProjectCockpitScreen } from "@/components/app-shell/screens";
+
 import { prettyLabel } from "@/components/app-shell/shell-config";
 
 export default async function ProjectTeamPage({
@@ -9,7 +9,7 @@ export default async function ProjectTeamPage({
 }: {
   params: Promise<{ workspaceSlug: string; projectSlug: string }>;
 }) {
-  const { workspaceSlug, projectSlug } = await params;
+  const { projectSlug } = await params;
   const supabase = await createClient();
 
   // 1. Fetch the project to verify existence and get ID
