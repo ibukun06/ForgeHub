@@ -181,18 +181,6 @@ const DEFAULT_WORK_TASKS = [
   },
 ];
 
-const DEFAULT_WORK_TIMELINE = [
-  "Milestone 1 · App shell foundation",
-  "Milestone 2 · Detailed wireframe rollout",
-  "Milestone 3 · High-fidelity design-system hardening",
-];
-
-const DEFAULT_WORK_AI = [
-  "Suggest the best assignee based on current load and previous work history.",
-  "Detect tasks likely to slip based on clustered due dates and blocked dependencies.",
-  "Preview a backlog reprioritization before changing any work in bulk.",
-];
-
 const DEFAULT_KNOWLEDGE_METRICS = [
   { label: "Key docs", value: "9", hint: "Briefs, roadmaps, and architectural rationale" },
   { label: "Decision records", value: "5", hint: "Each tied to alternatives and outcomes" },
