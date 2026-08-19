@@ -2,10 +2,11 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import type { SectionStatus } from "@/lib/supabase/types";
 
-export async function updateSectionStatus(sectionId: string, newStatus: string) {
+export async function updateSectionStatus(sectionId: string, newStatus: SectionStatus) {
   const supabase = await createClient();
-  
+
   const { error } = await supabase
     .from("sections")
     .update({ status: newStatus, updated_at: new Date().toISOString() })
@@ -23,7 +24,7 @@ export async function updateSectionStatus(sectionId: string, newStatus: string) 
 
 export async function clearNotification(notificationId: string) {
   const supabase = await createClient();
-  
+
   const { error } = await supabase
     .from("notifications")
     .update({ read_at: new Date().toISOString() })

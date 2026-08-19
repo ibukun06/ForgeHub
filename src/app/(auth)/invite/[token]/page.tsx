@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { Mail, CheckCircle, AlertTriangle } from "lucide-react";
@@ -11,7 +11,7 @@ export default async function InvitePage({
   params: Promise<{ token: string }>;
 }) {
   const { token } = await params;
-  
+
   // 1. Fetch current user session
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -68,7 +68,7 @@ export default async function InvitePage({
   }
 
   const projectName = Array.isArray(invite.projects) ? invite.projects[0]?.name : (invite.projects as { name: string } | null)?.name;
-  const inviter = Array.isArray(invite.users) ? invite.users[0] : (invite.users as { name: string | null; email: string } | null);
+  const inviter = Array.isArray(invite.users) ? invite.users[0] : ((invite.users as unknown) as { name: string | null; email: string } | null);
   const inviterName = inviter?.name || inviter?.email || "Someone";
 
   // If the user isn't logged in, prompt them
@@ -78,7 +78,7 @@ export default async function InvitePage({
         <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
           <Mail className="h-6 w-6 text-primary" />
         </div>
-        <h1 className="font-heading text-2xl text-text-primary">You've been invited!</h1>
+        <h1 className="font-heading text-2xl text-text-primary">You&apos;ve been invited!</h1>
         <p className="text-text-muted">
           {inviterName} has invited you to join <strong>{projectName}</strong> as a {invite.role}.
         </p>

@@ -1,8 +1,10 @@
 import type { LucideIcon } from "lucide-react";
 import {
+  Activity,
   Bell,
   BookMarked,
   BriefcaseBusiness,
+  CheckCircle2,
   Compass,
   FolderKanban,
   KanbanSquare,
@@ -25,6 +27,8 @@ export type ProjectSectionKey =
   | "board"
   | "docs"
   | "chat"
+  | "review"
+  | "insights"
   | "team";
 
 export type ContextItem = {
@@ -79,10 +83,12 @@ export const PRIMARY_NAV: NavItem[] = [
 
 export const PROJECT_SPINE: ProjectSpineItem[] = [
   { key: "overview", label: "Overview", icon: LayoutDashboard },
-  { key: "roadmap", label: "Roadmap", icon: Map },
+  { key: "roadmap", label: "Plan", icon: Map },
   { key: "board", label: "Board", icon: KanbanSquare },
   { key: "docs", label: "Docs", icon: BookMarked },
   { key: "chat", label: "Chat", icon: MessagesSquare },
+  { key: "review", label: "Review", icon: CheckCircle2 },
+  { key: "insights", label: "Insights", icon: Activity },
   { key: "team", label: "Team", icon: Users },
 ];
 

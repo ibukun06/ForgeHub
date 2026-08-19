@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import type { InviteRole } from "@/lib/supabase/types";
 import { TeamManagement } from "@/components/project/TeamManagement";
-
 import { prettyLabel } from "@/components/app-shell/shell-config";
 
 export default async function ProjectTeamPage({
@@ -42,7 +42,7 @@ export default async function ProjectTeamPage({
   const isLead = currentMember?.role === "team_lead";
 
   // 4. Fetch pending invites (ONLY if team_lead; otherwise RLS returns empty/error, so we skip)
-  let invites: { id: string; email: string; role: string; expires_at: string }[] = [];
+  let invites: { id: string; email: string; role: InviteRole; expires_at: string }[] = [];
   if (isLead) {
     const { data: fetchedInvites } = await supabase
       .from("invites")
@@ -50,7 +50,7 @@ export default async function ProjectTeamPage({
       .eq("project_id", project.id)
       .is("accepted_at", null)
       .order("created_at", { ascending: false });
-    
+
     if (fetchedInvites) invites = fetchedInvites;
   }
 
@@ -76,7 +76,7 @@ export default async function ProjectTeamPage({
           </p>
         </div>
       </div>
-      
+
       <TeamManagement
         projectId={project.id}
         currentUserId={user?.id || ""}

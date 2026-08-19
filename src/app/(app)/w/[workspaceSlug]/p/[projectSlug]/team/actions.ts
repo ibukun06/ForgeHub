@@ -7,10 +7,13 @@ import type { InviteRole, MemberRole } from "@/lib/supabase/types";
 export async function createInvite(projectId: string, email: string, role: InviteRole) {
   const supabase = await createClient();
 
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "Not authenticated" };
+
   // We rely on RLS: "invites_insert" is restricted to team_lead.
   const { data, error } = await supabase
     .from("invites")
-    .insert({ project_id: projectId, email, role })
+    .insert({ project_id: projectId, email, role, created_by: user.id })
     .select()
     .single();
 

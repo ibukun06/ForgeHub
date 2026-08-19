@@ -306,10 +306,10 @@ async function getViewerGraph(workspaceSlug?: string): Promise<ViewerGraph> {
   const documentIds = documentList.map((document) => document.id);
   const { data: sections } = documentIds.length
     ? await supabase
-        .from("sections")
-        .select("id, document_id, prompt, status, updated_at")
-        .in("document_id", documentIds)
-        .order("updated_at", { ascending: false })
+      .from("sections")
+      .select("id, document_id, prompt, status, updated_at")
+      .in("document_id", documentIds)
+      .order("updated_at", { ascending: false })
     : { data: [] as SectionRecord[] };
 
   return {
@@ -392,12 +392,12 @@ async function getProjectGraphBySlug(projectSlug: string, workspaceSlug?: string
       .order("created_at", { ascending: false }),
     membershipRow
       ? supabase
-          .from("notifications")
-          .select("id, project_id, type, read_at, created_at")
-          .eq("user_id", user.id)
-          .eq("project_id", project.id)
-          .order("created_at", { ascending: false })
-          .limit(12)
+        .from("notifications")
+        .select("id, project_id, type, read_at, created_at")
+        .eq("user_id", user.id)
+        .eq("project_id", project.id)
+        .order("created_at", { ascending: false })
+        .limit(12)
       : Promise.resolve({ data: [] as NotificationRecord[] }),
     supabase.from("project_members").select("id", { count: "exact", head: true }).eq("project_id", project.id),
   ]);
@@ -406,10 +406,10 @@ async function getProjectGraphBySlug(projectSlug: string, workspaceSlug?: string
   const documentIds = documentList.map((document) => document.id);
   const { data: sections } = documentIds.length
     ? await supabase
-        .from("sections")
-        .select("id, document_id, prompt, status, updated_at")
-        .in("document_id", documentIds)
-        .order("updated_at", { ascending: false })
+      .from("sections")
+      .select("id, document_id, prompt, status, updated_at")
+      .in("document_id", documentIds)
+      .order("updated_at", { ascending: false })
     : { data: [] as SectionRecord[] };
 
   return {
@@ -567,12 +567,12 @@ export async function getWorkScreenData(workspaceSlug: string = DEFAULT_WORKSPAC
   const projectGraph = projectSlug ? await getProjectGraphBySlug(projectSlug, workspaceSlug) : null;
   const graph = projectGraph
     ? {
-        projects: [projectGraph.project],
-        documents: projectGraph.documents,
-        sections: projectGraph.sections,
-        decisions: projectGraph.decisions,
-        notifications: projectGraph.notifications,
-      }
+      projects: [projectGraph.project],
+      documents: projectGraph.documents,
+      sections: projectGraph.sections,
+      decisions: projectGraph.decisions,
+      notifications: projectGraph.notifications,
+    }
     : await getViewerGraph(workspaceSlug);
 
   const documentById = new Map(graph.documents.map((document) => [document.id, document]));
@@ -580,9 +580,8 @@ export async function getWorkScreenData(workspaceSlug: string = DEFAULT_WORKSPAC
   const tasks = graph.sections.slice(0, 6).map((section) => {
     const document = documentById.get(section.document_id);
     const project = document ? projectById.get(document.project_id) : null;
-    
+
     let boardStatus = "Backlog";
-    if (section.status === "in_progress") boardStatus = "In progress";
     if (section.status === "ai_draft") boardStatus = "Review";
     if (section.status === "team_reviewed") boardStatus = "Done";
 
@@ -618,11 +617,11 @@ export async function getKnowledgeScreenData(workspaceSlug: string = DEFAULT_WOR
   const projectGraph = projectSlug ? await getProjectGraphBySlug(projectSlug, workspaceSlug) : null;
   const graph = projectGraph
     ? {
-        projects: [projectGraph.project],
-        documents: projectGraph.documents,
-        sections: projectGraph.sections,
-        decisions: projectGraph.decisions,
-      }
+      projects: [projectGraph.project],
+      documents: projectGraph.documents,
+      sections: projectGraph.sections,
+      decisions: projectGraph.decisions,
+    }
     : await getViewerGraph(workspaceSlug);
 
   return {

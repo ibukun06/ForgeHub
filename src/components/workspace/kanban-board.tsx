@@ -25,6 +25,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { Plus } from "lucide-react";
 import { initials } from "@/lib/format";
 import { updateSectionStatus } from "@/lib/actions/work";
+import type { SectionStatus } from "@/lib/supabase/types";
 
 export type Task = {
   id: string;
@@ -39,9 +40,9 @@ type KanbanBoardProps = {
   initialTasks: Task[];
 };
 
-const COLUMNS = [
+const COLUMNS: { id: string; label: string; colorClass: string; dbStatus: SectionStatus }[] = [
   { id: "Backlog", label: "Backlog", colorClass: "border-t-border", dbStatus: "not_started" },
-  { id: "In progress", label: "In progress", colorClass: "border-t-primary", dbStatus: "in_progress" },
+  { id: "In progress", label: "In progress", colorClass: "border-t-primary", dbStatus: "not_started" }, // Schema does not have in_progress
   { id: "Review", label: "Review", colorClass: "border-t-warning", dbStatus: "ai_draft" },
   { id: "Done", label: "Done", colorClass: "border-t-success", dbStatus: "team_reviewed" },
 ];
