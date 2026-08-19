@@ -5,9 +5,9 @@ import { OAuthButtons, AuthDivider } from "@/components/auth/oauth-buttons";
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ verify?: string }>;
+  searchParams: Promise<{ verify?: string; redirectTo?: string }>;
 }) {
-  const { verify } = await searchParams;
+  const { verify, redirectTo } = await searchParams;
 
   return (
     <div className="flex flex-col gap-5">
@@ -19,7 +19,7 @@ export default async function LoginPage({
       <OAuthButtons />
       <AuthDivider />
 
-      <LoginForm justVerified={verify === "1"} />
+      <LoginForm justVerified={verify === "1"} redirectTo={redirectTo} />
 
       <p className="text-center text-sm text-text-muted">
         New to ForgeHub?{" "}

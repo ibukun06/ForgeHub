@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { cookies } from "next/headers";
 import { signInSchema, signUpSchema } from "@/lib/validation/auth";
 
 export type AuthActionState = {
@@ -53,6 +54,8 @@ export async function signIn(
   const parsed = signInSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
+    rememberMe: formData.get("rememberMe"),
+    redirectTo: formData.get("redirectTo"),
   });
 
   if (!parsed.success) {
@@ -60,7 +63,10 @@ export async function signIn(
   }
 
   const supabase = await createClient();
-  const { data, error } = await supabase.auth.signInWithPassword(parsed.data);
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: parsed.data.email,
+    password: parsed.data.password,
+  });
 
   if (error) {
     if (error.message.toLowerCase().includes("email not confirmed")) {
@@ -69,15 +75,34 @@ export async function signIn(
     return { error: "Invalid email or password." };
   }
 
+  const cookieStore = await cookies();
+  
+  if (parsed.data.rememberMe) {
+    cookieStore.delete("forgehub_session_pref");
+  } else {
+    cookieStore.set("forgehub_session_pref", "session", { path: "/", secure: true, sameSite: "lax" });
+  }
+
   // Route based on profile completeness (App Flow §2: /onboarding if
-  // incomplete, otherwise /dashboard).
+  // incomplete, otherwise /dashboard or redirectTo).
   const { data: profile } = await supabase
     .from("users")
     .select("name")
     .eq("id", data.user.id)
     .single();
 
-  redirect(profile?.name ? "/dashboard" : "/onboarding");
+  if (!profile?.name) {
+    redirect("/onboarding");
+  }
+
+  const redirectTo = parsed.data.redirectTo || cookieStore.get("forgehub_last_location")?.value || "/dashboard";
+  
+  // Prevent open redirects
+  if (!redirectTo.startsWith("/")) {
+    redirect("/dashboard");
+  }
+
+  redirect(redirectTo);
 }
 
 export async function signOut() {

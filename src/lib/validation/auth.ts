@@ -20,6 +20,8 @@ export const signUpSchema = z.object({
 export const signInSchema = z.object({
   email: z.string().email("Enter a valid email address"),
   password: z.string().min(1, "Password is required"),
+  rememberMe: z.union([z.boolean(), z.literal("on")]).optional(),
+  redirectTo: z.string().optional(),
 });
 
 export const onboardingSchema = z.object({
