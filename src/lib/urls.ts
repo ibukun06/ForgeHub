@@ -9,6 +9,6 @@ export function getProjectUrl(slug: string): string {
   return `/projects/${slug}`;
 }
 
-export function getProfileUrl(username: string): string {
-  return `/profile/${username}`;
+export function getProfileUrl(id: string): string {
+  return `/profile/${id}`;
 }

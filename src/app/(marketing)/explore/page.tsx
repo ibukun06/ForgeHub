@@ -26,13 +26,60 @@ export const metadata: Metadata = {
   },
 };
 
+import { createClient } from "@/lib/supabase/server";
+import { MOCK_PROJECTS, type ExploreProject } from "@/components/explore/data";
+
 export default async function ExplorePage({
   searchParams,
 }: {
   searchParams: Promise<ExploreSearchParams>;
 }) {
   const params = await searchParams;
-  const projects = filterAndSortProjects(params);
+  const supabase = await createClient();
+
+  const { data: realProjectsData } = await supabase
+    .from("projects")
+    .select(`
+      id,
+      slug,
+      name,
+      description,
+      project_type,
+      created_at,
+      users:created_by ( name, institution ),
+      project_members ( count )
+    `)
+    .eq("visibility", "published");
+
+  type RealProjectData = {
+    slug: string;
+    name: string;
+    description: string | null;
+    project_type: string;
+    created_at: string;
+    users?: { name: string; institution: string } | null;
+    project_members?: { count: number }[] | null;
+  };
+
+  const realProjects: ExploreProject[] = ((realProjectsData || []) as RealProjectData[]).map((rp) => ({
+    slug: rp.slug,
+    name: rp.name,
+    description: rp.description || "",
+    category: rp.project_type, // "software", "hardware" etc.
+    tags: [rp.project_type], // fallback tag
+    creator: rp.users?.name || "Unknown",
+    institution: rp.users?.institution || "Independent",
+    teamSize: rp.project_members?.[0]?.count || 1,
+    contributors: rp.project_members?.[0]?.count || 1,
+    progress: 50, // placeholder since we don't calculate it from sections yet
+    likes: 0,
+    views: 0,
+    featured: false,
+    createdAt: rp.created_at,
+  }));
+
+  const allProjects = [...realProjects, ...MOCK_PROJECTS];
+  const projects = filterAndSortProjects(params, allProjects);
 
   return (
     <>

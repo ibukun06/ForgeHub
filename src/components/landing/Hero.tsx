@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Check, FileText, Sparkles, Users } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import { createClient } from "@/lib/supabase/server";
 
 const SIGNALS = [
   { icon: FileText, label: "Guided docs" },
@@ -8,7 +9,10 @@ const SIGNALS = [
   { icon: Sparkles, label: "AI drafts" },
 ];
 
-export function Hero() {
+export async function Hero() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
   return (
     <section className="relative overflow-hidden border-b border-border">
       <div className="mx-auto grid max-w-7xl gap-14 px-4 py-20 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:px-8 lg:py-28">
@@ -16,7 +20,19 @@ export function Hero() {
           <p className="font-mono text-xs uppercase tracking-[0.14em] text-secondary">The documentation workspace for technical teams</p>
           <h1 className="mt-4 max-w-2xl text-5xl font-bold leading-[0.96] tracking-[-0.055em] text-text-primary sm:text-6xl lg:text-7xl">Keep the work. Keep the <span className="text-secondary">why.</span></h1>
           <p className="mt-7 max-w-xl text-lg leading-relaxed text-text-muted">ForgeHub helps engineering students, researchers, and makers document the problem, decisions, evidence, and progress of a project while they build it.</p>
-          <div className="mt-8 flex flex-wrap gap-3"><Link href="/signup" className={buttonVariants({ variant: "primary", className: "px-6 py-3 text-base" })}>Start a project <ArrowUpRight className="ml-1 h-4 w-4" aria-hidden /></Link><Link href="/explore" className={buttonVariants({ variant: "secondary", className: "px-6 py-3 text-base" })}>See project stories</Link></div>
+          <div className="mt-8 flex flex-wrap gap-3">
+            {user ? (
+              <>
+                <Link href="/dashboard" className={buttonVariants({ variant: "primary", className: "px-6 py-3 text-base" })}>Open ForgeHub <ArrowUpRight className="ml-1 h-4 w-4" aria-hidden /></Link>
+                <Link href="/dashboard" className={buttonVariants({ variant: "secondary", className: "px-6 py-3 text-base" })}>Continue Working</Link>
+              </>
+            ) : (
+              <>
+                <Link href="/signup" className={buttonVariants({ variant: "primary", className: "px-6 py-3 text-base" })}>Start a project <ArrowUpRight className="ml-1 h-4 w-4" aria-hidden /></Link>
+                <Link href="/explore" className={buttonVariants({ variant: "secondary", className: "px-6 py-3 text-base" })}>See project stories</Link>
+              </>
+            )}
+          </div>
           <div className="mt-8 flex flex-wrap gap-x-5 gap-y-3 text-sm text-text-muted">{SIGNALS.map(({ icon: Icon, label }) => <span key={label} className="flex items-center gap-2"><Icon className="h-4 w-4 text-secondary" aria-hidden />{label}</span>)}</div>
         </div>
         <BuildRecord />

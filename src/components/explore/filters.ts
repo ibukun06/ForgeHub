@@ -28,8 +28,8 @@ export function getTeamSizeBucket(teamSize: number): "solo" | "small" | "large" 
   return "large";
 }
 
-export function filterAndSortProjects(params: ExploreSearchParams): ExploreProject[] {
-  let results = [...MOCK_PROJECTS];
+export function filterAndSortProjects(params: ExploreSearchParams, baseProjects: ExploreProject[] = MOCK_PROJECTS): ExploreProject[] {
+  let results = [...baseProjects];
 
   if (params.q) {
     const q = params.q.toLowerCase();
