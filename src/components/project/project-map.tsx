@@ -12,13 +12,14 @@ import {
   Handle,
   Position,
   BackgroundVariant,
-  NodeProps
+  NodeProps,
+  Node
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { Activity, Beaker, CheckCircle2, AlertTriangle, Lightbulb, Link as LinkIcon } from 'lucide-react';
+import { Activity, Beaker, CheckCircle2, AlertTriangle, Lightbulb, Link as LinkIcon, Network } from 'lucide-react';
 
 // Custom Node component with industrial blueprint styling
-const ProjectNode = ({ data, isConnectable }: NodeProps) => {
+const ProjectNode = ({ data, isConnectable }: NodeProps<Node<{ label: string; category?: string; status?: string; type?: string }>>) => {
   const isFailed = data.status === 'failed';
   const isSuccess = data.status === 'success';
   const isWarning = data.status === 'warning';

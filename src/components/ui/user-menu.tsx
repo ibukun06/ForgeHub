@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { User, LogOut, Settings, LayoutDashboard, Palette } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
@@ -9,6 +10,9 @@ export function UserMenu({ user }: { user: any }) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const supabase = createClient();
+  const pathname = usePathname();
+  const workspaceSlugMatch = pathname.match(/^\/w\/([^/]+)/);
+  const workspaceSlug = workspaceSlugMatch ? workspaceSlugMatch[1] : null;
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -65,12 +69,12 @@ export function UserMenu({ user }: { user: any }) {
               Public Profile
             </Link>
             <Link
-              href="/settings/profile"
+              href={workspaceSlug ? `/w/${workspaceSlug}/settings` : "/dashboard"}
               onClick={() => setIsOpen(false)}
               className="group flex items-center px-4 py-2 text-text-muted hover:bg-surface-elevated hover:text-text-primary transition-colors"
             >
               <Settings className="mr-3 h-4 w-4 group-hover:text-primary transition-colors" />
-              Settings
+              Workspace Settings
             </Link>
             <Link
               href="/settings/appearance"
