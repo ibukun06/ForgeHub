@@ -1,23 +1,24 @@
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
-import { EmptyState } from "@/components/ui/empty-state";
 import {
   ArrowRight,
-  BellDot,
+  Bell,
   Bot,
+  BriefcaseBusiness,
   CalendarClock,
   CheckCircle2,
   CircleEllipsis,
-  FileStack,
   Flag,
   FolderKanban,
   KanbanSquare,
+  LibraryBig,
   ListTodo,
   MessageSquareMore,
   Plus,
   Scale,
   ShieldCheck,
+  Sparkles,
   Target,
   Users,
   Waypoints,
@@ -34,6 +35,9 @@ import type {
   WorkScreenData,
 } from "@/lib/app-shell-data";
 import { prettyLabel } from "./shell-config";
+import { KanbanBoard } from "@/components/workspace/kanban-board";
+import { InboxQueue } from "@/components/workspace/inbox-queue";
+import { InboxSelectedPanel } from "@/components/workspace/inbox-selected-panel";
 
 type FocusTone = "urgent" | "warning" | "default";
 
@@ -159,6 +163,7 @@ const DEFAULT_PROJECT_KITS = [
 
 const DEFAULT_WORK_TASKS = [
   {
+    id: "task-1",
     title: "Ship shell architecture",
     status: "In progress",
     owner: "Ibukunoluwa",
@@ -166,6 +171,7 @@ const DEFAULT_WORK_TASKS = [
     summary: "Inline editing, due-date control, dependency visibility, and keyboard navigation all live in the same row model.",
   },
   {
+    id: "task-2",
     title: "Map workspace routes",
     status: "Review",
     owner: "AI architect",
@@ -173,24 +179,13 @@ const DEFAULT_WORK_TASKS = [
     summary: "Preserve scope and context as users move between projects, work, and knowledge.",
   },
   {
+    id: "task-3",
     title: "Draft workload balancing logic",
     status: "Backlog",
     owner: "Ops design",
     due: "Next week",
     summary: "Ensure rebalancing guidance stays visible without becoming noisy or paternalistic.",
   },
-];
-
-const DEFAULT_WORK_TIMELINE = [
-  "Milestone 1 · App shell foundation",
-  "Milestone 2 · Detailed wireframe rollout",
-  "Milestone 3 · High-fidelity design-system hardening",
-];
-
-const DEFAULT_WORK_AI = [
-  "Suggest the best assignee based on current load and previous work history.",
-  "Detect tasks likely to slip based on clustered due dates and blocked dependencies.",
-  "Preview a backlog reprioritization before changing any work in bulk.",
 ];
 
 const DEFAULT_KNOWLEDGE_METRICS = [
@@ -213,10 +208,10 @@ const DEFAULT_KNOWLEDGE_AI = [
 ];
 
 const DEFAULT_INBOX_ITEMS = [
-  { title: "Approve the command-surface interaction model", source: "ForgeHub Redesign · Approval", state: "Action required" },
-  { title: "New comment on AI guardrails", source: "Decision log · Mention", state: "Mention" },
-  { title: "Milestone risk changed", source: "Project cockpit · Update", state: "Project update" },
-  { title: "Research synthesis ready", source: "Knowledge hub · Digest", state: "AI digest" },
+  { id: "inbox-1", title: "Approve the command-surface interaction model", source: "ForgeHub Redesign · Approval", state: "Action required" },
+  { id: "inbox-2", title: "New comment on AI guardrails", source: "Decision log · Mention", state: "Mention" },
+  { id: "inbox-3", title: "Milestone risk changed", source: "Project cockpit · Update", state: "Project update" },
+  { id: "inbox-4", title: "Research synthesis ready", source: "Knowledge hub · Digest", state: "AI digest" },
 ];
 
 const DEFAULT_INBOX_SELECTED = {
@@ -268,6 +263,17 @@ export function HomeScreen({ scope, data }: { scope?: string; data?: HomeScreenD
   const projects = data ? data.projects : ACTIVE_PROJECTS;
   const watchlist = data ? data.watchlist : DEFAULT_HOME_WATCHLIST;
   const schedule = data ? data.schedule : DEFAULT_HOME_SCHEDULE;
+
+  if (projects.length === 0 && focusItems.length === 0 && approvals.length === 0) {
+    return (
+      <GlobalEmptyState
+        title="Welcome to ForgeHub"
+        description="Your command center is currently clear. Start by creating a project to begin capturing decisions, tracking milestones, and accelerating delivery."
+        actionLabel="Create your first project"
+        actionHref="/projects/new"
+      />
+    );
+  }
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -352,6 +358,18 @@ export function InboxScreen({ data }: { data?: InboxScreenData }) {
   const selected = data?.selected ?? DEFAULT_INBOX_SELECTED;
   const triage = data ? data.triage : DEFAULT_INBOX_TRIAGE;
 
+  if (items.length === 0) {
+    return (
+      <GlobalEmptyState
+        icon={Bell}
+        title="Inbox Zero"
+        description="Your attention queue is completely clear. Approvals, mentions, and project updates will appear here when they need your input."
+        actionLabel="Explore active projects"
+        actionHref="/projects"
+      />
+    );
+  }
+
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
       <PageIntro
@@ -361,18 +379,7 @@ export function InboxScreen({ data }: { data?: InboxScreenData }) {
 
       <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)_320px]">
         <PanelCard id="action-required" title="Action required" description="Triage queue with urgency first, chronology second.">
-          <div className="space-y-3">
-            {items.length ? items.map((item, index) => (
-              <div
-                key={`${item.title}-${item.source}`}
-                className={`rounded-xl border p-4 transition-colors ${index === 0 ? "border-primary/30 bg-primary-soft" : "border-border bg-bg"}`}
-              >
-                <p className="eyebrow">{item.state}</p>
-                <p className="mt-2 font-medium text-text-primary">{item.title}</p>
-                <p className="mt-1 text-sm text-text-muted">{item.source}</p>
-              </div>
-            )) : <EmptyInlineState title="Inbox is clear" description="No approvals, mentions, or updates need attention right now." />}
-          </div>
+          <InboxQueue initialItems={items} />
 
           <div className="mt-6 grid gap-3" id="approvals">
             <ActionTile title="Approvals" description="Review queues stay visible without forcing you out of Inbox." />
@@ -382,22 +389,7 @@ export function InboxScreen({ data }: { data?: InboxScreenData }) {
         </PanelCard>
 
         <PanelCard id="project-updates" title="Selected item" description="Inspect source context without losing your place in the queue.">
-          <div className="surface-panel-muted p-5">
-            <div className="flex items-center gap-2 text-sm text-primary">
-              <ShieldCheck className="h-4 w-4" aria-hidden />
-              {selected.source}
-            </div>
-            <h2 className="mt-3 font-heading text-2xl text-text-primary">{selected.title}</h2>
-            <p className="mt-3 text-text-muted">{selected.summary}</p>
-            <div className="mt-5 grid gap-3 md:grid-cols-2">
-              <SignalTile title="Source" value={selected.source} icon={FileStack} />
-              <SignalTile title="Recommended action" value={selected.action} icon={BellDot} />
-            </div>
-            <div className="mt-5 flex flex-wrap gap-3">
-              <button className={buttonVariants({ variant: "primary" })}>Take action</button>
-              <button className={buttonVariants({ variant: "secondary" })}>Ask AI to summarize thread</button>
-            </div>
-          </div>
+          <InboxSelectedPanel selected={selected} />
 
           <div className="mt-5 grid gap-3 md:grid-cols-3">
             <ActionTile title="Mark read" description="Preserve source context while clearing the item from the active queue." />
@@ -419,6 +411,18 @@ export function ProjectsScreen({ scope, data }: { scope?: string; data?: Project
   const projects = data ? data.projects : ACTIVE_PROJECTS;
   const lanes = data ? data.lanes : DEFAULT_PROJECT_LANES;
   const kits = data ? data.kits : DEFAULT_PROJECT_KITS;
+
+  if (projects.length === 0) {
+    return (
+      <GlobalEmptyState
+        icon={FolderKanban}
+        title="Portfolio Empty"
+        description="There are no active projects in your workspace. Start a new project to establish a command center for your next initiative."
+        actionLabel="Create your first project"
+        actionHref="/projects/new"
+      />
+    );
+  }
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -478,8 +482,18 @@ export function WorkScreen({ scope, data }: { scope?: string; data?: WorkScreenD
     { label: "AI suggestions", value: "3", hint: "Assignee, due-date, and backlog cues" },
   ];
   const tasks = data ? data.tasks : DEFAULT_WORK_TASKS;
-  const timelineItems = data ? data.timelineItems : DEFAULT_WORK_TIMELINE;
-  const aiItems = data ? data.aiItems : DEFAULT_WORK_AI;
+
+  if (tasks.length === 0 && !scope) {
+    return (
+      <GlobalEmptyState
+        icon={BriefcaseBusiness}
+        title="Execution Queue Clear"
+        description="You have no active work assignments. As projects generate tasks and reviews, your centralized execution board will populate here."
+        actionLabel="Browse portfolio"
+        actionHref="/projects"
+      />
+    );
+  }
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -492,7 +506,7 @@ export function WorkScreen({ scope, data }: { scope?: string; data?: WorkScreenD
 
       <PanelCard id="saved-views" title="View system" description="Switch lenses without switching products.">
         <div className="flex flex-wrap gap-3">
-          {["List", "Board", "Timeline", "Calendar", "Workload", "Table"].map((view, index) => (
+          {["Board", "List", "Timeline", "Calendar", "Workload", "Table"].map((view, index) => (
             <button type="button" key={view} className={`signal-pill focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-bg transition-colors ${index === 0 ? "signal-pill-brand" : "signal-pill-neutral hover:bg-surface hover:text-text-primary"}`}>
               {view}
             </button>
@@ -500,35 +514,15 @@ export function WorkScreen({ scope, data }: { scope?: string; data?: WorkScreenD
         </div>
       </PanelCard>
 
-      <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
-        <PanelCard id="my-work" title="Current work view" description="Detailed wireframe for dense list execution with bulk action readiness.">
-          <div className="grid gap-3">
-            {tasks.length ? tasks.map((task) => (
-              <button type="button" key={task.title} className="group surface-panel-muted grid w-full gap-3 p-4 text-left transition-all duration-200 hover:border-primary/50 hover:bg-surface hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-bg md:grid-cols-[minmax(0,1fr)_120px_120px_100px] md:items-center">
-                <div>
-                  <p className="font-medium text-text-primary transition-colors group-hover:text-primary">{task.title}</p>
-                  <p className="mt-1 text-sm text-text-muted">{task.summary}</p>
-                </div>
-                <span className="signal-pill signal-pill-neutral justify-center text-xs text-text-muted">{task.status}</span>
-                <span className="text-sm text-text-muted">{task.owner}</span>
-                <span className="text-sm text-text-muted">{task.due}</span>
-              </button>
-            )) : <EmptyState icon={ListTodo} title="No live work items in this scope" description="Create a project to start tracking work items and documentation tasks.">
-              <Link href="/projects/new" className={buttonVariants({ variant: "primary", size: "sm" })}>Create project</Link>
-            </EmptyState>}
-          </div>
-        </PanelCard>
-
-        <div className="space-y-6">
-          <PanelCard id="timeline" title="Timeline & dependencies" description="Calendar-aware sequencing without becoming a separate app.">
-            {timelineItems.length ? <MiniTimeline items={timelineItems} /> : <EmptyInlineState title="No timeline data yet" description="Milestones and dependencies will appear here as soon as the current scope has enough scheduling data." />}
-          </PanelCard>
-
-          <PanelCard id="workload" title="AI execution assist" description="Preview-first automation and planning support.">
-            <AssistList items={aiItems.length ? aiItems : ["No execution suggestions available yet."]} />
-          </PanelCard>
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-xl font-heading text-text-primary">Project Board</h2>
+        <div className="flex gap-2">
+          <button className="signal-pill signal-pill-neutral hover:bg-surface-elevated">Filter</button>
+          <button className="signal-pill signal-pill-neutral hover:bg-surface-elevated">Sort</button>
         </div>
       </div>
+
+      <KanbanBoard initialTasks={tasks} />
     </div>
   );
 }
@@ -538,6 +532,18 @@ export function KnowledgeScreen({ scope, data }: { scope?: string; data?: Knowle
   const docs = data ? data.docs : KNOWLEDGE_DOCS;
   const libraryItems = data ? data.libraryItems : DEFAULT_LIBRARY_ITEMS;
   const aiItems = data ? data.aiItems : DEFAULT_KNOWLEDGE_AI;
+
+  if (docs.length === 0 && !scope) {
+    return (
+      <GlobalEmptyState
+        icon={LibraryBig}
+        title="Knowledge Base Empty"
+        description="Your workspace has no durable knowledge yet. Project briefs, decision records, and research notes will aggregate here automatically."
+        actionLabel="Start a new project"
+        actionHref="/projects/new"
+      />
+    );
+  }
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -593,6 +599,37 @@ export function ProjectCockpitScreen({
   const aiBrief = data ? data.aiBrief : DEFAULT_COCKPIT_BRIEF;
   const decisions = data ? data.decisions : DEFAULT_COCKPIT_DECISIONS;
   const artifacts = data ? data.artifacts : KNOWLEDGE_DOCS;
+
+  if (artifacts.length === 0 && decisions.length === 0 && blockers.length === 0) {
+    return (
+      <div className="space-y-6 pb-20 lg:pb-6">
+        <ScreenHero
+          eyebrow={`${workspaceName} workspace`}
+          title={projectName}
+          description="The project cockpit is the operating center of gravity: health, milestone status, blockers, active work, key docs, decisions, and AI synthesis aligned in one command bridge."
+          metrics={metrics}
+        />
+        {data?.project && (
+          <div className="flex flex-wrap justify-end gap-3">
+            <ShareProjectDialog projectId={data.project.id} slug={data.project.slug} initialVisibility={data.project.visibility} />
+            <EditProjectDialog
+              projectId={data.project.id}
+              initialName={data.project.name}
+              initialDescription={data.project.description}
+              initialType={data.project.projectType}
+            />
+          </div>
+        )}
+        <GlobalEmptyState
+          icon={Target}
+          title="Project Empty"
+          description="This project has no documentation, decisions, or tracked milestones yet. Kick off your first phase by drafting a project brief or inviting team members."
+          actionLabel="Open Knowledge Base"
+          actionHref={`/w/${workspaceSlug}/p/${projectSlug}/docs`}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 pb-20 lg:pb-6">
@@ -670,16 +707,64 @@ export function ProjectCockpitScreen({
 }
 
 export function ProjectPlanScreen({ projectSlug }: { projectSlug: string }) {
+  const phases = [
+    { name: "Phase 1: Foundation", status: "Completed", progress: 100, date: "Aug 1 - Aug 15" },
+    { name: "Phase 2: Core Architecture", status: "In Progress", progress: 65, date: "Aug 16 - Sep 5" },
+    { name: "Phase 3: High Fidelity UI", status: "Not Started", progress: 0, date: "Sep 6 - Sep 20" },
+    { name: "Phase 4: Data Integration", status: "Not Started", progress: 0, date: "Sep 21 - Oct 10" }
+  ];
+
   return (
-    <ProjectSectionFrame
-      title="Plan"
-      description={`Roadmap structure for ${prettyLabel(projectSlug)} across phases, milestones, dependencies, and sequencing logic.`}
-      cards={[
-        { title: "Roadmap phases", detail: "Foundation → Core screens → Detailed wireframes → High fidelity → Data integration hardening", icon: Flag },
-        { title: "Dependency map", detail: "Interaction rules and shell decisions continue to stay ahead of implementation specifics.", icon: Waypoints },
-        { title: "Milestone framing", detail: "Every phase should end in an artifact the engineering team can implement directly.", icon: Target },
-      ]}
-    />
+    <div className="space-y-6 pb-20 lg:pb-6">
+      <PageIntro
+        title="Project Plan"
+        description={`Strategic roadmap and timeline for ${prettyLabel(projectSlug)}.`}
+      />
+
+      <div className="grid gap-6 lg:grid-cols-3">
+        <div className="lg:col-span-2 space-y-4">
+          <h2 className="font-heading text-xl text-text-primary">Milestones</h2>
+          {phases.map((phase) => (
+            <div key={phase.name} className="surface-panel p-5 transition-all hover:border-primary/50">
+              <div className="flex justify-between items-center mb-2">
+                <h3 className="font-medium text-text-primary">{phase.name}</h3>
+                <span className={`text-xs font-semibold px-2 py-1 rounded-full ${phase.status === "Completed" ? "bg-success/10 text-success" :
+                  phase.status === "In Progress" ? "bg-primary/10 text-primary" :
+                    "bg-surface-elevated text-text-muted"
+                  }`}>
+                  {phase.status}
+                </span>
+              </div>
+              <p className="text-sm text-text-muted mb-4">{phase.date}</p>
+              <div className="w-full bg-surface-elevated rounded-full h-2">
+                <div
+                  className={`h-2 rounded-full ${phase.progress === 100 ? 'bg-success' : 'bg-primary'}`}
+                  style={{ width: `${phase.progress}%` }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="font-heading text-xl text-text-primary">Dependencies</h2>
+          <div className="surface-panel p-5 space-y-4">
+            <div className="border-b border-border pb-3">
+              <p className="text-sm font-medium text-text-primary">Design System Token Freeze</p>
+              <p className="text-xs text-text-muted mt-1">Blocks Phase 3 UI work</p>
+            </div>
+            <div className="border-b border-border pb-3">
+              <p className="text-sm font-medium text-text-primary">Supabase Auth Migration</p>
+              <p className="text-xs text-text-muted mt-1">Blocks Phase 4 Integration</p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-text-primary">API Rate Limiting Policy</p>
+              <p className="text-xs text-text-muted mt-1">Review pending</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -698,30 +783,122 @@ export function ProjectConversationScreen({ projectSlug }: { projectSlug: string
 }
 
 export function ProjectReviewScreen({ projectSlug }: { projectSlug: string }) {
+  const reviews = [
+    { id: "REV-402", title: "Authentication Flow Wireframes", author: "Ibukunoluwa", type: "Design", status: "Pending", urgency: "high" },
+    { id: "REV-401", title: "Database Schema V2", author: "AI Architect", type: "Architecture", status: "Changes Requested", urgency: "medium" },
+    { id: "REV-399", title: "User Onboarding Copy", author: "Content Team", type: "Copy", status: "Approved", urgency: "low" }
+  ];
+
   return (
-    <ProjectSectionFrame
-      title="Review"
-      description={`Approvals, QA checkpoints, and signoff workflows for ${prettyLabel(projectSlug)}.`}
-      cards={[
-        { title: "Approval queues", detail: "Review artifacts without leaving project context or losing return state.", icon: ShieldCheck },
-        { title: "Checklist validation", detail: "Track what must be true before a milestone can be considered done.", icon: CheckCircle2 },
-        { title: "Feedback loops", detail: "Route comments into decisions, tasks, or follow-up threads with one action.", icon: MessageSquareMore },
-      ]}
-    />
+    <div className="space-y-6 pb-20 lg:pb-6">
+      <PageIntro
+        title="Review Queue"
+        description={`Pending approvals, pull requests, and document reviews for ${prettyLabel(projectSlug)}.`}
+      />
+
+      <div className="surface-panel overflow-hidden">
+        <div className="grid grid-cols-12 gap-4 p-4 border-b border-border bg-surface-muted text-xs font-semibold text-text-muted uppercase tracking-wider">
+          <div className="col-span-5">Artifact</div>
+          <div className="col-span-2">Type</div>
+          <div className="col-span-2">Author</div>
+          <div className="col-span-3 text-right">Status</div>
+        </div>
+
+        <div className="divide-y divide-border">
+          {reviews.map((rev) => (
+            <div key={rev.id} className="grid grid-cols-12 gap-4 p-4 items-center hover:bg-surface-elevated transition-colors cursor-pointer">
+              <div className="col-span-5 flex flex-col">
+                <span className="font-medium text-text-primary">{rev.title}</span>
+                <span className="text-xs text-text-muted">{rev.id}</span>
+              </div>
+              <div className="col-span-2 text-sm text-text-muted">{rev.type}</div>
+              <div className="col-span-2 text-sm text-text-muted">{rev.author}</div>
+              <div className="col-span-3 flex justify-end">
+                <span className={`text-xs px-2 py-1 rounded-md font-medium ${rev.status === "Approved" ? "bg-success/10 text-success" :
+                  rev.status === "Pending" ? "bg-warning/10 text-warning" :
+                    "bg-error/10 text-error"
+                  }`}>
+                  {rev.status}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
 export function ProjectInsightsScreen({ projectSlug }: { projectSlug: string }) {
   return (
-    <ProjectSectionFrame
-      title="Insights"
-      description={`Health, workload, and delivery confidence for ${prettyLabel(projectSlug)} — useful signals rather than vanity metrics.`}
-      cards={[
-        { title: "Risk heatmap", detail: "Highlight schedule, scope, and decision risk with a plain-language summary.", icon: Scale },
-        { title: "Workload signals", detail: "See who is over capacity and where rebalancing can help delivery.", icon: Users },
-        { title: "Delivery confidence", detail: "Connect milestone readiness to blockers, dependencies, and recent change velocity.", icon: CalendarClock },
-      ]}
-    />
+    <div className="space-y-6 pb-20 lg:pb-6">
+      <PageIntro
+        title="Insights & Telemetry"
+        description={`Delivery velocity, health metrics, and workload capacity for ${prettyLabel(projectSlug)}.`}
+      />
+
+      <div className="grid gap-6 md:grid-cols-3">
+        <div className="surface-panel p-5">
+          <h3 className="text-sm font-medium text-text-muted mb-2">Velocity (Tasks/Week)</h3>
+          <div className="text-3xl font-heading text-text-primary">24.5</div>
+          <p className="text-xs text-success mt-2 flex items-center gap-1">↑ 12% vs last week</p>
+        </div>
+        <div className="surface-panel p-5">
+          <h3 className="text-sm font-medium text-text-muted mb-2">Blocker Resolution Time</h3>
+          <div className="text-3xl font-heading text-text-primary">1.2d</div>
+          <p className="text-xs text-success mt-2 flex items-center gap-1">↓ 4 hours vs last week</p>
+        </div>
+        <div className="surface-panel p-5">
+          <h3 className="text-sm font-medium text-text-muted mb-2">Team Capacity</h3>
+          <div className="text-3xl font-heading text-text-primary">85%</div>
+          <p className="text-xs text-warning mt-2 flex items-center gap-1">Approaching limits</p>
+        </div>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="surface-panel p-5 h-64 flex flex-col justify-between">
+          <h3 className="font-medium text-text-primary">Task Completion Trend</h3>
+          <div className="flex items-end justify-between h-40 gap-2 mt-4">
+            {/* Simple CSS bar chart placeholder */}
+            {[40, 60, 45, 80, 55, 90, 75].map((h, i) => (
+              <div key={i} className="w-full bg-primary/20 rounded-t-sm relative group">
+                <div className="absolute bottom-0 w-full bg-primary rounded-t-sm transition-all" style={{ height: `${h}%` }} />
+              </div>
+            ))}
+          </div>
+          <div className="flex justify-between text-xs text-text-muted mt-2">
+            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+          </div>
+        </div>
+
+        <div className="surface-panel p-5">
+          <h3 className="font-medium text-text-primary mb-4">Risk Heatmap</h3>
+          <div className="space-y-4">
+            <div>
+              <div className="flex justify-between text-sm mb-1">
+                <span className="text-text-primary">Scope Creep</span>
+                <span className="text-warning font-medium">Medium</span>
+              </div>
+              <div className="w-full bg-surface-elevated h-1.5 rounded-full"><div className="bg-warning w-1/2 h-1.5 rounded-full" /></div>
+            </div>
+            <div>
+              <div className="flex justify-between text-sm mb-1">
+                <span className="text-text-primary">Technical Debt</span>
+                <span className="text-error font-medium">High</span>
+              </div>
+              <div className="w-full bg-surface-elevated h-1.5 rounded-full"><div className="bg-error w-4/5 h-1.5 rounded-full" /></div>
+            </div>
+            <div>
+              <div className="flex justify-between text-sm mb-1">
+                <span className="text-text-primary">Resource Availability</span>
+                <span className="text-success font-medium">Low</span>
+              </div>
+              <div className="w-full bg-surface-elevated h-1.5 rounded-full"><div className="bg-success w-1/4 h-1.5 rounded-full" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -986,6 +1163,37 @@ function MiniTimeline({ items }: { items: string[] }) {
           <div className="surface-panel-muted flex-1 p-4 text-sm text-text-muted transition-all duration-200 group-hover:border-primary/50 group-hover:bg-surface group-hover:text-text-primary group-hover:shadow-md">{item}</div>
         </div>
       ))}
+    </div>
+  );
+}
+
+export function GlobalEmptyState({
+  icon: Icon,
+  title,
+  description,
+  actionLabel,
+  actionHref,
+}: {
+  icon?: React.ElementType;
+  title: string;
+  description: string;
+  actionLabel?: string;
+  actionHref?: string;
+}) {
+  return (
+    <div className="flex flex-col items-center justify-center py-24 text-center">
+      <div className="relative mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-surface-muted border border-border shadow-inner">
+        {Icon ? <Icon className="h-10 w-10 text-primary opacity-80" /> : <Sparkles className="h-10 w-10 text-primary opacity-80" />}
+        <div className="absolute inset-0 rounded-full ring-1 ring-primary/20 ring-offset-2 ring-offset-bg blur-sm"></div>
+      </div>
+      <h2 className="font-heading text-2xl text-text-primary mb-2">{title}</h2>
+      <p className="text-text-muted max-w-md mx-auto mb-8">{description}</p>
+      {actionLabel && actionHref && (
+        <Link href={actionHref} className={buttonVariants({ variant: "primary", size: "lg" })}>
+          <Plus className="mr-2 h-4 w-4" />
+          {actionLabel}
+        </Link>
+      )}
     </div>
   );
 }

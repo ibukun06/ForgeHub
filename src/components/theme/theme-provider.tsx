@@ -2,12 +2,12 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-type Theme = "light" | "dark";
+type Theme = "light" | "dark" | "system";
 
 type ThemeContextValue = {
   theme: Theme;
   setTheme: (theme: Theme) => void;
-  toggleTheme: () => void;
+  resolvedTheme: "light" | "dark";
 };
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
@@ -24,25 +24,40 @@ const STORAGE_KEY = "forgehub-theme";
  * Forge" app shell; light is an available mode, not the fallback.
  */
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("dark");
+  const [theme, setThemeState] = useState<Theme>("system");
+  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("dark");
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setThemeState(stored === "light" ? "light" : "dark");
+    const stored = (localStorage.getItem(STORAGE_KEY) as Theme) || "system";
+    setThemeState(stored);
+    applyTheme(stored);
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = () => {
+      if (localStorage.getItem(STORAGE_KEY) === 'system' || !localStorage.getItem(STORAGE_KEY)) {
+        applyTheme("system");
+      }
+    };
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
+
+  function applyTheme(next: Theme) {
+    const isDark = next === 'system' 
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches 
+      : next === 'dark';
+    
+    document.documentElement.classList.toggle("dark", isDark);
+    setResolvedTheme(isDark ? "dark" : "light");
+  }
 
   function setTheme(next: Theme) {
     setThemeState(next);
     localStorage.setItem(STORAGE_KEY, next);
-    document.documentElement.classList.toggle("dark", next === "dark");
+    applyTheme(next);
   }
 
-  function toggleTheme() {
-    setTheme(theme === "dark" ? "light" : "dark");
-  }
-
-  return <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>{children}</ThemeContext.Provider>;
+  return <ThemeContext.Provider value={{ theme, setTheme, resolvedTheme }}>{children}</ThemeContext.Provider>;
 }
 
 export function useTheme() {

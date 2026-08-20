@@ -33,7 +33,14 @@ const themeInitScript = `
 (function () {
   try {
     var stored = localStorage.getItem('forgehub-theme');
-    var isDark = stored !== 'light';
+    var isDark;
+    if (stored === 'light') {
+      isDark = false;
+    } else if (stored === 'system' || !stored) {
+      isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    } else {
+      isDark = true;
+    }
     document.documentElement.classList.toggle('dark', isDark);
   } catch (e) {
     document.documentElement.classList.add('dark');

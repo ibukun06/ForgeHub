@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Star, Eye, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import { CATEGORIES } from "@/components/landing/data";
 import { getProjectStatus } from "./filters";
 import { getProjectUrl } from "@/lib/urls";
@@ -48,13 +48,7 @@ export function ProjectCard({ project }: { project: ExploreProject }) {
 
         <div className="mt-4 flex items-center gap-4 text-xs text-text-muted">
           <span className="flex items-center gap-1">
-            <Users className="h-3.5 w-3.5" aria-hidden /> {project.contributors}
-          </span>
-          <span className="flex items-center gap-1">
-            <Star className="h-3.5 w-3.5" aria-hidden /> {project.likes}
-          </span>
-          <span className="flex items-center gap-1">
-            <Eye className="h-3.5 w-3.5" aria-hidden /> {project.views}
+            <Users className="h-3.5 w-3.5" aria-hidden /> {project.contributors} contributors
           </span>
         </div>
       </div>

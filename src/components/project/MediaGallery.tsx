@@ -25,14 +25,33 @@ export function MediaGallery({ media }: { media: MediaItem[] }) {
         <h2 className="font-heading text-2xl font-bold text-text-primary">Media</h2>
 
         <div
-          className="mt-6 flex h-64 flex-col items-center justify-center gap-2 rounded-lg border border-border bg-gradient-to-br from-primary/15 to-secondary/15"
+          className="mt-6 flex h-64 flex-col items-center justify-center gap-2 rounded-lg border border-border bg-surface-muted overflow-hidden relative group"
           aria-live="polite"
         >
-          <ActiveIcon className="h-10 w-10 text-primary" aria-hidden />
-          <p className="text-sm text-text-muted">{active.caption}</p>
-          <span className="rounded-full border border-border px-2 py-0.5 text-[11px] text-text-muted">
-            {MEDIA_LABELS[active.type]}
-          </span>
+          {active.type === 'cad' ? (
+            <div className="absolute inset-0 bg-surface-elevated/50 flex flex-col items-center justify-center group-hover:bg-surface-elevated transition-colors">
+              <Box className="h-12 w-12 text-primary opacity-80" aria-hidden />
+              <div className="mt-4 flex gap-2">
+                <button className="bg-primary text-primary-foreground px-4 py-1.5 rounded-md text-sm font-medium shadow-sm hover:bg-primary/90 transition-colors">
+                  Load 3D Viewer
+                </button>
+                <button className="bg-surface text-text-primary px-4 py-1.5 rounded-md text-sm font-medium border border-border shadow-sm hover:bg-surface-muted transition-colors">
+                  Download .step
+                </button>
+              </div>
+              <span className="absolute top-3 left-3 rounded-full border border-border bg-surface/80 px-2 py-0.5 text-[11px] text-text-muted backdrop-blur-sm">
+                CAD Model (Requires WebGL)
+              </span>
+            </div>
+          ) : (
+            <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-primary/15 to-secondary/15">
+              <ActiveIcon className="h-10 w-10 text-primary" aria-hidden />
+              <p className="text-sm text-text-muted">{active.caption}</p>
+              <span className="rounded-full border border-border px-2 py-0.5 text-[11px] text-text-muted">
+                {MEDIA_LABELS[active.type]}
+              </span>
+            </div>
+          )}
         </div>
 
         {media.length > 1 && (

@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { relativeTime } from "@/lib/format";
 import { createClient } from "@/lib/supabase/server";
+import { generateProjectBrief } from "@/lib/ai/gemini";
 import type {
   MemberRole,
   NotificationType,
@@ -9,7 +10,7 @@ import type {
   SectionStatus,
 } from "@/lib/supabase/types";
 
-const DEFAULT_WORKSPACE_SLUG = "forgehub";
+export const DEFAULT_WORKSPACE_SLUG = "forgehub";
 
 type ProjectRecord = {
   id: string;
@@ -20,6 +21,7 @@ type ProjectRecord = {
   slug: string;
   created_at: string;
   updated_at: string;
+  workspace_id: string;
 };
 
 type MembershipRow = {
@@ -65,6 +67,36 @@ export type MetricData = {
   hint: string;
 };
 
+export type InsightsScreenData = {
+  metrics: MetricData[];
+  deliveryConfidence: number;
+  risks: string[];
+  workload: Array<{ member: string; assignedCount: number }>;
+};
+
+export type PlanScreenData = {
+  milestones: Array<{
+    id: string;
+    title: string;
+    status: "Completed" | "In progress" | "Not started" | string;
+    sections: Array<{
+      id: string;
+      prompt: string;
+      status: "Reviewed" | string;
+    }>;
+  }>;
+};
+
+export type ReviewScreenData = {
+  pendingReviews: Array<{
+    id: string;
+    status: string;
+    documentTitle: string;
+    prompt: string;
+    updated_at: string;
+  }>;
+};
+
 export type FocusTone = "urgent" | "warning" | "default";
 
 export type HomeScreenData = {
@@ -77,7 +109,7 @@ export type HomeScreenData = {
 };
 
 export type InboxScreenData = {
-  items: Array<{ title: string; source: string; state: string }>;
+  items: Array<{ id: string; title: string; source: string; state: string }>;
   selected: {
     title: string;
     summary: string;
@@ -96,7 +128,7 @@ export type ProjectsScreenData = {
 
 export type WorkScreenData = {
   metrics: MetricData[];
-  tasks: Array<{ title: string; status: string; owner: string; due: string; summary: string }>;
+  tasks: Array<{ id: string; title: string; status: string; owner: string; due: string; summary: string }>;
   timelineItems: string[];
   aiItems: string[];
 };
@@ -216,8 +248,13 @@ async function getViewerGraph(workspaceSlug?: string): Promise<ViewerGraph> {
   let targetWorkspaceId: string | undefined;
   if (workspaceSlug) {
     const { data: ws } = await supabase.from("workspaces").select("id").eq("slug", workspaceSlug).maybeSingle();
-    if (!ws) redirect("/home");
-    targetWorkspaceId = ws.id;
+    if (!ws) {
+      if (workspaceSlug !== DEFAULT_WORKSPACE_SLUG) {
+        redirect("/inbox");
+      }
+    } else {
+      targetWorkspaceId = ws.id;
+    }
   }
 
   const { data: membershipRows } = await supabase
@@ -232,7 +269,7 @@ async function getViewerGraph(workspaceSlug?: string): Promise<ViewerGraph> {
   for (const membership of memberships) {
     const projectValue = Array.isArray(membership.projects) ? membership.projects[0] : membership.projects;
     if (!projectValue) continue;
-    if (targetWorkspaceId && (projectValue as any).workspace_id !== targetWorkspaceId) continue;
+    if (targetWorkspaceId && projectValue.workspace_id !== targetWorkspaceId) continue;
     dedupedProjects.set(projectValue.id, projectValue);
     memberRoles.set(projectValue.id, membership.role);
   }
@@ -269,10 +306,10 @@ async function getViewerGraph(workspaceSlug?: string): Promise<ViewerGraph> {
   const documentIds = documentList.map((document) => document.id);
   const { data: sections } = documentIds.length
     ? await supabase
-        .from("sections")
-        .select("id, document_id, prompt, status, updated_at")
-        .in("document_id", documentIds)
-        .order("updated_at", { ascending: false })
+      .from("sections")
+      .select("id, document_id, prompt, status, updated_at")
+      .in("document_id", documentIds)
+      .order("updated_at", { ascending: false })
     : { data: [] as SectionRecord[] };
 
   return {
@@ -355,12 +392,12 @@ async function getProjectGraphBySlug(projectSlug: string, workspaceSlug?: string
       .order("created_at", { ascending: false }),
     membershipRow
       ? supabase
-          .from("notifications")
-          .select("id, project_id, type, read_at, created_at")
-          .eq("user_id", user.id)
-          .eq("project_id", project.id)
-          .order("created_at", { ascending: false })
-          .limit(12)
+        .from("notifications")
+        .select("id, project_id, type, read_at, created_at")
+        .eq("user_id", user.id)
+        .eq("project_id", project.id)
+        .order("created_at", { ascending: false })
+        .limit(12)
       : Promise.resolve({ data: [] as NotificationRecord[] }),
     supabase.from("project_members").select("id", { count: "exact", head: true }).eq("project_id", project.id),
   ]);
@@ -369,10 +406,10 @@ async function getProjectGraphBySlug(projectSlug: string, workspaceSlug?: string
   const documentIds = documentList.map((document) => document.id);
   const { data: sections } = documentIds.length
     ? await supabase
-        .from("sections")
-        .select("id, document_id, prompt, status, updated_at")
-        .in("document_id", documentIds)
-        .order("updated_at", { ascending: false })
+      .from("sections")
+      .select("id, document_id, prompt, status, updated_at")
+      .in("document_id", documentIds)
+      .order("updated_at", { ascending: false })
     : { data: [] as SectionRecord[] };
 
   return {
@@ -390,7 +427,7 @@ async function getProjectGraphBySlug(projectSlug: string, workspaceSlug?: string
   };
 }
 
-export async function getHomeScreenData(workspaceSlug: string): Promise<HomeScreenData> {
+export async function getHomeScreenData(workspaceSlug: string = DEFAULT_WORKSPACE_SLUG): Promise<HomeScreenData> {
   const graph = await getViewerGraph(workspaceSlug);
   const documentById = new Map(graph.documents.map((document) => [document.id, document]));
   const projectById = new Map(graph.projects.map((project) => [project.id, project]));
@@ -456,10 +493,11 @@ export async function getHomeScreenData(workspaceSlug: string): Promise<HomeScre
   };
 }
 
-export async function getInboxScreenData(workspaceSlug: string): Promise<InboxScreenData> {
+export async function getInboxScreenData(workspaceSlug: string = DEFAULT_WORKSPACE_SLUG): Promise<InboxScreenData> {
   const graph = await getViewerGraph(workspaceSlug);
   const projectById = new Map(graph.projects.map((project) => [project.id, project]));
   const items = graph.notifications.slice(0, 6).map((notification) => ({
+    id: notification.id,
     title: notificationLabel(notification.type),
     source: `${projectById.get(notification.project_id ?? "")?.name ?? "Workspace"} · ${relativeTime(notification.created_at)}`,
     state: notification.read_at ? "Read" : "Action required",
@@ -486,7 +524,7 @@ export async function getInboxScreenData(workspaceSlug: string): Promise<InboxSc
   };
 }
 
-export async function getProjectsScreenData(workspaceSlug: string): Promise<ProjectsScreenData> {
+export async function getProjectsScreenData(workspaceSlug: string = DEFAULT_WORKSPACE_SLUG): Promise<ProjectsScreenData> {
   const graph = await getViewerGraph(workspaceSlug);
   const publishedCount = graph.projects.filter((project) => project.visibility === "published").length;
   const staleCount = graph.notifications.filter((notification) => notification.type === "section_stale").length;
@@ -525,16 +563,16 @@ export async function getProjectsScreenData(workspaceSlug: string): Promise<Proj
   };
 }
 
-export async function getWorkScreenData(workspaceSlug: string, projectSlug?: string): Promise<WorkScreenData> {
+export async function getWorkScreenData(workspaceSlug: string = DEFAULT_WORKSPACE_SLUG, projectSlug?: string): Promise<WorkScreenData> {
   const projectGraph = projectSlug ? await getProjectGraphBySlug(projectSlug, workspaceSlug) : null;
   const graph = projectGraph
     ? {
-        projects: [projectGraph.project],
-        documents: projectGraph.documents,
-        sections: projectGraph.sections,
-        decisions: projectGraph.decisions,
-        notifications: projectGraph.notifications,
-      }
+      projects: [projectGraph.project],
+      documents: projectGraph.documents,
+      sections: projectGraph.sections,
+      decisions: projectGraph.decisions,
+      notifications: projectGraph.notifications,
+    }
     : await getViewerGraph(workspaceSlug);
 
   const documentById = new Map(graph.documents.map((document) => [document.id, document]));
@@ -542,9 +580,15 @@ export async function getWorkScreenData(workspaceSlug: string, projectSlug?: str
   const tasks = graph.sections.slice(0, 6).map((section) => {
     const document = documentById.get(section.document_id);
     const project = document ? projectById.get(document.project_id) : null;
+
+    let boardStatus = "Backlog";
+    if (section.status === "ai_draft") boardStatus = "Review";
+    if (section.status === "team_reviewed") boardStatus = "Done";
+
     return {
+      id: section.id,
       title: section.prompt || document?.title || "Documentation task",
-      status: sectionStatusLabel(section.status),
+      status: boardStatus,
       owner: project?.name ?? "Project team",
       due: relativeTime(section.updated_at),
       summary: `${document?.title ?? "Document"} still needs movement before the next review cycle.`,
@@ -569,15 +613,15 @@ export async function getWorkScreenData(workspaceSlug: string, projectSlug?: str
   };
 }
 
-export async function getKnowledgeScreenData(workspaceSlug: string, projectSlug?: string): Promise<KnowledgeScreenData> {
+export async function getKnowledgeScreenData(workspaceSlug: string = DEFAULT_WORKSPACE_SLUG, projectSlug?: string): Promise<KnowledgeScreenData> {
   const projectGraph = projectSlug ? await getProjectGraphBySlug(projectSlug, workspaceSlug) : null;
   const graph = projectGraph
     ? {
-        projects: [projectGraph.project],
-        documents: projectGraph.documents,
-        sections: projectGraph.sections,
-        decisions: projectGraph.decisions,
-      }
+      projects: [projectGraph.project],
+      documents: projectGraph.documents,
+      sections: projectGraph.sections,
+      decisions: projectGraph.decisions,
+    }
     : await getViewerGraph(workspaceSlug);
 
   return {
@@ -656,11 +700,12 @@ export async function getProjectCockpitData(projectSlug: string, workspaceSlug: 
     workInMotion: blockerSections[0]?.prompt || graph.documents[0]?.title || "Review the active documentation set.",
     keyDependency: latestDecision ? `Latest decision: ${latestDecision.decision}` : "Define the next milestone decision before scaling implementation.",
     blockers: blockerSections.map((section) => `${section.prompt || "A documentation section"} is still ${sectionStatusLabel(section.status).toLowerCase()} (${relativeTime(section.updated_at)}).`),
-    aiBrief: [
-      `Project updated ${relativeTime(graph.project.updated_at)} and currently sits in a ${blockerSections.length > 0 ? "watch" : "stable"} state.`,
-      `Most active focus: ${blockerSections[0]?.prompt || graph.documents[0]?.title || "review open documentation work"}.`,
-      `Next likely leadership action: ${latestDecision ? `review the implications of “${latestDecision.decision}.”` : "create a new decision record to resolve an open constraint."}`,
-    ],
+    aiBrief: await generateProjectBrief(
+      graph.project.name,
+      graph.documents.map(d => ({ title: d.title || 'Untitled', kind: d.document_type })),
+      graph.decisions.map(d => ({ decision: d.decision, rationale: d.rationale })),
+      graph.sections.map(s => ({ title: s.prompt || 'Untitled', status: sectionStatusLabel(s.status) }))
+    ),
     decisions: graph.decisions.slice(0, 3).map((decision) => ({
       title: decision.decision,
       status: relativeTime(decision.created_at),

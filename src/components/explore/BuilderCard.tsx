@@ -23,8 +23,7 @@ export function BuilderCard({ builder }: { builder: Builder }) {
         ))}
       </div>
       <div className="mt-3 flex gap-4 text-xs text-text-muted">
-        <span>{builder.followers} followers</span>
-        <span>{builder.projectCount} projects</span>
+        <span>{builder.projectCount} project{builder.projectCount !== 1 && 's'}</span>
       </div>
     </Link>
   );

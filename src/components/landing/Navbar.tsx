@@ -7,6 +7,7 @@ import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { buttonVariants } from "@/components/ui/button";
+import { UserMenu } from "@/components/ui/user-menu";
 
 // Absolute paths, not bare "#anchor" — a relative anchor only works if
 // you're already on the page that has that section. Now that Navbar is
@@ -17,7 +18,7 @@ const NAV_LINKS = [
   { href: "/#how-it-works", label: "How it works" },
 ];
 
-export function Navbar() {
+export function Navbar({ user }: { user?: any }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -37,12 +38,23 @@ export function Navbar() {
 
         <div className="hidden items-center gap-3 md:flex">
           <ThemeToggle />
-          <Link href="/login" className="text-sm text-text-muted transition-colors hover:text-text-primary">
-            Log in
-          </Link>
-          <Link href="/signup" className={buttonVariants({ variant: "primary" })}>
-            Start Forging
-          </Link>
+          {user ? (
+            <>
+              <UserMenu user={user} />
+              <Link href="/dashboard" className={buttonVariants({ variant: "primary" })}>
+                Dashboard
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href="/login" className="text-sm text-text-muted transition-colors hover:text-text-primary">
+                Log in
+              </Link>
+              <Link href="/signup" className={buttonVariants({ variant: "primary" })}>
+                Start Forging
+              </Link>
+            </>
+          )}
         </div>
 
         <button
@@ -70,14 +82,24 @@ export function Navbar() {
               </Link>
             ))}
             <div className="flex items-center justify-between pt-2">
-              <Link href="/login" className="text-sm text-text-muted">
-                Log in
-              </Link>
+              {user ? (
+                <UserMenu user={user} />
+              ) : (
+                <Link href="/login" className="text-sm text-text-muted">
+                  Log in
+                </Link>
+              )}
               <ThemeToggle />
             </div>
-            <Link href="/signup" className={buttonVariants({ variant: "primary", className: "w-full justify-center" })}>
-              Start Forging
-            </Link>
+            {user ? (
+              <Link href="/dashboard" className={buttonVariants({ variant: "primary", className: "w-full justify-center" })}>
+                Dashboard
+              </Link>
+            ) : (
+              <Link href="/signup" className={buttonVariants({ variant: "primary", className: "w-full justify-center" })}>
+                Start Forging
+              </Link>
+            )}
           </nav>
         </div>
       )}
