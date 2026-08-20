@@ -1,0 +1,987 @@
+[
+  {
+    "id": "TC001",
+    "title": "Delete the account and revoke access",
+    "description": "A signed-in user can delete their account, confirm the removal, and lose access to the authenticated workspace.",
+    "category": "Account Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /w/default/settings/account"
+      },
+      {
+        "type": "action",
+        "description": "Start the account deletion flow"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the account deletion"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify account removal is confirmed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify access to the authenticated workspace is revoked"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Sign in and land in the workspace",
+    "description": "This verifies a signed-out visitor can sign in and reach the authenticated workspace experience.",
+    "category": "Login",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands in the authenticated workspace"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify workspace content is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Open account settings and delete the account",
+    "description": "This verifies a signed-in user can confirm account deletion and lose access afterward.",
+    "category": "Account Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open account settings"
+      },
+      {
+        "type": "action",
+        "description": "Click the delete account action"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the account deletion"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an account removal confirmation is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify access to the authenticated workspace is revoked"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Sign in and reach the workspace",
+    "description": "A visitor can sign in with valid credentials and reach the authenticated workspace experience.",
+    "category": "User Login",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands in an authenticated workspace"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify protected workspace content is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Open account settings from the authenticated workspace",
+    "description": "A signed-in user can access the account settings page from the workspace environment.",
+    "category": "Account Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /w/default/settings/account"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the account settings page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify account management controls are available"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Open profile settings from the authenticated workspace",
+    "description": "A signed-in user can access the profile settings page from the workspace environment.",
+    "category": "Profile Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /w/default/settings/profile"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the profile settings page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify profile settings controls are available"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Update and persist profile details",
+    "description": "A signed-in user can update profile details and see the saved profile information persist after submission.",
+    "category": "Profile Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /w/default/settings/profile"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the display name field with a unique personal name"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the bio field with a short profile description"
+      },
+      {
+        "type": "action",
+        "description": "Submit the profile settings form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated profile details are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the saved profile information persists after refresh or re-entry"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Open profile settings and save personal details",
+    "description": "This verifies a signed-in workspace member can update profile details and see the saved profile state persist.",
+    "category": "Profile Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open profile settings"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the display name field with a new value"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the bio field with a short updated bio"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the username field with a new unique username"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the social links fields with updated profile links"
+      },
+      {
+        "type": "action",
+        "description": "Save the profile changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated profile information is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the saved profile data persists after saving"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Update and persist workspace details",
+    "description": "A signed-in user can update workspace information and see the saved workspace details persist after submission.",
+    "category": "Workspace Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /w/default/settings/workspace"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the workspace name field with a unique workspace name"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the workspace slug field with a valid new slug"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the workspace description field with a short workspace description"
+      },
+      {
+        "type": "action",
+        "description": "Submit the workspace settings form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated workspace details are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the saved workspace information persists after refresh or re-entry"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Open workspace settings and save workspace details",
+    "description": "This verifies a signed-in workspace member can update workspace name, slug, and description and see the saved workspace state persist.",
+    "category": "Workspace Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open workspace settings"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the workspace name field with a new value"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the workspace slug field with a new valid slug"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the workspace description field with updated text"
+      },
+      {
+        "type": "action",
+        "description": "Save the workspace changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated workspace information is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the saved workspace data persists after saving"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Open members settings and prepare an invite",
+    "description": "This verifies a signed-in workspace member can view current members and prepare an invite with email and role.",
+    "category": "Workspace Members",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open members settings"
+      },
+      {
+        "type": "action",
+        "description": "Verify current members are displayed"
+      },
+      {
+        "type": "action",
+        "description": "Click the invite member action"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with a valid invite address"
+      },
+      {
+        "type": "action",
+        "description": "Select a member role"
+      },
+      {
+        "type": "action",
+        "description": "Submit the invite form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an invite prepared confirmation is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the invite form reflects the selected workspace member role"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "Open members settings and review the member list",
+    "description": "A signed-in workspace member can access the members page and review the current workspace members.",
+    "category": "Workspace Members",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /w/default/settings/members"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the members settings page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify current members are listed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC013",
+    "title": "Prepare an invite for a new workspace member",
+    "description": "A signed-in workspace admin can enter an email address and role to prepare a new member invite.",
+    "category": "Workspace Members",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /w/default/settings/members"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the invite email field with a valid email address"
+      },
+      {
+        "type": "action",
+        "description": "Select a workspace role for the invite"
+      },
+      {
+        "type": "action",
+        "description": "Submit the member invite form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the invite is prepared successfully"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the invited member is reflected in the members view"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC014",
+    "title": "Keep profile changes after leaving and returning",
+    "description": "A signed-in user can save profile changes and later see the same values still present when revisiting the page.",
+    "category": "Profile Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /w/default/settings/profile"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the display name field with a unique personal name"
+      },
+      {
+        "type": "action",
+        "description": "Submit the profile settings form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate away from the profile settings page"
+      },
+      {
+        "type": "action",
+        "description": "Return to the profile settings page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the saved display name remains visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the profile settings page shows persisted values"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC015",
+    "title": "Handle profile form edge values and validation",
+    "description": "This verifies profile settings surface validation for invalid or boundary input and preserve successful changes.",
+    "category": "Profile Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open profile settings"
+      },
+      {
+        "type": "action",
+        "description": "Clear the display name field"
+      },
+      {
+        "type": "action",
+        "description": "Clear the username field"
+      },
+      {
+        "type": "action",
+        "description": "Save the profile changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify validation errors are visible for the required profile fields"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the profile settings remain editable after validation"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC016",
+    "title": "Show validation for an invalid workspace slug",
+    "description": "A signed-in user sees validation feedback when the workspace slug does not meet expected format rules.",
+    "category": "Workspace Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /w/default/settings/workspace"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the workspace slug field with an invalid slug value"
+      },
+      {
+        "type": "action",
+        "description": "Submit the workspace settings form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a workspace slug validation error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the workspace changes are not saved"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC017",
+    "title": "Handle workspace slug editing and validation",
+    "description": "This verifies workspace settings validate slug changes and keep the user on a usable settings page when input is corrected.",
+    "category": "Workspace Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open workspace settings"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the workspace slug field with an invalid value"
+      },
+      {
+        "type": "action",
+        "description": "Save the workspace changes"
+      },
+      {
+        "type": "action",
+        "description": "Correct the workspace slug field with a valid slug"
+      },
+      {
+        "type": "action",
+        "description": "Save the workspace changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a slug validation error is shown for the invalid value"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the workspace changes can be saved after correction"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC018",
+    "title": "Handle invite form validation and role selection",
+    "description": "This verifies the invite member flow surfaces validation for missing or invalid email input before an invite is prepared.",
+    "category": "Workspace Members",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open members settings"
+      },
+      {
+        "type": "action",
+        "description": "Click the invite member action"
+      },
+      {
+        "type": "action",
+        "description": "Clear the email field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the invite form"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with an invalid invite address"
+      },
+      {
+        "type": "action",
+        "description": "Select a member role"
+      },
+      {
+        "type": "action",
+        "description": "Submit the invite form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an invite validation error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the role selector remains available for correction"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC019",
+    "title": "Show validation for an invalid invite email",
+    "description": "A signed-in workspace admin sees validation feedback when the invite email is not valid.",
+    "category": "Workspace Members",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /w/default/settings/members"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the invite email field with an invalid email value"
+      },
+      {
+        "type": "action",
+        "description": "Select a workspace role for the invite"
+      },
+      {
+        "type": "action",
+        "description": "Submit the member invite form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an invite email validation error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the invite is not prepared"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC020",
+    "title": "Show validation for missing profile details",
+    "description": "A signed-in user sees validation feedback when required profile information is not provided.",
+    "category": "Profile Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /w/default/settings/profile"
+      },
+      {
+        "type": "action",
+        "description": "Clear the display name field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the profile settings form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a profile validation error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the profile changes are not saved"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC021",
+    "title": "Cancel account deletion and keep access",
+    "description": "A signed-in user can back out of account deletion and remain able to use the workspace.",
+    "category": "Account Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with test_audit@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with Test_Audit!123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /w/default/settings/account"
+      },
+      {
+        "type": "action",
+        "description": "Start the account deletion flow"
+      },
+      {
+        "type": "action",
+        "description": "Cancel the account deletion"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the account remains active"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify workspace access is still available"
+      }
+    ],
+    "priority": "Low"
+  }
+]

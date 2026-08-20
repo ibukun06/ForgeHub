@@ -117,7 +117,7 @@ export function KanbanBoard({ initialTasks }: KanbanBoardProps) {
     if (!over) return;
 
     const activeId = active.id as string;
-    
+
     // Determine what column we dropped into
     let newColumnId = "";
     if (over.data.current?.type === "Column") {
@@ -133,7 +133,7 @@ export function KanbanBoard({ initialTasks }: KanbanBoardProps) {
         const originalTask = initialTasks.find((t) => t.id === activeId);
         // Only call server if status actually changed
         if (originalTask && originalTask.status !== newColumnId) {
-           await updateSectionStatus(activeId, col.dbStatus);
+          await updateSectionStatus(activeId, col.dbStatus);
         }
       }
     }
@@ -168,7 +168,7 @@ export function KanbanBoard({ initialTasks }: KanbanBoardProps) {
 
 function KanbanColumn({ column, tasks }: { column: { id: string; label: string; colorClass: string }; tasks: Task[] }) {
   const taskIds = useMemo(() => tasks.map((t) => t.id), [tasks]);
-  
+
   // Use useDroppable to make the column droppable when empty
   const { setNodeRef } = useSortable({
     id: column.id,

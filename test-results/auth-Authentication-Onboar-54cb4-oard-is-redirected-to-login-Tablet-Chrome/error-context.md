@@ -6,8 +6,8 @@
 
 # Test info
 
-- Name: ui-verification.spec.ts >> ForgeHub UI/UX Redesign Verification >> Explore Page renders Technical Discovery graph and domains
-- Location: e2e\ui-verification.spec.ts:15:7
+- Name: auth.spec.ts >> Authentication & Onboarding >> unauthenticated user trying to access /dashboard is redirected to /login
+- Location: e2e\auth.spec.ts:4:7
 
 # Error details
 

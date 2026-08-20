@@ -6,8 +6,8 @@
 
 # Test info
 
-- Name: ui-verification.spec.ts >> ForgeHub UI/UX Redesign Verification >> Landing Page renders industrial aesthetic and Project Map Hero
-- Location: e2e\ui-verification.spec.ts:4:7
+- Name: tracks.spec.ts >> Track A & B Verification >> Explore page loads and shows Technical Discovery (Track B)
+- Location: e2e\tracks.spec.ts:5:7
 
 # Error details
 

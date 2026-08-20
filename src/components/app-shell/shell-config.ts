@@ -13,6 +13,7 @@ import {
   Map,
   MessagesSquare,
   Users,
+  Files,
 } from "lucide-react";
 
 export type ShellAreaKey =
@@ -29,7 +30,8 @@ export type ProjectSectionKey =
   | "chat"
   | "review"
   | "insights"
-  | "team";
+  | "team"
+  | "files";
 
 export type ContextItem = {
   label: string;
@@ -90,6 +92,7 @@ export const PROJECT_SPINE: ProjectSpineItem[] = [
   { key: "review", label: "Review", icon: CheckCircle2 },
   { key: "insights", label: "Insights", icon: Activity },
   { key: "team", label: "Team", icon: Users },
+  { key: "files", label: "Files", icon: Files },
 ];
 
 export const FAVORITE_LINKS: FavoriteLink[] = [

@@ -6,8 +6,8 @@
 
 # Test info
 
-- Name: ui-verification.spec.ts >> ForgeHub UI/UX Redesign Verification >> Login Page functions correctly for testing account
-- Location: e2e\ui-verification.spec.ts:28:7
+- Name: workspace.spec.ts >> Workspace Navigation & Editor >> Knowledge Editor section creation handles gracefully
+- Location: e2e\workspace.spec.ts:17:7
 
 # Error details
 

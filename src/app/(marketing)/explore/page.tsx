@@ -1,7 +1,20 @@
-import { Network, Database, Layers, Search, Cpu } from "lucide-react";
+import { Network, Database, Layers, Search, Cpu, FolderOpen } from "lucide-react";
 import { BrandLogo } from "@/components/ui/brand-logo";
+import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
 
-export default function ExplorePage() {
+export default async function ExplorePage() {
+  const supabase = await createClient();
+
+  // Fetch published projects
+  const { data: projects } = await supabase
+    .from("projects")
+    .select("*, users!projects_created_by_fkey(name, username)")
+    .eq("visibility", "published")
+    .order("created_at", { ascending: false });
+
+  const publishedProjects = projects || [];
+
   return (
     <div className="min-h-screen bg-bg font-mono">
       {/* Explore Header */}
@@ -12,7 +25,7 @@ export default function ExplorePage() {
             Technical Discovery
           </h1>
           <p className="text-text-muted max-w-2xl text-sm leading-relaxed">
-            Don't just see what people are posting. See what they are building. Explore technical graphs, 
+            Don't just see what people are posting. See what they are building. Explore technical projects, 
             understand the problems being solved, and discover the materials and technologies shaping them.
           </p>
           
@@ -29,8 +42,44 @@ export default function ExplorePage() {
 
       {/* Discovery Grid */}
       <main className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mb-12">
+          <h2 className="text-xs uppercase tracking-[0.2em] text-text-muted mb-6 flex items-center gap-2">
+            <FolderOpen className="h-4 w-4" /> Recently Published Projects
+          </h2>
+
+          {publishedProjects.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {publishedProjects.map(proj => (
+                <Link href={`/projects/${proj.slug}`} key={proj.id} className="block group h-full">
+                  <div className="border border-border bg-surface p-6 shadow-md hover:border-primary/50 transition-colors h-full flex flex-col justify-between">
+                    <div>
+                      <div className="flex justify-between items-start mb-4">
+                        <h3 className="text-xl font-bold text-text-primary group-hover:text-primary transition-colors">{proj.name}</h3>
+                        <span className="text-[10px] uppercase border border-border px-2 py-1 bg-surface-muted">{proj.project_type}</span>
+                      </div>
+                      <p className="text-sm text-text-muted mb-4 line-clamp-3">
+                        {proj.description || "No description provided."}
+                      </p>
+                    </div>
+                    
+                    <div className="text-xs text-text-muted flex items-center justify-between border-t border-border pt-4 mt-4">
+                      <span>by {proj.users?.name || proj.users?.username || 'Unknown Builder'}</span>
+                      <span className="text-primary font-bold">View Project →</span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="p-12 border border-border bg-surface-muted flex flex-col items-center justify-center text-center">
+              <FolderOpen className="h-8 w-8 text-border mb-4" />
+              <h3 className="text-lg font-bold text-text-primary mb-1">No Projects Found</h3>
+              <p className="text-sm text-text-muted">There are no published projects on ForgeHub yet.</p>
+            </div>
+          )}
+        </div>
+
         <div className="grid md:grid-cols-3 gap-8">
-          
           {/* Domains */}
           <div className="col-span-1 border border-border bg-surface shadow-xl p-6">
             <h2 className="text-xs uppercase tracking-[0.2em] text-text-muted mb-6 flex items-center gap-2">
@@ -76,7 +125,6 @@ export default function ExplorePage() {
               Projects connect through shared materials, problems, and solutions.
             </div>
           </div>
-
         </div>
       </main>
     </div>
