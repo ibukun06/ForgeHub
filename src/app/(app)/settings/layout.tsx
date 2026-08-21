@@ -1,59 +1,78 @@
-import { ReactNode } from "react";
+"use client";
+
 import Link from "next/link";
-import { User, Shield, Palette, Settings, Users, Key } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { User, Palette, Shield, Bell, Lock, HardDrive, Users, Accessibility, Link as LinkIcon, Database } from "lucide-react";
 
-export default function SettingsLayout({ children }: { children: ReactNode }) {
+const SETTINGS_NAV = [
+  { name: "Profile", href: "/settings/profile", icon: User },
+  { name: "Account", href: "/settings/account", icon: Shield },
+  { name: "Appearance", href: "/settings/appearance", icon: Palette },
+  { name: "Notifications", href: "/settings/notifications", icon: Bell },
+  { name: "Security", href: "/settings/security", icon: Lock },
+  { name: "Privacy", href: "/settings/privacy", icon: Shield },
+  { name: "Files & Storage", href: "/settings/files", icon: HardDrive },
+  { name: "Collaboration", href: "/settings/collaboration", icon: Users },
+  { name: "Accessibility", href: "/settings/accessibility", icon: Accessibility },
+  { name: "Integrations", href: "/settings/integrations", icon: LinkIcon },
+  { name: "Data & Privacy", href: "/settings/data-privacy", icon: Database, danger: true },
+];
+
+export default function SettingsLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+
   return (
-    <div className="flex h-full flex-col lg:flex-row">
-      {/* Sidebar */}
-      <aside className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-border bg-surface-muted/30 p-6 overflow-y-auto shrink-0">
-        <h2 className="font-heading text-xl text-text-primary mb-6">Settings</h2>
-        
-        <div className="space-y-8">
-          <section>
-            <h3 className="text-xs font-mono uppercase tracking-wider text-text-muted mb-3">Personal</h3>
-            <nav className="flex flex-col gap-1">
-              <Link href="/settings/profile" className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-text-primary hover:bg-surface-muted transition-colors">
-                <User className="w-4 h-4 text-text-muted" /> Profile
-              </Link>
-              <Link href="/settings/account" className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-text-primary hover:bg-surface-muted transition-colors">
-                <Shield className="w-4 h-4 text-text-muted" /> Account
-              </Link>
-              <Link href="/settings/preferences" className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-text-primary hover:bg-surface-muted transition-colors">
-                <Palette className="w-4 h-4 text-text-muted" /> Preferences
-              </Link>
-            </nav>
-          </section>
+    <div className="mx-auto max-w-5xl">
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold font-heading text-text-primary">Personal Settings</h1>
+        <p className="text-sm text-text-muted mt-1">Manage your account settings and preferences.</p>
+      </div>
 
-          <section>
-            <h3 className="text-xs font-mono uppercase tracking-wider text-text-muted mb-3">Workspace</h3>
-            <nav className="flex flex-col gap-1">
-              <Link href="/settings/workspace/general" className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-text-primary hover:bg-surface-muted transition-colors">
-                <Settings className="w-4 h-4 text-text-muted" /> General
-              </Link>
-              <Link href="/settings/workspace/members" className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-text-primary hover:bg-surface-muted transition-colors">
-                <Users className="w-4 h-4 text-text-muted" /> Members
-              </Link>
-            </nav>
-          </section>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <aside className="md:col-span-1 hidden md:block">
+          <nav className="flex flex-col gap-1">
+            {SETTINGS_NAV.map((item) => {
+              const active = pathname === item.href;
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+                    active
+                      ? "bg-surface-elevated text-primary font-medium shadow-sm border border-border"
+                      : "text-text-muted hover:text-text-primary hover:bg-surface border border-transparent"
+                  } ${item.danger && !active ? "hover:text-error" : ""} ${
+                    item.danger && active ? "text-error border-error/20 bg-error/10" : ""
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  {item.name}
+                </Link>
+              );
+            })}
+          </nav>
+        </aside>
 
-          <section>
-            <h3 className="text-xs font-mono uppercase tracking-wider text-text-muted mb-3">Administration</h3>
-            <nav className="flex flex-col gap-1">
-              <Link href="/settings/admin/roles" className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-text-primary hover:bg-surface-muted transition-colors">
-                <Key className="w-4 h-4 text-text-muted" /> Roles & Permissions
-              </Link>
-            </nav>
-          </section>
-        </div>
-      </aside>
+        {/* Mobile Nav (Dropdown/Select alternative could go here, for now relying on responsive flex/grid overrides later) */}
+        <aside className="md:hidden">
+            <select 
+                className="w-full bg-surface border border-border rounded-lg px-3 py-2 text-text-primary"
+                value={pathname}
+                onChange={(e) => window.location.href = e.target.value}
+            >
+                {SETTINGS_NAV.map(item => (
+                    <option key={item.href} value={item.href}>{item.name}</option>
+                ))}
+            </select>
+        </aside>
 
-      {/* Main Content Area */}
-      <main className="flex-1 min-w-0 p-6 md:p-8 overflow-y-auto">
-        <div className="max-w-3xl mx-auto">
-          {children}
-        </div>
-      </main>
+        <main className="md:col-span-3">
+          <div className="surface-panel p-6">
+            {children}
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

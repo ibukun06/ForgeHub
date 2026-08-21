@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-:root {
+:root, [data-theme="forge-light"] {
   /* Backgrounds & Surfaces (Light) */
   --color-bg: hsl(0, 0%, 100%);
   --color-surface: hsl(0, 0%, 98%);
@@ -11,12 +11,6 @@
   /* Borders */
   --color-border: hsl(224, 20%, 90%);
   --color-border-strong: hsl(224, 20%, 80%);
-  
-  /* Brand Primary */
-  --color-primary: hsl(250, 100%, 65%);
-  --color-primary-hover: hsl(250, 100%, 60%);
-  --color-primary-active: hsl(250, 100%, 55%);
-  --color-primary-soft: hsla(250, 100%, 65%, 0.1);
   
   /* Brand Secondary */
   --color-secondary: hsl(200, 100%, 50%);
@@ -69,23 +63,45 @@
   --gradient-page: radial-gradient(circle at top, hsla(250, 100%, 65%, 0.05), transparent 38%);
 }
 
-.dark {
-  /* Obsidian Glass - Backgrounds & Surfaces */
-  --color-bg: hsl(224, 71%, 4%);
-  --color-surface: hsl(224, 71%, 8%);
-  --color-surface-muted: hsl(224, 71%, 12%);
-  --color-surface-elevated: hsl(224, 71%, 16%);
-  --color-input-bg: hsl(224, 71%, 10%);
+[data-theme="forge-light-hc"] {
+  --color-bg: hsl(0, 0%, 100%);
+  --color-surface: hsl(0, 0%, 100%);
+  --color-surface-muted: hsl(0, 0%, 100%);
+  --color-surface-elevated: hsl(0, 0%, 100%);
+  --color-input-bg: hsl(0, 0%, 100%);
+  --color-border: hsl(224, 20%, 50%);
+  --color-border-strong: hsl(224, 20%, 30%);
+  --color-text-primary: hsl(0, 0%, 0%);
+  --color-text-muted: hsl(224, 20%, 20%);
+  --color-text-inverse: hsl(0, 0%, 100%);
+}
+
+[data-theme="forge-dark"] {
+  --color-bg: hsl(0, 0%, 0%);
+  --color-surface: hsl(220, 10%, 4%);
+  --color-surface-muted: hsl(220, 10%, 6%);
+  --color-surface-elevated: hsl(220, 10%, 10%);
+  --color-input-bg: hsl(220, 10%, 6%);
+  --color-border: hsl(224, 20%, 15%);
+  --color-border-strong: hsl(224, 20%, 25%);
+  --color-text-primary: hsl(0, 0%, 100%);
+  --color-text-muted: hsl(224, 20%, 70%);
+  --color-text-inverse: hsl(0, 0%, 0%);
+  --shadow-glass: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  --gradient-page: radial-gradient(circle at top, hsla(28, 90%, 55%, 0.05), transparent 32%);
+}
+
+[data-theme="forge-dim"] {
+  /* Carbon/Slate - Backgrounds & Surfaces */
+  --color-bg: hsl(220, 10%, 4%);
+  --color-surface: hsl(220, 10%, 8%);
+  --color-surface-muted: hsl(220, 10%, 12%);
+  --color-surface-elevated: hsl(220, 10%, 16%);
+  --color-input-bg: hsl(220, 10%, 10%);
   
   /* Borders */
   --color-border: hsl(224, 20%, 20%);
   --color-border-strong: hsl(224, 20%, 30%);
-  
-  /* Brand Primary */
-  --color-primary: hsl(250, 100%, 75%);
-  --color-primary-hover: hsl(250, 100%, 80%);
-  --color-primary-active: hsl(250, 100%, 85%);
-  --color-primary-soft: hsla(250, 100%, 75%, 0.15);
   
   /* Brand Secondary */
   --color-secondary: hsl(200, 100%, 70%);
@@ -122,7 +138,65 @@
 
   --shadow-glass: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
 
-  --gradient-page: radial-gradient(circle at top, hsla(250, 100%, 75%, 0.08), transparent 32%);
+  --gradient-page: radial-gradient(circle at top, hsla(28, 90%, 55%, 0.05), transparent 32%);
+}
+
+[data-theme="forge-dark-hc"] {
+  --color-bg: hsl(0, 0%, 0%);
+  --color-surface: hsl(0, 0%, 0%);
+  --color-surface-muted: hsl(0, 0%, 0%);
+  --color-surface-elevated: hsl(0, 0%, 0%);
+  --color-input-bg: hsl(0, 0%, 0%);
+  --color-border: hsl(224, 20%, 50%);
+  --color-border-strong: hsl(224, 20%, 70%);
+  --color-text-primary: hsl(0, 0%, 100%);
+  --color-text-muted: hsl(0, 0%, 100%);
+  --color-text-inverse: hsl(0, 0%, 0%);
+}
+
+/* Brand Accents */
+:root, [data-accent="forge-orange"] {
+  --color-primary: hsl(28, 90%, 55%);
+  --color-primary-hover: hsl(28, 90%, 50%);
+  --color-primary-active: hsl(28, 90%, 45%);
+  --color-primary-soft: hsla(28, 90%, 55%, 0.15);
+}
+
+[data-theme="forge-dim"] [data-accent="forge-orange"],
+[data-theme="forge-dark"] [data-accent="forge-orange"],
+[data-theme="forge-dark-hc"] [data-accent="forge-orange"] {
+  --color-primary: hsl(28, 90%, 55%);
+  --color-primary-hover: hsl(28, 90%, 60%);
+  --color-primary-active: hsl(28, 90%, 65%);
+  --color-primary-soft: hsla(28, 90%, 55%, 0.15);
+}
+
+[data-accent="blue"] {
+  --color-primary: hsl(210, 100%, 55%);
+  --color-primary-hover: hsl(210, 100%, 50%);
+  --color-primary-active: hsl(210, 100%, 45%);
+  --color-primary-soft: hsla(210, 100%, 55%, 0.15);
+}
+
+[data-accent="purple"] {
+  --color-primary: hsl(270, 80%, 65%);
+  --color-primary-hover: hsl(270, 80%, 60%);
+  --color-primary-active: hsl(270, 80%, 55%);
+  --color-primary-soft: hsla(270, 80%, 65%, 0.15);
+}
+
+[data-accent="green"] {
+  --color-primary: hsl(150, 80%, 45%);
+  --color-primary-hover: hsl(150, 80%, 40%);
+  --color-primary-active: hsl(150, 80%, 35%);
+  --color-primary-soft: hsla(150, 80%, 45%, 0.15);
+}
+
+[data-accent="teal"] {
+  --color-primary: hsl(180, 80%, 45%);
+  --color-primary-hover: hsl(180, 80%, 40%);
+  --color-primary-active: hsl(180, 80%, 35%);
+  --color-primary-soft: hsla(180, 80%, 45%, 0.15);
 }
 
 @theme inline {
@@ -286,10 +360,21 @@ button:disabled {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  :root:not([data-motion="full"]) *,
+  :root:not([data-motion="full"]) *::before,
+  :root:not([data-motion="full"]) *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+[data-motion="reduced"] *,
+[data-motion="reduced"] *::before,
+[data-motion="reduced"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: 0.01ms !important;
 }

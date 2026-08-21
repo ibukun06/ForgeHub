@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
+import { createClient } from "@/lib/supabase/server";
 
 /**
  * Defaults for every page under (marketing). A page that exports its own
@@ -26,10 +27,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function MarketingLayout({ children }: { children: React.ReactNode }) {
+export default async function MarketingLayout({ children }: { children: React.ReactNode }) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
   return (
     <>
-      <Navbar />
+      <Navbar user={user} />
       <main>{children}</main>
       <Footer />
     </>

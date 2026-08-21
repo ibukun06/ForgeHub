@@ -32,11 +32,48 @@ export const metadata: Metadata = {
 const themeInitScript = `
 (function () {
   try {
-    var stored = localStorage.getItem('forgehub-theme');
-    var isDark = stored !== 'light';
-    document.documentElement.classList.toggle('dark', isDark);
+    var defaultPrefs = {
+      themeMode: "system",
+      lightTheme: "forge-light",
+      darkTheme: "forge-dim",
+      accent: "forge-orange",
+      density: "comfortable",
+      motion: "system"
+    };
+    
+    var prefs = defaultPrefs;
+    var stored = localStorage.getItem('forgehub-theme-prefs');
+    
+    if (stored) {
+      try {
+        prefs = Object.assign({}, defaultPrefs, JSON.parse(stored));
+      } catch (e) {}
+    } else {
+      var legacy = localStorage.getItem('forgehub-theme');
+      if (legacy) {
+        prefs.themeMode = legacy;
+      }
+    }
+    
+    var effectiveTheme = prefs.darkTheme;
+    if (prefs.themeMode === "light") {
+      effectiveTheme = prefs.lightTheme;
+    } else if (prefs.themeMode === "dark") {
+      effectiveTheme = prefs.darkTheme;
+    } else if (prefs.themeMode === "system" || prefs.themeMode === "auto") {
+      var isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      effectiveTheme = isSystemDark ? prefs.darkTheme : prefs.lightTheme;
+    }
+    
+    document.documentElement.setAttribute("data-theme", effectiveTheme);
+    document.documentElement.setAttribute("data-accent", prefs.accent);
+    document.documentElement.setAttribute("data-density", prefs.density);
+    document.documentElement.setAttribute("data-motion", prefs.motion);
   } catch (e) {
-    document.documentElement.classList.add('dark');
+    document.documentElement.setAttribute("data-theme", "forge-dim");
+    document.documentElement.setAttribute("data-accent", "forge-orange");
+    document.documentElement.setAttribute("data-density", "comfortable");
+    document.documentElement.setAttribute("data-motion", "system");
   }
 })();
 `;

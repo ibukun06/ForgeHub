@@ -109,7 +109,7 @@ export type HomeScreenData = {
 };
 
 export type InboxScreenData = {
-  items: Array<{ id: string; title: string; source: string; state: string }>;
+  items: Array<{ id: string; type?: string; title: string; source: string; state: string; avatar?: string }>;
   selected: {
     title: string;
     summary: string;
@@ -117,9 +117,7 @@ export type InboxScreenData = {
     action: string;
   };
   triage: string[];
-};
-
-export type ProjectsScreenData = {
+};export type ProjectsScreenData = {
   metrics: MetricData[];
   projects: Array<{ name: string; stage: string; summary: string; href: string }>;
   lanes: Array<{ title: string; description: string }>;
@@ -717,3 +715,5 @@ export async function getProjectCockpitData(projectSlug: string, workspaceSlug: 
     })),
   };
 }
+
+export async function getDashboardScreenData() { return { projects: [], activities: [], notifications: [] }; }

@@ -55,8 +55,9 @@ export async function updateSession(request: NextRequest) {
     request.nextUrl.pathname.startsWith(p)
   );
 
-  // If logged in and trying to access an auth page or landing page, redirect to dashboard or intended location
-  if (user && (isAuthPath || request.nextUrl.pathname === "/")) {
+  // If logged in and trying to access an auth page (login/signup), redirect to dashboard or intended location.
+  // We explicitly DO NOT redirect if they visit "/" because authenticated users should be able to view the landing page.
+  if (user && isAuthPath) {
     let redirectTo = request.nextUrl.searchParams.get("redirectTo") || "/dashboard";
     if (["/login", "/signup", "/reset-password"].some(p => redirectTo.startsWith(p))) {
       redirectTo = "/dashboard";

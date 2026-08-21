@@ -3,23 +3,17 @@ import {
   Activity,
   Bell,
   BookMarked,
-  BriefcaseBusiness,
   CheckCircle2,
   Compass,
-  FolderKanban,
   KanbanSquare,
   LayoutDashboard,
-  LibraryBig,
   Map,
   MessagesSquare,
   Users,
+  Files,
 } from "lucide-react";
 
-export type ShellAreaKey =
-  | "inbox"
-  | "work"
-  | "projects"
-  | "knowledge";
+export type ShellAreaKey = "dashboard" | "inbox" | "explore" | "settings" | "projects";
 
 export type ProjectSectionKey =
   | "overview"
@@ -29,7 +23,8 @@ export type ProjectSectionKey =
   | "chat"
   | "review"
   | "insights"
-  | "team";
+  | "team"
+  | "files";
 
 export type ContextItem = {
   label: string;
@@ -75,10 +70,9 @@ export type ShellState = {
 };
 
 export const PRIMARY_NAV: NavItem[] = [
+  { key: "dashboard", label: "Home", href: "/dashboard", icon: LayoutDashboard, shortLabel: "Home" },
+  { key: "explore", label: "Explore", href: "/explore", icon: Compass, shortLabel: "Explore" },
   { key: "inbox", label: "Inbox", href: "/inbox", icon: Bell, shortLabel: "Inbox" },
-  { key: "work", label: "Work", href: "/work", icon: BriefcaseBusiness, shortLabel: "Work" },
-  { key: "projects", label: "Projects", href: "/projects", icon: FolderKanban, shortLabel: "Projects" },
-  { key: "knowledge", label: "Knowledge", href: "/knowledge", icon: LibraryBig, shortLabel: "Knowledge" },
 ];
 
 export const PROJECT_SPINE: ProjectSpineItem[] = [
@@ -90,6 +84,7 @@ export const PROJECT_SPINE: ProjectSpineItem[] = [
   { key: "review", label: "Review", icon: CheckCircle2 },
   { key: "insights", label: "Insights", icon: Activity },
   { key: "team", label: "Team", icon: Users },
+  { key: "files", label: "Files", icon: Files },
 ];
 
 export const FAVORITE_LINKS: FavoriteLink[] = [
@@ -116,27 +111,19 @@ function topLevelContext(area: ShellAreaKey): ContextItem[] {
         { label: "Project updates", href: "/inbox#project-updates", hint: "Signal over noise" },
         { label: "Snoozed", href: "/inbox#snoozed", hint: "Deferred follow-ups" },
       ];
-    case "projects":
+    case "dashboard":
       return [
-        { label: "Active projects", href: "/projects#active-projects", hint: "Current delivery focus" },
-        { label: "Portfolio view", href: "/projects#portfolio", hint: "By stage, team, and risk" },
-        { label: "Templates", href: "/projects#project-kits", hint: "Reusable project operating models" },
-        { label: "ForgeHub redesign", href: "/w/forgehub/p/forgehub-redesign/overview", hint: "Flagship project cockpit" },
+        { label: "My Projects", href: "/dashboard#projects", hint: "Projects you are active in" },
+        { label: "Action Center", href: "/dashboard#action-center", hint: "Requires your attention" },
+        { label: "Recent Activity", href: "/dashboard#activity", hint: "What happened recently" },
       ];
-    case "work":
+    case "explore":
       return [
-        { label: "My work", href: "/work#my-work", hint: "Assigned, due, and blocked" },
-        { label: "Saved views", href: "/work#saved-views", hint: "Reusable execution lenses" },
-        { label: "Timeline", href: "/work#timeline", hint: "Dependencies and sequencing" },
-        { label: "Workload", href: "/work#workload", hint: "Capacity and balancing" },
+        { label: "Trending", href: "/explore#trending", hint: "Popular engineering projects" },
+        { label: "Recommended", href: "/explore#recommended", hint: "Projects for you" },
       ];
-    case "knowledge":
-      return [
-        { label: "Docs", href: "/knowledge#docs", hint: "Specs, briefs, plans" },
-        { label: "Decisions", href: "/knowledge#decisions", hint: "Durable project memory" },
-        { label: "Research", href: "/knowledge#research", hint: "Evidence and synthesis" },
-        { label: "Collections", href: "/knowledge#collections", hint: "Organized knowledge clusters" },
-      ];
+    default:
+      return [];
   }
 }
 
@@ -147,21 +134,17 @@ function topLevelUtilities(area: ShellAreaKey): UtilitySection[] {
         { title: "AI triage", items: ["Cluster related notifications", "Summarize long threads", "Explain why this item is urgent"] },
         { title: "Inbox actions", items: ["Mute source", "Snooze until tomorrow", "Convert update to task"] },
       ];
-    case "projects":
+    case "dashboard":
       return [
-        { title: "Portfolio cues", items: ["3 projects need milestone definition", "1 project has rising delivery risk", "2 projects are ready for review"] },
-        { title: "AI planning", items: ["Generate kickoff structure", "Suggest roadmap phases", "Recommend project template"] },
+        { title: "AI suggestions", items: ["Draft status update", "Review pending PRs"] },
+        { title: "Quick actions", items: ["New project", "Create workspace"] },
       ];
-    case "work":
+    case "explore":
       return [
-        { title: "AI execution", items: ["Prioritize backlog", "Suggest assignees by load", "Detect overdue clusters"] },
-        { title: "Bulk actions", items: ["Move selected work", "Update due dates", "Save current view"] },
+        { title: "Filters", items: ["Most starred this week", "Recently updated"] },
       ];
-    case "knowledge":
-      return [
-        { title: "AI knowledge", items: ["Summarize long doc", "Extract action items", "Answer with citations"] },
-        { title: "Knowledge actions", items: ["Create decision log", "Import research", "Link task to doc"] },
-      ];
+    default:
+      return [];
   }
 }
 

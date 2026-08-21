@@ -54,8 +54,8 @@ export async function signIn(
   const parsed = signInSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
-    rememberMe: formData.get("rememberMe"),
-    redirectTo: formData.get("redirectTo"),
+    rememberMe: formData.get("rememberMe") || undefined,
+    redirectTo: formData.get("redirectTo") || undefined,
   });
 
   if (!parsed.success) {
