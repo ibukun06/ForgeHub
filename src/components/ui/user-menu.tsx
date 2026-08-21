@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { User, LogOut, Settings, LayoutDashboard, Palette } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
-export function UserMenu({ user }: { user: { email?: string; displayName?: string; user_metadata?: { full_name?: string }; id?: string;[key: string]: unknown } | null }) {
+export function UserMenu({ user }: { user: { email?: string; displayName?: string; user_metadata?: { full_name?: string }; id?: string } | null }) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const supabase = createClient();

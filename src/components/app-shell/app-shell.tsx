@@ -28,7 +28,7 @@ export type ShellWorkspace = {
 };
 
 type AppShellProps = {
-  user: { displayName?: string; email?: string; user_metadata?: { full_name?: string; name?: string }; [key: string]: unknown } | null;
+  user: { displayName?: string; email?: string; user_metadata?: { full_name?: string; name?: string } } | null;
   workspaces?: ShellWorkspace[];
   children: ReactNode;
 };
