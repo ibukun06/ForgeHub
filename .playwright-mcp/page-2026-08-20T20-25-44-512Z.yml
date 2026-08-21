@@ -1,0 +1,115 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - link [ref=e5] [cursor=pointer]:
+      - /url: /inbox
+      - generic [ref=e8]:
+        - paragraph [ref=e9]: ForgeHub
+        - paragraph [ref=e10]: Project OS
+    - button "Collapse sidebar" [expanded] [ref=e12] [cursor=pointer]:
+      - generic [ref=e16]: Collapse
+    - button "Search, command, or ask AI" [ref=e18] [cursor=pointer]:
+      - generic [ref=e22]: Search, command...
+    - navigation "Primary navigation" [ref=e23]:
+      - link "Inbox" [ref=e24] [cursor=pointer]:
+        - /url: /inbox
+      - link "Work" [ref=e29] [cursor=pointer]:
+        - /url: /work
+      - link "Projects" [ref=e35] [cursor=pointer]:
+        - /url: /projects
+      - link "Knowledge" [ref=e39] [cursor=pointer]:
+        - /url: /knowledge
+    - generic [ref=e44]:
+      - generic [ref=e45]: Favorites
+      - generic [ref=e49]:
+        - link "ForgeHub Redesign" [ref=e50] [cursor=pointer]:
+          - /url: /w/forgehub/p/forgehub-redesign/overview
+        - link "Execution board" [ref=e55] [cursor=pointer]:
+          - /url: /work#board
+    - generic [ref=e61]:
+      - paragraph [ref=e62]: Signed in
+      - paragraph [ref=e63]: oluwafemiibk
+      - paragraph [ref=e64]: oluwafemiibk@gmail.com
+  - generic [ref=e65]:
+    - banner [ref=e66]:
+      - generic [ref=e67]:
+        - button "Collapse context rail" [ref=e68] [cursor=pointer]
+        - generic [ref=e72]:
+          - generic [ref=e73]: Projects
+          - generic [ref=e76]:
+            - paragraph [ref=e77]: Projects · global view
+            - paragraph [ref=e78]: Projects
+        - button "Search, command, or ask AI ⌘K" [ref=e79] [cursor=pointer]:
+          - text: Search, command, or ask AI
+          - generic [ref=e83]: ⌘K
+        - link "Create" [ref=e84] [cursor=pointer]:
+          - /url: /projects/new
+        - button "Current theme is system. Click to switch." [ref=e86] [cursor=pointer]
+        - button "OL" [ref=e91] [cursor=pointer]
+    - generic [ref=e93]:
+      - complementary [ref=e94]:
+        - generic [ref=e95]:
+          - paragraph [ref=e96]: Current scope
+          - heading "Projects" [level=2] [ref=e97]
+          - paragraph [ref=e98]: Projects · global view
+        - generic [ref=e99]: Context rail
+        - generic [ref=e100]:
+          - link [ref=e101] [cursor=pointer]:
+            - /url: /projects#active-projects
+            - paragraph [ref=e102]: Active projects
+            - paragraph [ref=e103]: Current delivery focus
+          - link [ref=e104] [cursor=pointer]:
+            - /url: /projects#portfolio
+            - paragraph [ref=e105]: Portfolio view
+            - paragraph [ref=e106]: By stage, team, and risk
+          - link [ref=e107] [cursor=pointer]:
+            - /url: /projects#project-kits
+            - paragraph [ref=e108]: Templates
+            - paragraph [ref=e109]: Reusable project operating models
+          - link [ref=e110] [cursor=pointer]:
+            - /url: /w/forgehub/p/forgehub-redesign/overview
+            - paragraph [ref=e111]: ForgeHub redesign
+            - paragraph [ref=e112]: Flagship project cockpit
+      - main [ref=e113]:
+        - generic [ref=e114]:
+          - generic [ref=e115]:
+            - paragraph [ref=e116]: Start a new build
+            - heading "Give the idea some structure." [level=1] [ref=e117]
+            - paragraph [ref=e118]: Answer a few useful questions, then ForgeHub will prepare a private project record instead of dropping you into a blank dashboard.
+          - generic [ref=e119]:
+            - generic [ref=e120]:
+              - generic "Project creation progress" [ref=e121]:
+                - generic [ref=e122]: 01 / Idea
+                - generic [ref=e123]: 02 / Type
+                - generic [ref=e124]: 03 / Documents
+                - generic [ref=e125]: 04 / Review
+              - generic [ref=e126]:
+                - generic [ref=e127]:
+                  - generic [ref=e128]: Project name *
+                  - textbox "Project name" [ref=e129]:
+                    - /placeholder: e.g. Autonomous field rover
+                - generic [ref=e130]:
+                  - generic [ref=e131]: What are you making?
+                  - textbox "What are you making?" [ref=e132]:
+                    - /placeholder: Describe the problem, who it affects, and what you want to change.
+                  - paragraph [ref=e133]: 0/500
+              - button "Continue" [ref=e135] [cursor=pointer]
+            - complementary [ref=e138]:
+              - paragraph [ref=e139]: Start with a useful record.
+              - paragraph [ref=e140]: The first document set is a working hypothesis, not a contract. Your project stays private until you choose to publish it.
+              - link "Back to projects" [ref=e141] [cursor=pointer]:
+                - /url: /projects
+      - complementary [ref=e142]:
+        - generic [ref=e143]: Utility rail
+        - generic [ref=e144]:
+          - generic [ref=e145]:
+            - heading "Portfolio cues" [level=3] [ref=e146]
+            - list [ref=e147]:
+              - listitem [ref=e148]: • 3 projects need milestone definition
+              - listitem [ref=e149]: • 1 project has rising delivery risk
+              - listitem [ref=e150]: • 2 projects are ready for review
+          - generic [ref=e151]:
+            - heading "AI planning" [level=3] [ref=e152]
+            - list [ref=e153]:
+              - listitem [ref=e154]: • Generate kickoff structure
+              - listitem [ref=e155]: • Suggest roadmap phases
+              - listitem [ref=e156]: • Recommend project template

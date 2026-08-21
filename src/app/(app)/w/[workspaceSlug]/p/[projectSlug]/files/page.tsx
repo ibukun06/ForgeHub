@@ -1,8 +1,20 @@
 import React from "react";
+<<<<<<< HEAD
 import { Upload, FilePlus2, Search, FolderKanban } from "lucide-react";
 import { FileViewer } from "@/components/files/file-viewer";
 
 export default async function ProjectFilesPage() {
+=======
+import { Upload, FilePlus2, Search, Filter, FolderKanban } from "lucide-react";
+import { FileViewer } from "@/components/files/file-viewer";
+
+export default async function ProjectFilesPage({
+  params,
+}: {
+  params: Promise<{ projectSlug: string }>;
+}) {
+  const { projectSlug } = await params;
+>>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
 
   // Mocked files for Track C UI
   const files = [

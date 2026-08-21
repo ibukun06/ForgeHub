@@ -1,0 +1,67 @@
+- generic [active] [ref=f5e1]:
+  - generic [ref=f5e2]:
+    - complementary [ref=f5e3]:
+      - link [ref=f5e5] [cursor=pointer]:
+        - /url: /inbox
+        - img "ForgeHub Logo" [ref=f5e7]
+        - generic [ref=f5e8]:
+          - paragraph [ref=f5e9]: ForgeHub
+          - paragraph [ref=f5e10]: Project OS
+      - button "Collapse sidebar" [expanded] [ref=f5e12] [cursor=pointer]:
+        - generic [ref=f5e16]: Collapse
+      - button "Search, command, or ask AI" [ref=f5e18] [cursor=pointer]:
+        - generic [ref=f5e22]: Search, command...
+      - navigation "Primary navigation" [ref=f5e23]:
+        - link "Inbox" [ref=f5e24] [cursor=pointer]:
+          - /url: /inbox
+        - link "Work" [ref=f5e29] [cursor=pointer]:
+          - /url: /work
+        - link "Projects" [ref=f5e35] [cursor=pointer]:
+          - /url: /projects
+        - link "Knowledge" [ref=f5e39] [cursor=pointer]:
+          - /url: /knowledge
+      - generic [ref=f5e44]:
+        - generic [ref=f5e45]: Favorites
+        - generic [ref=f5e49]:
+          - link "ForgeHub Redesign" [ref=f5e50] [cursor=pointer]:
+            - /url: /w/forgehub/p/forgehub-redesign/overview
+          - link "Execution board" [ref=f5e55] [cursor=pointer]:
+            - /url: /work#board
+      - generic [ref=f5e61]:
+        - paragraph [ref=f5e62]: Signed in
+        - paragraph [ref=f5e63]: Ibukunoluwa Oluwafemi
+        - paragraph [ref=f5e64]: oluwafemiibk@gmail.com
+    - generic [ref=f5e65]:
+      - banner [ref=f5e66]:
+        - generic [ref=f5e67]:
+          - generic [ref=f5e68]:
+            - generic [ref=f5e69]: Inbox
+            - generic [ref=f5e72]:
+              - paragraph [ref=f5e73]: Inbox · global view
+              - paragraph [ref=f5e74]: Inbox
+          - button "Search, command, or ask AI ⌘K" [ref=f5e75] [cursor=pointer]:
+            - text: Search, command, or ask AI
+            - generic [ref=f5e79]: ⌘K
+          - link "Create" [ref=f5e80] [cursor=pointer]:
+            - /url: /projects/new
+          - button "Current theme is dark. Click to switch." [ref=f5e82] [cursor=pointer]
+          - button "OL" [ref=f5e87] [cursor=pointer]
+      - generic [ref=f5e89]:
+        - main [ref=f5e90]
+        - complementary [ref=f5e235]:
+          - generic [ref=f5e236]: Utility rail
+          - generic [ref=f5e237]:
+            - generic [ref=f5e238]:
+              - heading "AI triage" [level=3] [ref=f5e239]
+              - list [ref=f5e240]:
+                - listitem [ref=f5e241]: • Cluster related notifications
+                - listitem [ref=f5e242]: • Summarize long threads
+                - listitem [ref=f5e243]: • Explain why this item is urgent
+            - generic [ref=f5e244]:
+              - heading "Inbox actions" [level=3] [ref=f5e245]
+              - list [ref=f5e246]:
+                - listitem [ref=f5e247]: • Mute source
+                - listitem [ref=f5e248]: • Snooze until tomorrow
+                - listitem [ref=f5e249]: • Convert update to task
+  - button "Open Next.js Dev Tools" [ref=f5e255] [cursor=pointer]
+  - alert [ref=f5e259]

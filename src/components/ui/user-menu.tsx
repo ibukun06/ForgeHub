@@ -6,7 +6,11 @@ import { usePathname } from "next/navigation";
 import { User, LogOut, Settings, LayoutDashboard, Palette } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
+<<<<<<< HEAD
 export function UserMenu({ user }: { user: { email?: string; displayName?: string; user_metadata?: { full_name?: string }; id?: string;[key: string]: unknown } | null }) {
+=======
+export function UserMenu({ user }: { user: any }) {
+>>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const supabase = createClient();
@@ -50,7 +54,11 @@ export function UserMenu({ user }: { user: { email?: string; displayName?: strin
               {user?.email}
             </p>
           </div>
+<<<<<<< HEAD
 
+=======
+          
+>>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
           <div className="py-1">
             <Link
               href="/dashboard"
@@ -85,7 +93,11 @@ export function UserMenu({ user }: { user: { email?: string; displayName?: strin
               Theme & Appearance
             </Link>
           </div>
+<<<<<<< HEAD
 
+=======
+          
+>>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
           <div className="border-t border-border py-1 bg-surface-muted">
             <button
               onClick={handleSignOut}

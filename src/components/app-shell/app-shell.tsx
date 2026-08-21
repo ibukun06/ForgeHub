@@ -11,6 +11,8 @@ import {
   PanelLeftOpen,
   Plus,
   Search,
+  Sparkles,
+  UserCircle2,
   Network,
   X,
 } from "lucide-react";
@@ -19,7 +21,7 @@ import { Logo } from "@/components/ui/logo";
 import { UserMenu } from "@/components/ui/user-menu";
 import { initials } from "@/lib/format";
 import { CommandSurface } from "./command-surface";
-import { getShellState, PRIMARY_NAV, type ContextItem, type ShellState } from "./shell-config";
+import { FAVORITE_LINKS, getShellState, PRIMARY_NAV, type ContextItem, type ShellState } from "./shell-config";
 
 export type ShellWorkspace = {
   id: string;
@@ -28,7 +30,7 @@ export type ShellWorkspace = {
 };
 
 type AppShellProps = {
-  user: { displayName?: string; email?: string; user_metadata?: { full_name?: string; name?: string }; [key: string]: unknown } | null;
+  user: any;
   workspaces?: ShellWorkspace[];
   children: ReactNode;
 };

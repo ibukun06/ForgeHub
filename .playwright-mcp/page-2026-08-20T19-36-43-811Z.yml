@@ -1,0 +1,89 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - complementary [ref=f1e3]:
+      - link [ref=f1e5] [cursor=pointer]:
+        - /url: /inbox
+        - generic [ref=f1e8]:
+          - paragraph [ref=f1e9]: ForgeHub
+          - paragraph [ref=f1e10]: Project OS
+      - button "Collapse sidebar" [expanded] [ref=f1e12] [cursor=pointer]:
+        - generic [ref=f1e16]: Collapse
+      - button "Search, command, or ask AI" [ref=f1e18] [cursor=pointer]:
+        - generic [ref=f1e22]: Search, command...
+      - navigation "Primary navigation" [ref=f1e23]:
+        - link "Inbox" [ref=f1e24] [cursor=pointer]:
+          - /url: /inbox
+        - link "Work" [ref=f1e29] [cursor=pointer]:
+          - /url: /work
+        - link "Projects" [ref=f1e35] [cursor=pointer]:
+          - /url: /projects
+        - link "Knowledge" [ref=f1e39] [cursor=pointer]:
+          - /url: /knowledge
+      - generic [ref=f1e44]:
+        - generic [ref=f1e45]: Favorites
+        - generic [ref=f1e49]:
+          - link "ForgeHub Redesign" [ref=f1e50] [cursor=pointer]:
+            - /url: /w/forgehub/p/forgehub-redesign/overview
+          - link "Execution board" [ref=f1e55] [cursor=pointer]:
+            - /url: /work#board
+      - generic [ref=f1e61]:
+        - paragraph [ref=f1e62]: Signed in
+        - paragraph [ref=f1e63]: oluwafemiibk
+        - paragraph [ref=f1e64]: oluwafemiibk@gmail.com
+    - generic [ref=f1e65]:
+      - banner [ref=f1e66]:
+        - generic [ref=f1e67]:
+          - button "Collapse context rail" [ref=f1e68] [cursor=pointer]
+          - generic [ref=f1e72]:
+            - generic [ref=f1e73]: Inbox
+            - generic [ref=f1e76]:
+              - paragraph [ref=f1e77]: Inbox · global view
+              - paragraph [ref=f1e78]: Inbox
+          - button "Search, command, or ask AI ⌘K" [ref=f1e79] [cursor=pointer]:
+            - text: Search, command, or ask AI
+            - generic [ref=f1e83]: ⌘K
+          - link "Create" [ref=f1e84] [cursor=pointer]:
+            - /url: /projects/new
+          - button "Current theme is system. Click to switch." [ref=f1e86] [cursor=pointer]
+          - button "OL" [ref=f1e91] [cursor=pointer]
+      - generic [ref=f1e93]:
+        - complementary [ref=f1e94]:
+          - generic [ref=f1e95]:
+            - paragraph [ref=f1e96]: Current scope
+            - heading "Inbox" [level=2] [ref=f1e97]
+            - paragraph [ref=f1e98]: Inbox · global view
+          - generic [ref=f1e99]: Context rail
+          - generic [ref=f1e100]:
+            - link [ref=f1e101] [cursor=pointer]:
+              - /url: /inbox#action-required
+              - paragraph [ref=f1e102]: Action required
+              - paragraph [ref=f1e103]: Approvals, blockers, mentions
+            - link [ref=f1e104] [cursor=pointer]:
+              - /url: /inbox#approvals
+              - paragraph [ref=f1e105]: Approvals
+              - paragraph [ref=f1e106]: Decisions waiting on you
+            - link [ref=f1e107] [cursor=pointer]:
+              - /url: /inbox#project-updates
+              - paragraph [ref=f1e108]: Project updates
+              - paragraph [ref=f1e109]: Signal over noise
+            - link [ref=f1e110] [cursor=pointer]:
+              - /url: /inbox#snoozed
+              - paragraph [ref=f1e111]: Snoozed
+              - paragraph [ref=f1e112]: Deferred follow-ups
+        - main [ref=f1e113]
+        - complementary [ref=f1e258]:
+          - generic [ref=f1e259]: Utility rail
+          - generic [ref=f1e260]:
+            - generic [ref=f1e261]:
+              - heading "AI triage" [level=3] [ref=f1e262]
+              - list [ref=f1e263]:
+                - listitem [ref=f1e264]: • Cluster related notifications
+                - listitem [ref=f1e265]: • Summarize long threads
+                - listitem [ref=f1e266]: • Explain why this item is urgent
+            - generic [ref=f1e267]:
+              - heading "Inbox actions" [level=3] [ref=f1e268]
+              - list [ref=f1e269]:
+                - listitem [ref=f1e270]: • Mute source
+                - listitem [ref=f1e271]: • Snooze until tomorrow
+                - listitem [ref=f1e272]: • Convert update to task
+  - button "Open Next.js Dev Tools" [ref=f1e278] [cursor=pointer]

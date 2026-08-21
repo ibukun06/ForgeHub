@@ -29,7 +29,11 @@ const EXPERIENCE_LEVELS = [
 export default function ProfileSettingsPage() {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+<<<<<<< HEAD
   const [user, setUser] = useState<{ id: string } | null>(null);
+=======
+  const [user, setUser] = useState<unknown>(null);
+>>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -63,7 +67,11 @@ export default function ProfileSettingsPage() {
           .single();
           
         if (profile) {
+<<<<<<< HEAD
           const p = profile as { social_links?: Record<string, string>; name?: string; username?: string; bio?: string; location?: string; website?: string; institution?: string; title?: string; discipline?: string; skills?: string[]; expertise?: string[] };
+=======
+          const p = profile as any;
+>>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
           const social = p.social_links || {};
           setFormData({
             name: p.name || user.user_metadata?.full_name || "",
@@ -102,7 +110,11 @@ export default function ProfileSettingsPage() {
         }
       });
       
+<<<<<<< HEAD
       const updateData: Record<string, unknown> = {
+=======
+      const updateData: any = {
+>>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
         name: formData.name,
         username: formData.username,
         bio: formData.bio,

@@ -8,7 +8,11 @@ export default function WorkspaceBillingSettingsPage({
 }: {
   params: Promise<{ workspaceSlug: string }>;
 }) {
+<<<<<<< HEAD
   // Parameter destructured but not used in this mock UI
+=======
+  const { workspaceSlug } = use(params);
+>>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
 
   return (
     <div className="space-y-6">

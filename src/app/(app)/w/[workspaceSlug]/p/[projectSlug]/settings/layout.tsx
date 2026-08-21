@@ -1,4 +1,15 @@
+<<<<<<< HEAD
 import { Settings, AlertTriangle, Blocks } from "lucide-react";
+=======
+import Link from "next/link";
+import { Settings2, Settings, AlertTriangle, Blocks } from "lucide-react";
+
+const PROJECT_SETTINGS_NAV = [
+  { name: "General Settings", segment: "general", icon: Settings },
+  { name: "Features & Tools", segment: "features", icon: Blocks },
+  { name: "Danger Zone", segment: "danger-zone", icon: AlertTriangle, danger: true },
+];
+>>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
 
 export default async function ProjectSettingsLayout({
   children,

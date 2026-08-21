@@ -48,7 +48,11 @@ export default function ProjectGeneralSettingsPage({
     if (!project) return;
     setSaving(true);
     
+<<<<<<< HEAD
     const updateData: Record<string, unknown> = {
+=======
+    const updateData: any = {
+>>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
       name: generalInfo.name,
       description: generalInfo.description,
       visibility: generalInfo.visibility,
@@ -82,7 +86,11 @@ export default function ProjectGeneralSettingsPage({
       <div className="border-b border-border pb-5">
         <h2 className="font-heading text-2xl text-text-primary">General Settings</h2>
         <p className="mt-2 text-sm text-text-muted">
+<<<<<<< HEAD
           Manage the details and visibility of {(project as Record<string, unknown>).name as string}.
+=======
+          Manage the details and visibility of {(project as any).name}.
+>>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
         </p>
       </div>
 

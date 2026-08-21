@@ -1,7 +1,11 @@
 "use client";
 
 import { use, useState } from "react";
+<<<<<<< HEAD
 import { AlertTriangle, Trash2 } from "lucide-react";
+=======
+import { AlertTriangle, Trash2, Archive } from "lucide-react";
+>>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
 
 export default function ProjectDangerZonePage({
   params,
