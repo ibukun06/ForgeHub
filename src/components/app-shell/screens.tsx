@@ -355,7 +355,8 @@ export function HomeScreen({ scope, data }: { scope?: string; data?: HomeScreenD
 }
 
 export function InboxScreen({ data, activeTab = "Messages" }: { data?: InboxScreenData; activeTab?: string }) {
-  const items = data ? data.items : DEFAULT_INBOX_ITEMS;
+  const items = (data && data.items && data.items.length > 0) ? data.items : DEFAULT_INBOX_ITEMS;
+  const filteredItems = items.filter(item => (item as any).type === activeTab || !(item as any).type);
   const selected = data?.selected ?? DEFAULT_INBOX_SELECTED;
   const triage = data ? data.triage : DEFAULT_INBOX_TRIAGE;
 
