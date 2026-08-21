@@ -1222,7 +1222,7 @@ function EmptyInlineState({ title, description, actionLabel, actionHref }: { tit
   );
 }
 
-export function DashboardScreen({ user }: { user: { user_metadata?: { full_name?: string; name?: string }; email?: string } | null; data?: DashboardScreenData }) {
+export function DashboardScreen({ user, data }: { user: import('@supabase/supabase-js').User | null; data?: DashboardScreenData }) {
   const displayName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split("@")[0] || "Builder";
   return (
     <div className="space-y-10 animate-in fade-in duration-500">
