@@ -39,14 +39,14 @@ test.describe("ForgeHub Navigation & Authentication Overhaul", () => {
 
   // Note: Full authenticated flow testing requires seeding a test user in Supabase.
   // We'll stub this test to demonstrate the intended behavior.
-  test.skip("Authenticated user can visit public landing page without forced dashboard redirect", async ({ page }) => {
+  test.skip("Authenticated user can visit public landing page without forced dashboard redirect", async () => {
     // 1. Log in via UI
     // 2. Navigate to "/"
     // 3. Expect URL to remain "/"
     // 4. Expect Navbar to show "Dashboard" button instead of "Log in"
   });
 
-  test.skip("Account deletion flow shows danger confirmation modal", async ({ page }) => {
+  test.skip("Account deletion flow shows danger confirmation modal", async () => {
     // 1. Log in
     // 2. Navigate to /settings/account
     // 3. Click "Delete Account"

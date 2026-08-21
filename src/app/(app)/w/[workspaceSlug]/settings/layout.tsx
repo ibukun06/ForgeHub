@@ -1,20 +1,4 @@
-<<<<<<< HEAD
-import { Settings, Users, CreditCard, Shield, Link as LinkIcon, AlertTriangle } from "lucide-react";
 
-=======
-import Link from "next/link";
-import { Settings, Users, CreditCard, Shield, Link as LinkIcon, AlertTriangle } from "lucide-react";
-
-const WORKSPACE_SETTINGS_NAV = [
-  { name: "General Settings", segment: "general", icon: Settings },
-  { name: "Members & Roles", segment: "members", icon: Users },
-  { name: "Billing & Plans", segment: "billing", icon: CreditCard },
-  { name: "Security & Access", segment: "security", icon: Shield },
-  { name: "Integrations & Apps", segment: "integrations", icon: LinkIcon },
-  { name: "Danger Zone", segment: "danger-zone", icon: AlertTriangle, danger: true },
-];
-
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
 export default async function WorkspaceSettingsLayout({
   children,
   params,

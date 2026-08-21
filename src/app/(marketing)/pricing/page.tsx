@@ -87,17 +87,10 @@ export default function PricingPage() {
           </p>
         </div>
         <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-text-muted">
-<<<<<<< HEAD
           Whether you&apos;re a student documenting your first robot, or an enterprise team managing complex hardware files, we have a plan for you.
         </p>
         <div className="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0">
           {TIERS.map((tier) => (
-=======
-          Whether you're a student documenting your first robot, or an enterprise team managing complex hardware files, we have a plan for you.
-        </p>
-        <div className="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0">
-          {TIERS.map((tier, tierIdx) => (
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
             <div
               key={tier.id}
               className={classNames(

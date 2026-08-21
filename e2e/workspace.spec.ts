@@ -14,7 +14,7 @@ test.describe('Workspace Navigation & Editor', () => {
     }
   });
 
-  test('Knowledge Editor section creation handles gracefully', async ({ page }) => {
+  test('Knowledge Editor section creation handles gracefully', async () => {
     // Requires auth. We just outline the test structure as per QA Plan
   });
 });

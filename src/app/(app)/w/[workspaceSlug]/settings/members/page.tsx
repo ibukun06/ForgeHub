@@ -1,16 +1,6 @@
 import { MoreHorizontal, Shield, UserPlus } from "lucide-react";
 
-<<<<<<< HEAD
 export default async function WorkspaceMembersPage() {
-=======
-export default async function WorkspaceMembersPage({
-  params,
-}: {
-  params: Promise<{ workspaceSlug: string }>;
-}) {
-  const { workspaceSlug } = await params;
-
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
   // Placeholder data. In Phase 2 this will fetch from workspace_members table.
   const members = [
     { name: "Ibukunoluwa", email: "ibukun@example.com", role: "Owner" },

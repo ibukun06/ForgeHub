@@ -26,11 +26,7 @@ export default function AccountSettingsPage() {
           .single();
           
         if (prefs?.account) {
-<<<<<<< HEAD
           const account = prefs.account as Record<string, unknown>;
-=======
-          const account = prefs.account as any;
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
           if (account.default_start_page) {
             setStartPage(String(account.default_start_page));
           }

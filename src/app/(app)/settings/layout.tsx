@@ -2,11 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-<<<<<<< HEAD
 import { User, Palette, Shield, Bell, Lock, HardDrive, Users, Accessibility, Link as LinkIcon, Database } from "lucide-react";
-=======
-import { User, Palette, Shield, AlertTriangle, Bell, Lock, HardDrive, Users, Accessibility, Link as LinkIcon, Database } from "lucide-react";
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
 
 const SETTINGS_NAV = [
   { name: "Profile", href: "/settings/profile", icon: User },

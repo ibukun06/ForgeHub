@@ -1,14 +1,4 @@
-<<<<<<< HEAD
 export default async function AccountSettingsPage() {
-=======
-export default async function AccountSettingsPage({
-  params,
-}: {
-  params: Promise<{ workspaceSlug: string }>;
-}) {
-  const { workspaceSlug } = await params;
-
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
   return (
     <div className="space-y-6">
       <div className="border-b border-border pb-5">

@@ -1,11 +1,7 @@
 "use client";
 
 import { use } from "react";
-<<<<<<< HEAD
 import { Link as LinkIcon, Plus } from "lucide-react";
-=======
-import { Link as LinkIcon, Plus, ExternalLink, Settings as SettingsIcon, Trash2 } from "lucide-react";
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
 
 export default function WorkspaceIntegrationsSettingsPage({
   params,

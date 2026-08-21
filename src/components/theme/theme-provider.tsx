@@ -44,44 +44,27 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const applyPreferences = (prefs: ThemePreferences) => {
     // 1. Resolve Effective Theme
     let effectiveTheme = prefs.darkTheme;
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
     if (prefs.themeMode === "light") {
       effectiveTheme = prefs.lightTheme;
     } else if (prefs.themeMode === "dark") {
       effectiveTheme = prefs.darkTheme;
     } else if (prefs.themeMode === "system" || prefs.themeMode === "auto") {
       // In a real browser environment, we check the media query
-<<<<<<< HEAD
       const isSystemDark = typeof window !== 'undefined'
         ? window.matchMedia('(prefers-color-scheme: dark)').matches
-=======
-      const isSystemDark = typeof window !== 'undefined' 
-        ? window.matchMedia('(prefers-color-scheme: dark)').matches 
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
         : true;
       effectiveTheme = isSystemDark ? prefs.darkTheme : prefs.lightTheme;
     }
 
     setResolvedTheme(effectiveTheme);
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
     if (typeof document !== 'undefined') {
       document.documentElement.setAttribute("data-theme", effectiveTheme);
       document.documentElement.setAttribute("data-accent", prefs.accent);
       document.documentElement.setAttribute("data-density", prefs.density);
       document.documentElement.setAttribute("data-motion", prefs.motion);
-<<<<<<< HEAD
 
-=======
-      
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
       // Cleanup legacy class if present
       document.documentElement.classList.remove("dark");
     }
@@ -102,18 +85,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(loadedPrefs));
         }
       }
-<<<<<<< HEAD
     } catch {
       console.warn("Failed to parse theme preferences");
     }
 
     // eslint-disable-next-line react-hooks/set-state-in-effect
-=======
-    } catch (e) {
-      console.warn("Failed to parse theme preferences");
-    }
-
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
     setPreferencesState(loadedPrefs);
     applyPreferences(loadedPrefs);
 
@@ -128,11 +104,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
           applyPreferences(currentPrefs);
           setPreferencesState(currentPrefs);
         }
-<<<<<<< HEAD
       } catch {}
-=======
-      } catch (e) {}
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
     };
     
     mediaQuery.addEventListener('change', handleChange);
@@ -144,11 +116,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
           const newPrefs = { ...defaultPreferences, ...JSON.parse(e.newValue) };
           applyPreferences(newPrefs);
           setPreferencesState(newPrefs);
-<<<<<<< HEAD
         } catch {}
-=======
-        } catch (err) {}
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
       }
     };
     window.addEventListener('storage', handleStorage);

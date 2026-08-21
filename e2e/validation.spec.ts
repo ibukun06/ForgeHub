@@ -8,7 +8,7 @@ test.describe('API & Validation Failures', () => {
     
     await page.click('button[type="submit"]');
     // Depending on the UI, zod validation errors usually appear as text
-    const errorMessages = page.locator('text=Required').first();
+    page.locator('text=Required').first();
     // Some implementations use HTML5 validation which blocks the submit event, 
     // but if Zod handles it, we should see an error message.
   });

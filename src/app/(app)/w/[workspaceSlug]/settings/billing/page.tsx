@@ -1,18 +1,10 @@
 "use client";
 
-import { use } from "react";
+
 import { CreditCard, Check } from "lucide-react";
 
-export default function WorkspaceBillingSettingsPage({
-  params,
-}: {
-  params: Promise<{ workspaceSlug: string }>;
-}) {
-<<<<<<< HEAD
+export default function WorkspaceBillingSettingsPage() {
   // Parameter destructured but not used in this mock UI
-=======
-  const { workspaceSlug } = use(params);
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
 
   return (
     <div className="space-y-6">

@@ -1,11 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-<<<<<<< HEAD
 import { useTheme } from "@/components/theme/theme-provider";
-=======
-import { useTheme, type ThemeMode } from "@/components/theme/theme-provider";
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
 import { Monitor, Moon, Sun, Clock, Check } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
@@ -29,11 +25,7 @@ const DARK_THEMES = [
 ];
 
 export default function AppearanceSettingsPage() {
-<<<<<<< HEAD
   const { preferences, setPreferences } = useTheme();
-=======
-  const { preferences, setPreferences, resolvedTheme } = useTheme();
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   
@@ -56,11 +48,7 @@ export default function AppearanceSettingsPage() {
           .single();
           
         if (prefs?.appearance) {
-<<<<<<< HEAD
           const appearance = prefs.appearance as Record<string, string | boolean | undefined>;
-=======
-          const appearance = prefs.appearance as any;
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
           
           // Hydrate the theme provider
           setPreferences({
@@ -81,11 +69,7 @@ export default function AppearanceSettingsPage() {
       setLoading(false);
     }
     loadAppearance();
-<<<<<<< HEAD
   }, [supabase, setPreferences]);
-=======
-  }, [supabase]);
->>>>>>> dfb45177077b186131dffe1e49d84d8e443f6418
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
