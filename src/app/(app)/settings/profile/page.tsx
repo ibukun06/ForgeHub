@@ -102,7 +102,7 @@ export default function ProfileSettingsPage() {
         }
       });
       
-      const updateData: Record<string, unknown> = {
+      const updateData: any = {
         name: formData.name,
         username: formData.username,
         bio: formData.bio,
