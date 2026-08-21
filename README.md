@@ -29,6 +29,12 @@ see the synthesis docs for context.
   functional. Plan, Conversation, Review, and Insights are still static
   placeholder cards — real UI, no data behind them yet.
 
+### Recent Updates
+
+- **AI API Migration**: Upgraded Gemini integrations to use the new `interactions.create` API.
+- **Type Safety & Linting**: Performed a comprehensive sweep to enforce strict ESLint rules (removing `any` types, unused variables/imports, and `require()` in test scripts). Fixed all strict nullability checks for the Supabase `User` object across the application shell and settings routes.
+- **Theme Hydration**: Fixed type casting and hydration logic for the `ThemeProvider` to strictly align with saved user appearance preferences.
+
 ## What's not built yet
 
 Team management (invite, accept, roles) and the Decisions Log have
