@@ -41,12 +41,12 @@ export async function generateProjectBrief(
   `;
 
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: prompt,
+    const response = await ai.interactions.create({
+      model: "gemini-3.6-flash",
+      input: prompt,
     });
-    
-    const text = response.text || "";
+
+    const text = response.output_text || "";
     // Split by newline and clean up any accidental bullets
     const lines = text.split("\n").filter(line => line.trim().length > 0).map(line => line.replace(/^[-*•]\s*/, '').trim());
     return lines.slice(0, 3);
@@ -71,11 +71,11 @@ export async function generateInboxSummary(notificationTitle: string, source: st
   `;
 
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: prompt,
+    const response = await ai.interactions.create({
+      model: "gemini-3.6-flash",
+      input: prompt,
     });
-    return response.text || "No summary available.";
+    return response.output_text || "No summary available.";
   } catch (error) {
     console.error("Gemini API Error:", error);
     return "Failed to generate inbox summary.";
