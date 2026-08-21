@@ -1,0 +1,129 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e2]:
+    - complementary [ref=f3e3]:
+      - link [ref=f3e5] [cursor=pointer]:
+        - /url: /inbox
+        - img "ForgeHub Logo" [ref=f3e7]
+        - generic [ref=f3e8]:
+          - paragraph [ref=f3e9]: ForgeHub
+          - paragraph [ref=f3e10]: Project OS
+      - button "Collapse sidebar" [expanded] [ref=f3e12] [cursor=pointer]:
+        - generic [ref=f3e16]: Collapse
+      - button "Search, command, or ask AI" [ref=f3e18] [cursor=pointer]:
+        - generic [ref=f3e22]: Search, command...
+      - navigation "Primary navigation" [ref=f3e23]:
+        - link "Inbox" [ref=f3e24] [cursor=pointer]:
+          - /url: /inbox
+        - link "Work" [ref=f3e29] [cursor=pointer]:
+          - /url: /work
+        - link "Projects" [ref=f3e35] [cursor=pointer]:
+          - /url: /projects
+        - link "Knowledge" [ref=f3e39] [cursor=pointer]:
+          - /url: /knowledge
+      - generic [ref=f3e44]:
+        - generic [ref=f3e45]: Favorites
+        - generic [ref=f3e49]:
+          - link "ForgeHub Redesign" [ref=f3e50] [cursor=pointer]:
+            - /url: /w/forgehub/p/forgehub-redesign/overview
+          - link "Execution board" [ref=f3e55] [cursor=pointer]:
+            - /url: /work#board
+      - generic [ref=f3e61]:
+        - paragraph [ref=f3e62]: Signed in
+        - paragraph [ref=f3e63]: Ibukunoluwa Oluwafemi
+        - paragraph [ref=f3e64]: oluwafemiibk@gmail.com
+    - generic [ref=f3e65]:
+      - banner [ref=f3e66]:
+        - generic [ref=f3e67]:
+          - button "Collapse context rail" [ref=f3e68] [cursor=pointer]
+          - generic [ref=f3e72]:
+            - generic [ref=f3e73]: Projects
+            - generic [ref=f3e76]:
+              - paragraph [ref=f3e77]: Projects · global view
+              - paragraph [ref=f3e78]: Projects
+          - button "Search, command, or ask AI ⌘K" [ref=f3e79] [cursor=pointer]:
+            - text: Search, command, or ask AI
+            - generic [ref=f3e83]: ⌘K
+          - link "Create" [ref=f3e84] [cursor=pointer]:
+            - /url: /projects/new
+          - button "Current theme is light. Click to switch." [ref=f3e86] [cursor=pointer]
+          - button "OL" [ref=f3e95] [cursor=pointer]
+      - generic [ref=f3e97]:
+        - complementary [ref=f3e98]:
+          - generic [ref=f3e99]:
+            - paragraph [ref=f3e100]: Current scope
+            - heading "Projects" [level=2] [ref=f3e101]
+            - paragraph [ref=f3e102]: Projects · global view
+          - generic [ref=f3e103]: Context rail
+          - generic [ref=f3e104]:
+            - link [ref=f3e105] [cursor=pointer]:
+              - /url: /projects#active-projects
+              - paragraph [ref=f3e106]: Active projects
+              - paragraph [ref=f3e107]: Current delivery focus
+            - link [ref=f3e108] [cursor=pointer]:
+              - /url: /projects#portfolio
+              - paragraph [ref=f3e109]: Portfolio view
+              - paragraph [ref=f3e110]: By stage, team, and risk
+            - link [ref=f3e111] [cursor=pointer]:
+              - /url: /projects#project-kits
+              - paragraph [ref=f3e112]: Templates
+              - paragraph [ref=f3e113]: Reusable project operating models
+            - link [ref=f3e114] [cursor=pointer]:
+              - /url: /w/forgehub/p/forgehub-redesign/overview
+              - paragraph [ref=f3e115]: ForgeHub redesign
+              - paragraph [ref=f3e116]: Flagship project cockpit
+        - main [ref=f3e117]:
+          - generic [ref=f3e118]:
+            - generic [ref=f3e119]:
+              - paragraph [ref=f3e120]: Start a new build
+              - heading "Give the idea some structure." [level=1] [ref=f3e121]
+              - paragraph [ref=f3e122]: Answer a few useful questions, then ForgeHub will prepare a private project record instead of dropping you into a blank dashboard.
+            - generic [ref=f3e123]:
+              - generic [ref=f3e124]:
+                - generic "Project creation progress" [ref=f3e125]:
+                  - generic [ref=f3e126]: 01 / Idea
+                  - generic [ref=f3e127]: 02 / Type
+                  - generic [ref=f3e128]: 03 / Documents
+                  - generic [ref=f3e129]: 04 / Review
+                - generic [ref=f3e130]:
+                  - generic [ref=f3e131]:
+                    - generic [ref=f3e132]: Project name *
+                    - textbox "Project name" [ref=f3e133]:
+                      - /placeholder: e.g. Autonomous field rover
+                      - text: demo
+                  - generic [ref=f3e134]:
+                    - generic [ref=f3e135]: What are you making?
+                    - textbox "What are you making?" [ref=f3e136]:
+                      - /placeholder: Describe the problem, who it affects, and what you want to change.
+                      - text: "?"
+                    - paragraph [ref=f3e137]: 1/500
+                - button "Continue" [ref=f3e139] [cursor=pointer]
+              - complementary [ref=f3e142]:
+                - paragraph [ref=f3e143]: Start with a useful record.
+                - paragraph [ref=f3e144]: The first document set is a working hypothesis, not a contract. Your project stays private until you choose to publish it.
+                - link "Back to projects" [ref=f3e145] [cursor=pointer]:
+                  - /url: /projects
+        - complementary [ref=f3e146]:
+          - generic [ref=f3e147]: Utility rail
+          - generic [ref=f3e148]:
+            - generic [ref=f3e149]:
+              - heading "Portfolio cues" [level=3] [ref=f3e150]
+              - list [ref=f3e151]:
+                - listitem [ref=f3e152]: • 3 projects need milestone definition
+                - listitem [ref=f3e153]: • 1 project has rising delivery risk
+                - listitem [ref=f3e154]: • 2 projects are ready for review
+            - generic [ref=f3e155]:
+              - heading "AI planning" [level=3] [ref=f3e156]
+              - list [ref=f3e157]:
+                - listitem [ref=f3e158]: • Generate kickoff structure
+                - listitem [ref=f3e159]: • Suggest roadmap phases
+                - listitem [ref=f3e160]: • Recommend project template
+  - generic [ref=f3e165] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=f3e166]
+    - generic [ref=f3e170]:
+      - button "Open issues overlay" [ref=f3e171]:
+        - generic [ref=f3e172]:
+          - generic [ref=f3e173]: "0"
+          - generic [ref=f3e174]: "1"
+        - generic [ref=f3e175]: Issue
+      - button "Collapse issues badge" [ref=f3e176]
+  - alert [ref=f3e179]

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { AlertTriangle } from "lucide-react";
+import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 
 export default function MarketingError({
@@ -28,9 +29,9 @@ export default function MarketingError({
         <button onClick={() => reset()} className={buttonVariants({ variant: "primary" })}>
           Try again
         </button>
-        <a href="/" className={buttonVariants({ variant: "outline" })}>
+        <Link href="/" className={buttonVariants({ variant: "outline" })}>
           Return home
-        </a>
+        </Link>
       </div>
     </div>
   );

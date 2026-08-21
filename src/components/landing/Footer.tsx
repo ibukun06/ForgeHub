@@ -15,40 +15,55 @@ export function Footer() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-5">
           <div>
             <h3 className="font-heading text-sm font-semibold text-text-primary">Product</h3>
             <ul className="mt-3 space-y-2 text-sm text-text-muted">
-              <li>
-                <Link href="/explore" className="hover:text-text-primary">
-                  Explore
-                </Link>
-              </li>
-              <li>
-                <Link href="#categories" className="hover:text-text-primary">
-                  Browse Categories
-                </Link>
-              </li>
-              <li>
-                <Link href="#how-it-works" className="hover:text-text-primary">
-                  How it works
-                </Link>
-              </li>
+              <li><Link href="/features" className="hover:text-text-primary">Features</Link></li>
+              <li><Link href="/explore" className="hover:text-text-primary">Explore</Link></li>
+              <li><Link href="/explore" className="hover:text-text-primary">Workspaces</Link></li>
+              <li><Link href="/explore" className="hover:text-text-primary">Projects</Link></li>
+              <li><Link href="/pricing" className="hover:text-text-primary">Pricing</Link></li>
+              <li><span className="opacity-50 cursor-not-allowed">Changelog</span></li>
             </ul>
           </div>
           <div>
-            <h3 className="font-heading text-sm font-semibold text-text-primary">Account</h3>
+            <h3 className="font-heading text-sm font-semibold text-text-primary">Resources</h3>
             <ul className="mt-3 space-y-2 text-sm text-text-muted">
-              <li>
-                <Link href="/login" className="hover:text-text-primary">
-                  Log in
-                </Link>
-              </li>
-              <li>
-                <Link href="/signup" className="hover:text-text-primary">
-                  Sign up
-                </Link>
-              </li>
+              <li><span className="opacity-50 cursor-not-allowed">Documentation</span></li>
+              <li><span className="opacity-50 cursor-not-allowed">Help Center</span></li>
+              <li><span className="opacity-50 cursor-not-allowed">Blog</span></li>
+              <li><span className="opacity-50 cursor-not-allowed">Engineering Resources</span></li>
+              <li><span className="opacity-50 cursor-not-allowed">Community</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-heading text-sm font-semibold text-text-primary">Company</h3>
+            <ul className="mt-3 space-y-2 text-sm text-text-muted">
+              <li><Link href="/about" className="hover:text-text-primary">About</Link></li>
+              <li><span className="opacity-50 cursor-not-allowed">Careers</span></li>
+              <li><Link href="/contact" className="hover:text-text-primary">Contact</Link></li>
+              <li><span className="opacity-50 cursor-not-allowed">Press</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-heading text-sm font-semibold text-text-primary">Social</h3>
+            <ul className="mt-3 space-y-2 text-sm text-text-muted">
+              <li><span className="opacity-50 cursor-not-allowed">LinkedIn</span></li>
+              <li><span className="opacity-50 cursor-not-allowed">GitHub</span></li>
+              <li><span className="opacity-50 cursor-not-allowed">YouTube</span></li>
+              <li><span className="opacity-50 cursor-not-allowed">X</span></li>
+              <li><span className="opacity-50 cursor-not-allowed">Discord</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-heading text-sm font-semibold text-text-primary">Legal</h3>
+            <ul className="mt-3 space-y-2 text-sm text-text-muted">
+              <li><Link href="/privacy" className="hover:text-text-primary">Privacy</Link></li>
+              <li><Link href="/terms" className="hover:text-text-primary">Terms</Link></li>
+              <li><span className="opacity-50 cursor-not-allowed">Cookies</span></li>
+              <li><span className="opacity-50 cursor-not-allowed">Security</span></li>
+              <li><span className="opacity-50 cursor-not-allowed">Acceptable Use</span></li>
             </ul>
           </div>
         </div>

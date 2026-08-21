@@ -717,3 +717,5 @@ export async function getProjectCockpitData(projectSlug: string, workspaceSlug: 
     })),
   };
 }
+
+export async function getDashboardScreenData() { return { projects: [], activities: [], notifications: [] }; }

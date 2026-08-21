@@ -27,7 +27,7 @@ export async function Hero() {
             A living map of an <span className="text-text-muted">idea</span> becoming <span className="text-primary">real.</span>
           </h1>
           <p className="mt-7 max-w-xl text-lg leading-relaxed text-text-muted">
-            ForgeHub is a new digital environment where technical ideas become research, designs, experiments, failures, and ultimately, proof of work. Don't just claim your skills—prove how you solve problems.
+            ForgeHub is a new digital environment where technical ideas become research, designs, experiments, failures, and ultimately, proof of work. Don&apos;t just claim your skills—prove how you solve problems.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             {user ? (

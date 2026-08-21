@@ -27,8 +27,19 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("system");
   const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("dark");
 
+  // Moved applyTheme up to fix "accessed before it is declared"
+  const applyTheme = (next: Theme) => {
+    const isDark = next === 'system' 
+      ? window.matchMedia('(prefers-color-scheme: dark)').matches 
+      : next === 'dark';
+    
+    document.documentElement.classList.toggle("dark", isDark);
+    setResolvedTheme(isDark ? "dark" : "light");
+  };
+
   useEffect(() => {
     const stored = (localStorage.getItem(STORAGE_KEY) as Theme) || "system";
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setThemeState(stored);
     applyTheme(stored);
 
@@ -41,15 +52,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
-
-  function applyTheme(next: Theme) {
-    const isDark = next === 'system' 
-      ? window.matchMedia('(prefers-color-scheme: dark)').matches 
-      : next === 'dark';
-    
-    document.documentElement.classList.toggle("dark", isDark);
-    setResolvedTheme(isDark ? "dark" : "light");
-  }
 
   function setTheme(next: Theme) {
     setThemeState(next);

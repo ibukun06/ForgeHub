@@ -111,6 +111,72 @@ export interface Database {
           },
         ];
       };
+      user_preferences: {
+        Row: {
+          user_id: string;
+          appearance: Record<string, unknown> | null;
+          notifications: Record<string, unknown> | null;
+          privacy: Record<string, unknown> | null;
+          files: Record<string, unknown> | null;
+          collaboration: Record<string, unknown> | null;
+          accessibility: Record<string, unknown> | null;
+          integrations: Record<string, unknown> | null;
+          account: Record<string, unknown> | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["user_preferences"]["Row"]> & { user_id: string };
+        Update: Partial<Database["public"]["Tables"]["user_preferences"]["Row"]>;
+        Relationships: [
+          {
+            foreignKeyName: "user_preferences_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: true;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      workspace_settings: {
+        Row: {
+          workspace_id: string;
+          general: Record<string, unknown> | null;
+          security: Record<string, unknown> | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["workspace_settings"]["Row"]> & { workspace_id: string };
+        Update: Partial<Database["public"]["Tables"]["workspace_settings"]["Row"]>;
+        Relationships: [
+          {
+            foreignKeyName: "workspace_settings_workspace_id_fkey";
+            columns: ["workspace_id"];
+            isOneToOne: true;
+            referencedRelation: "workspaces";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      project_settings: {
+        Row: {
+          project_id: string;
+          features: Record<string, unknown> | null;
+          files: Record<string, unknown> | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["project_settings"]["Row"]> & { project_id: string };
+        Update: Partial<Database["public"]["Tables"]["project_settings"]["Row"]>;
+        Relationships: [
+          {
+            foreignKeyName: "project_settings_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: true;
+            referencedRelation: "projects";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
       projects: {
         Row: {
           id: string;

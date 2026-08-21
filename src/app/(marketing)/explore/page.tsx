@@ -1,4 +1,4 @@
-import { Network, Database, Layers, Search, Cpu, FolderOpen } from "lucide-react";
+import { Network, Search, Cpu, FolderOpen } from "lucide-react";
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
@@ -9,7 +9,7 @@ export default async function ExplorePage() {
   // Fetch published projects
   const { data: projects } = await supabase
     .from("projects")
-    .select("*, users!projects_created_by_fkey(name, username)")
+    .select("*, users!projects_created_by_fkey(name)")
     .eq("visibility", "published")
     .order("created_at", { ascending: false });
 
@@ -25,7 +25,7 @@ export default async function ExplorePage() {
             Technical Discovery
           </h1>
           <p className="text-text-muted max-w-2xl text-sm leading-relaxed">
-            Don't just see what people are posting. See what they are building. Explore technical projects, 
+            Don&apos;t just see what people are posting. See what they are building. Explore technical projects, 
             understand the problems being solved, and discover the materials and technologies shaping them.
           </p>
           
@@ -63,7 +63,7 @@ export default async function ExplorePage() {
                     </div>
                     
                     <div className="text-xs text-text-muted flex items-center justify-between border-t border-border pt-4 mt-4">
-                      <span>by {proj.users?.name || proj.users?.username || 'Unknown Builder'}</span>
+                      <span>by {proj.users?.name || 'Unknown Builder'}</span>
                       <span className="text-primary font-bold">View Project →</span>
                     </div>
                   </div>

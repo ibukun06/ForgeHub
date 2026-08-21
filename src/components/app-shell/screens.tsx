@@ -371,21 +371,31 @@ export function InboxScreen({ data }: { data?: InboxScreenData }) {
   }
 
   return (
-    <div className="space-y-6 pb-20 lg:pb-6">
-      <PageIntro
-        title="Inbox"
-        description="A master-detail attention system where approvals, mentions, and project changes are grouped by actionability rather than dumped in time order."
-      />
+    <div className="space-y-6 pb-20 lg:pb-6 animate-in fade-in duration-500">
+      <div className="space-y-2">
+        <h1 className="text-3xl font-semibold tracking-tight text-text-primary">Inbox</h1>
+        <p className="text-lg text-text-muted">What requires your attention or response.</p>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex space-x-1 rounded-lg bg-surface-muted p-1 sm:w-fit">
+        {["All", "Unread", "Mentions", "Reviews", "Requests"].map((tab, idx) => (
+          <button
+            key={tab}
+            className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+              idx === 0
+                ? "bg-surface text-text-primary shadow-sm"
+                : "text-text-muted hover:bg-surface/50 hover:text-text-primary"
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
 
       <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)_320px]">
-        <PanelCard id="action-required" title="Action required" description="Triage queue with urgency first, chronology second.">
+        <PanelCard id="action-required" title="Queue" description="Triage queue with urgency first, chronology second.">
           <InboxQueue initialItems={items} />
-
-          <div className="mt-6 grid gap-3" id="approvals">
-            <ActionTile title="Approvals" description="Review queues stay visible without forcing you out of Inbox." />
-            <ActionTile title="Project updates" description="Related changes can be grouped into one review batch to reduce noise." />
-            <ActionTile id="snoozed" title="Snoozed" description="Deferred threads remain searchable and can return at the right time." />
-          </div>
         </PanelCard>
 
         <PanelCard id="project-updates" title="Selected item" description="Inspect source context without losing your place in the queue.">
@@ -393,8 +403,8 @@ export function InboxScreen({ data }: { data?: InboxScreenData }) {
 
           <div className="mt-5 grid gap-3 md:grid-cols-3">
             <ActionTile title="Mark read" description="Preserve source context while clearing the item from the active queue." />
-            <ActionTile title="Snooze" description="Move follow-up to a future window without losing history or searchability." />
-            <ActionTile title="Convert to task" description="Turn the thread into a durable execution item with one action." />
+            <ActionTile title="Snooze" description="Move follow-up to a future window without losing history." />
+            <ActionTile title="Convert to task" description="Turn the thread into a durable execution item." />
           </div>
         </PanelCard>
 
@@ -1209,6 +1219,192 @@ function EmptyInlineState({ title, description, actionLabel, actionHref }: { tit
           {actionLabel}
         </Link>
       )}
+    </div>
+  );
+}
+
+export function DashboardScreen({ data, user }: { data: any, user: any }) {
+  const displayName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split("@")[0] || "Builder";
+  return (
+    <div className="space-y-10 animate-in fade-in duration-500">
+      {/* Context Header */}
+      <div className="space-y-2">
+        <h1 className="text-3xl font-semibold tracking-tight text-text-primary">
+          Good morning, {displayName}.
+        </h1>
+        <p className="text-lg text-text-muted">
+          Here’s what’s happening across your workspaces.
+        </p>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="flex gap-4">
+        <Link href="/projects/new" className={buttonVariants({ variant: "primary" })}>
+          <Plus className="mr-2 h-4 w-4" /> New Project
+        </Link>
+        <Link href="/workspaces/new" className={buttonVariants({ variant: "outline" })}>
+          Create Workspace
+        </Link>
+        <Link href="/explore" className={buttonVariants({ variant: "ghost" })}>
+          Explore
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-1 gap-10 xl:grid-cols-[1fr_320px]">
+        <div className="space-y-10">
+          {/* Action Center (Mentions, Approvals) */}
+          <section className="space-y-4" id="action-center">
+            <h2 className="text-xl font-semibold tracking-tight text-text-primary">Action Center</h2>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {HOME_APPROVALS.map((item, idx) => (
+                <div key={idx} className="group relative flex flex-col justify-between rounded-xl border border-border bg-surface p-5 transition-colors hover:border-primary">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <ShieldCheck className="h-4 w-4 text-warning" />
+                      <span className="text-xs font-medium uppercase tracking-wider text-warning">
+                        Approval Required
+                      </span>
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-text-primary group-hover:text-primary transition-colors">
+                        <Link href="#" className="focus:outline-none">
+                          <span className="absolute inset-0" aria-hidden="true" />
+                          {item.title}
+                        </Link>
+                      </h3>
+                      <p className="mt-1 line-clamp-2 text-sm text-text-muted">{item.summary}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* My Projects */}
+          <section className="space-y-4" id="projects">
+            <h2 className="text-xl font-semibold tracking-tight text-text-primary">My Projects</h2>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {ACTIVE_PROJECTS.map((project, idx) => (
+                <div key={idx} className="group relative rounded-xl border border-border bg-surface p-5 transition-colors hover:border-primary">
+                  <h3 className="font-medium text-text-primary group-hover:text-primary transition-colors">
+                    <Link href={project.href} className="focus:outline-none">
+                      <span className="absolute inset-0" aria-hidden="true" />
+                      {project.name}
+                    </Link>
+                  </h3>
+                  <p className="mt-1 text-xs text-text-muted">{project.stage}</p>
+                  <p className="mt-3 line-clamp-2 text-sm text-text-muted">{project.summary}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        {/* Sidebar / Recent Activity */}
+        <div className="space-y-10">
+          <section className="space-y-4" id="activity">
+            <h2 className="text-lg font-semibold tracking-tight text-text-primary">Recent Activity</h2>
+            <div className="space-y-4 rounded-xl border border-border bg-surface p-5">
+              {HOME_FOCUS.map((focus, idx) => (
+                <div key={idx} className="flex gap-4">
+                  <div className={`mt-1 h-2 w-2 shrink-0 rounded-full ${focus.tone === "urgent" ? "bg-error" : focus.tone === "warning" ? "bg-warning" : "bg-primary"}`} />
+                  <div>
+                    <p className="text-sm font-medium text-text-primary">{focus.title}</p>
+                    <p className="text-xs text-text-muted mt-1">{focus.meta}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function WorkspaceScreen({ workspace, projects, user }: { workspace: any, projects: any[], user: any }) {
+  return (
+    <div className="space-y-10 animate-in fade-in duration-500">
+      {/* Context Header */}
+      <div className="space-y-2">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-surface border border-border">
+            <span className="text-lg font-semibold text-text-primary uppercase">{workspace.name.substring(0, 2)}</span>
+          </div>
+          <h1 className="text-3xl font-semibold tracking-tight text-text-primary">
+            {workspace.name}
+          </h1>
+        </div>
+        <p className="text-lg text-text-muted">
+          Overview of projects and activity in this workspace.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 gap-10 xl:grid-cols-[1fr_320px]">
+        <div className="space-y-10">
+          {/* Projects */}
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold tracking-tight text-text-primary">Active Projects</h2>
+              <Link href={`/projects/new?workspace=${workspace.slug}`} className={buttonVariants({ variant: "outline", size: "sm" })}>
+                <Plus className="mr-2 h-3.5 w-3.5" /> New Project
+              </Link>
+            </div>
+            {projects.length > 0 ? (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {projects.map((project) => (
+                  <div key={project.id} className="group relative rounded-xl border border-border bg-surface p-5 transition-colors hover:border-primary">
+                    <h3 className="font-medium text-text-primary group-hover:text-primary transition-colors">
+                      <Link href={`/w/${workspace.slug}/p/${project.slug}/overview`} className="focus:outline-none">
+                        <span className="absolute inset-0" aria-hidden="true" />
+                        {project.name}
+                      </Link>
+                    </h3>
+                    <p className="mt-1 text-xs text-text-muted">{project.project_type || "Standard"}</p>
+                    <p className="mt-3 line-clamp-2 text-sm text-text-muted">{project.description || "No description provided."}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-xl border border-dashed border-border p-8 text-center">
+                <FolderKanban className="mx-auto h-8 w-8 text-text-muted" />
+                <h3 className="mt-4 text-sm font-medium text-text-primary">No projects yet</h3>
+                <p className="mt-1 text-sm text-text-muted">Get started by creating a new project in this workspace.</p>
+                <div className="mt-6">
+                  <Link href={`/projects/new?workspace=${workspace.slug}`} className={buttonVariants({ variant: "primary" })}>
+                    <Plus className="mr-2 h-4 w-4" /> Create Project
+                  </Link>
+                </div>
+              </div>
+            )}
+          </section>
+        </div>
+
+        {/* Sidebar / Team & Activity */}
+        <div className="space-y-10">
+          <section className="space-y-4">
+            <h2 className="text-lg font-semibold tracking-tight text-text-primary">Workspace Stats</h2>
+            <div className="space-y-4 rounded-xl border border-border bg-surface p-5">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2 text-sm text-text-muted">
+                  <Users className="h-4 w-4" /> Team members
+                </div>
+                <span className="font-medium text-text-primary">
+                  {workspace.workspace_members?.length || 1}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2 text-sm text-text-muted">
+                  <FolderKanban className="h-4 w-4" /> Total projects
+                </div>
+                <span className="font-medium text-text-primary">
+                  {projects.length}
+                </span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
     </div>
   );
 }

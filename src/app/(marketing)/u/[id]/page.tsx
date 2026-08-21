@@ -1,17 +1,17 @@
 import { notFound } from "next/navigation";
-import { User, Cpu, Hammer, Globe, Github, Twitter, Linkedin } from "lucide-react";
+import { User, Cpu, Hammer } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
-export default async function ProfilePage({ params }: { params: Promise<{ username: string }> }) {
-  const { username } = await params;
+export default async function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const supabase = await createClient();
 
   // Fetch the public profile
   const { data: profile } = await supabase
     .from("users")
     .select("*")
-    .eq("username", username)
+    .eq("id", id)
     .single();
 
   if (!profile) return notFound();
@@ -32,16 +32,12 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
       {/* Profile Header */}
       <div className="flex flex-col md:flex-row items-start md:items-center gap-8 mb-16 border-b border-border pb-12">
         <div className="w-32 h-32 bg-surface border border-border flex items-center justify-center shadow-xl overflow-hidden">
-          {profile.avatar_url ? (
-            <img src={profile.avatar_url} alt={profile.name || username} className="w-full h-full object-cover" />
-          ) : (
-            <User className="h-12 w-12 text-text-muted" />
-          )}
+          <User className="h-12 w-12 text-text-muted" />
         </div>
         <div className="flex-1">
           <div className="flex flex-col md:flex-row md:items-center gap-3 mb-2">
             <h1 className="text-4xl font-heading font-bold text-text-primary tracking-tight">
-              {profile.name || `@${username}`}
+              {profile.name || "Unknown Builder"}
             </h1>
             <span className="bg-primary/10 border border-primary/20 text-primary px-3 py-1 text-xs uppercase tracking-widest w-max">
               {profile.institution || "Builder"}
@@ -50,30 +46,6 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
           <p className="text-text-muted max-w-2xl mb-4">
             {profile.bio || "No biography provided. Judging by their work, they let their projects do the talking."}
           </p>
-          
-          {/* Social Links */}
-          <div className="flex gap-4">
-            {profile.website && (
-              <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
-                <Globe className="w-5 h-5" />
-              </a>
-            )}
-            {profile.social_links?.github && (
-              <a href={`https://github/${profile.social_links.github}`} target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
-                <Github className="w-5 h-5" />
-              </a>
-            )}
-            {profile.social_links?.twitter && (
-              <a href={`https://twitter.com/${profile.social_links.twitter}`} target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-            )}
-            {profile.social_links?.linkedin && (
-              <a href={`https://linkedin.com/in/${profile.social_links.linkedin}`} target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
-                <Linkedin className="w-5 h-5" />
-              </a>
-            )}
-          </div>
         </div>
       </div>
 
@@ -110,7 +82,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
           <div className="p-12 border border-border bg-surface flex flex-col items-center justify-center text-center">
             <Hammer className="h-8 w-8 text-border mb-4" />
             <h3 className="text-lg font-bold text-text-primary mb-1">No Public Projects</h3>
-            <p className="text-sm text-text-muted">This user hasn't published any projects yet.</p>
+            <p className="text-sm text-text-muted">This user hasn&apos;t published any projects yet.</p>
           </div>
         )}
       </div>

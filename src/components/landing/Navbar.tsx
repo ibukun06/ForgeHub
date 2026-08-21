@@ -13,12 +13,13 @@ import { UserMenu } from "@/components/ui/user-menu";
 // you're already on the page that has that section. Now that Navbar is
 // shared across every public page, that distinction actually matters.
 const NAV_LINKS = [
+  { href: "/features", label: "Product" },
   { href: "/explore", label: "Explore" },
-  { href: "/explore#categories", label: "Categories" },
-  { href: "/#how-it-works", label: "How it works" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/about", label: "About" },
 ];
 
-export function Navbar({ user }: { user?: any }) {
+export function Navbar({ user }: { user?: unknown }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 

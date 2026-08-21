@@ -2,13 +2,20 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { User, Palette, Shield, AlertTriangle } from "lucide-react";
+import { User, Palette, Shield, AlertTriangle, Bell, Lock, HardDrive, Users, Accessibility, Link as LinkIcon, Database } from "lucide-react";
 
 const SETTINGS_NAV = [
   { name: "Profile", href: "/settings/profile", icon: User },
+  { name: "Account", href: "/settings/account", icon: Shield },
   { name: "Appearance", href: "/settings/appearance", icon: Palette },
-  { name: "Security", href: "/settings/security", icon: Shield },
-  { name: "Account", href: "/settings/account", icon: AlertTriangle, danger: true },
+  { name: "Notifications", href: "/settings/notifications", icon: Bell },
+  { name: "Security", href: "/settings/security", icon: Lock },
+  { name: "Privacy", href: "/settings/privacy", icon: Shield },
+  { name: "Files & Storage", href: "/settings/files", icon: HardDrive },
+  { name: "Collaboration", href: "/settings/collaboration", icon: Users },
+  { name: "Accessibility", href: "/settings/accessibility", icon: Accessibility },
+  { name: "Integrations", href: "/settings/integrations", icon: LinkIcon },
+  { name: "Data & Privacy", href: "/settings/data-privacy", icon: Database, danger: true },
 ];
 
 export default function SettingsLayout({ children }: { children: React.ReactNode }) {
@@ -17,12 +24,12 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
   return (
     <div className="mx-auto max-w-5xl">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold font-heading text-text-primary">Settings</h1>
+        <h1 className="text-2xl font-bold font-heading text-text-primary">Personal Settings</h1>
         <p className="text-sm text-text-muted mt-1">Manage your account settings and preferences.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <aside className="md:col-span-1">
+        <aside className="md:col-span-1 hidden md:block">
           <nav className="flex flex-col gap-1">
             {SETTINGS_NAV.map((item) => {
               const active = pathname === item.href;
@@ -45,6 +52,19 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
               );
             })}
           </nav>
+        </aside>
+
+        {/* Mobile Nav (Dropdown/Select alternative could go here, for now relying on responsive flex/grid overrides later) */}
+        <aside className="md:hidden">
+            <select 
+                className="w-full bg-surface border border-border rounded-lg px-3 py-2 text-text-primary"
+                value={pathname}
+                onChange={(e) => window.location.href = e.target.value}
+            >
+                {SETTINGS_NAV.map(item => (
+                    <option key={item.href} value={item.href}>{item.name}</option>
+                ))}
+            </select>
         </aside>
 
         <main className="md:col-span-3">

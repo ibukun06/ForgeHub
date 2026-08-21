@@ -41,7 +41,7 @@ export function EvidenceChain() {
   );
 }
 
-function EvidenceNode({ icon: Icon, title, description, date, type, link }: any) {
+function EvidenceNode({ icon: Icon, title, description, date, link }: { icon: React.ElementType, title: string, description: string, date: string, type?: string, link?: string }) {
   return (
     <div className="relative pl-6">
       <div className="absolute -left-[17px] top-1 h-8 w-8 rounded-none border border-border bg-bg flex items-center justify-center shadow-md">

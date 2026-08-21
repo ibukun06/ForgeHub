@@ -1,5 +1,5 @@
 import React from "react";
-import { Database, Fingerprint, Layers, Cpu, Zap, Activity } from "lucide-react";
+import { Database, Fingerprint, Layers, Zap, Activity } from "lucide-react";
 
 export function ProjectDNA() {
   return (
@@ -42,7 +42,7 @@ export function ProjectDNA() {
   );
 }
 
-function DnaSection({ icon: Icon, title, value }: { icon: any, title: string, value: string }) {
+function DnaSection({ icon: Icon, title, value }: { icon: React.ElementType, title: string, value: string }) {
   return (
     <div>
       <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-text-muted mb-1">

@@ -13,6 +13,7 @@ import {
   Search,
   Sparkles,
   UserCircle2,
+  Network,
   X,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
@@ -22,14 +23,21 @@ import { initials } from "@/lib/format";
 import { CommandSurface } from "./command-surface";
 import { FAVORITE_LINKS, getShellState, PRIMARY_NAV, type ContextItem, type ShellState } from "./shell-config";
 
+export type ShellWorkspace = {
+  id: string;
+  slug: string;
+  name: string;
+};
+
 type AppShellProps = {
   user: any;
+  workspaces?: ShellWorkspace[];
   children: ReactNode;
 };
 
 const SIDEBAR_STORAGE_KEY = "forgehub-sidebar-collapsed";
 
-export function AppShell({ user, children }: AppShellProps) {
+export function AppShell({ user, workspaces = [], children }: AppShellProps) {
   const pathname = usePathname();
   const shellState = useMemo(() => getShellState(pathname), [pathname]);
   const [commandOpen, setCommandOpen] = useState(false);
@@ -108,6 +116,7 @@ export function AppShell({ user, children }: AppShellProps) {
       <GlobalSidebar
         shellState={shellState}
         user={user}
+        workspaces={workspaces}
         openCommand={() => setCommandOpen(true)}
         mobileOpen={navOpen}
         closeMobile={closeMobileNav}
@@ -211,6 +220,7 @@ export function AppShell({ user, children }: AppShellProps) {
 function GlobalSidebar({
   shellState,
   user,
+  workspaces,
   openCommand,
   mobileOpen,
   closeMobile,
@@ -220,6 +230,7 @@ function GlobalSidebar({
 }: {
   shellState: ShellState;
   user: AppShellProps["user"];
+  workspaces?: ShellWorkspace[];
   openCommand: () => void;
   mobileOpen: boolean;
   closeMobile: () => void;
@@ -325,26 +336,35 @@ function GlobalSidebar({
           })}
         </nav>
 
-        <div className={`border-t border-border px-4 py-4 ${textContainerClass}`}>
-          <div className="mb-3 flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-text-muted">
-            <Sparkles className="h-3.5 w-3.5" aria-hidden />
-            Favorites
+        <div className={`border-t border-border px-3 py-4 ${textContainerClass}`}>
+          <div className="mb-3 px-1 text-[11px] uppercase tracking-[0.18em] text-text-muted">
+            Workspaces
           </div>
-          <div className="space-y-2">
-            {FAVORITE_LINKS.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  onClick={closeMobile}
-                  className="flex items-center gap-3 rounded-lg border border-border px-3 py-2 text-sm text-text-muted transition-colors hover:border-primary hover:bg-surface-muted hover:text-text-primary focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2"
-                >
-                  <Icon className="h-4 w-4 shrink-0" aria-hidden />
-                  <span className="truncate">{item.label}</span>
-                </Link>
-              );
-            })}
+          <div className="space-y-1">
+            {workspaces?.map((ws) => (
+              <Link
+                key={ws.id}
+                href={`/w/${ws.slug}`}
+                onClick={closeMobile}
+                className="group relative flex items-center gap-3 rounded-lg px-2 py-2 text-sm text-text-muted transition-colors hover:bg-surface-muted hover:text-text-primary"
+              >
+                <div className="flex h-5 w-5 items-center justify-center rounded bg-surface border border-border">
+                  <Network className="h-3 w-3" aria-hidden />
+                </div>
+                <span className={`truncate font-medium ${textContainerClass}`}>{ws.name}</span>
+              </Link>
+            ))}
+            
+            <Link
+              href="/projects/new"
+              onClick={closeMobile}
+              className="group relative flex items-center gap-3 rounded-lg px-2 py-2 text-sm text-text-muted transition-colors hover:bg-surface-muted hover:text-text-primary"
+            >
+              <div className="flex h-5 w-5 items-center justify-center rounded border border-dashed border-border group-hover:border-primary/50 group-hover:text-primary">
+                <Plus className="h-3 w-3" aria-hidden />
+              </div>
+              <span className={`truncate font-medium ${textContainerClass}`}>Create new</span>
+            </Link>
           </div>
         </div>
 

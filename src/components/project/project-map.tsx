@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import {
   ReactFlow,
   MiniMap,
@@ -13,10 +13,11 @@ import {
   Position,
   BackgroundVariant,
   NodeProps,
-  Node
+  Node,
+  Connection
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { Activity, Beaker, CheckCircle2, AlertTriangle, Lightbulb, Link as LinkIcon, Network } from 'lucide-react';
+import { Activity, Beaker, CheckCircle2, AlertTriangle, Lightbulb, Network } from 'lucide-react';
 
 // Custom Node component with industrial blueprint styling
 const ProjectNode = ({ data, isConnectable }: NodeProps<Node<{ label: string; category?: string; status?: string; type?: string }>>) => {
@@ -91,10 +92,10 @@ const initialEdges = [
 ];
 
 export function ProjectMap() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [nodes, , onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
-  const onConnect = useCallback((params: any) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
+  const onConnect = useCallback((params: Connection) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
   return (
     <div className="w-full h-full min-h-[600px] border border-border bg-surface-muted relative font-mono">

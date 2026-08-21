@@ -44,8 +44,16 @@ export async function POST(request: Request) {
   if (!workspaceId) return NextResponse.json({ error: "No workspace available." }, { status: 400 });
 
   const slug = await generateUniqueProjectSlug(supabase, parsed.data.name);
-  const { data: project, error: projectError } = await supabase.from("projects").insert({ name: parsed.data.name, description: parsed.data.description || null, project_type: parsed.data.projectType, created_by: user.id, visibility: "private", slug, workspace_id: workspaceId }).select("id, slug").single();
-  if (projectError || !project) return NextResponse.json({ error: "We could not create the project. Try again." }, { status: 500 });
+  const { error: insertError } = await supabase.from("projects").insert({ name: parsed.data.name, description: parsed.data.description || null, project_type: parsed.data.projectType, created_by: user.id, visibility: "private", slug, workspace_id: workspaceId });
+  if (insertError) {
+    console.error("Project insertion error:", insertError);
+    return NextResponse.json({ error: "We could not create the project. Try again." }, { status: 500 });
+  }
+  const { data: project, error: projectError } = await supabase.from("projects").select("id, slug").eq("slug", slug).single();
+  if (projectError || !project) {
+    console.error("Project select error:", projectError);
+    return NextResponse.json({ error: "We could not fetch the project. Try again." }, { status: 500 });
+  }
 
   const documentRows = parsed.data.documents.map((documentType) => ({ project_id: project.id, document_type: documentType, title: titles[documentType] }));
   const { error: documentError } = await supabase.from("documents").insert(documentRows);
