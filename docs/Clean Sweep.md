@@ -1069,3 +1069,15 @@ The ultimate design goal is not to create the most beautiful dashboard.
 The goal is to create a completely new and memorable way for people to experience technical work.
 
 Design the future of how technical projects are created and understood.
+
+---
+
+# 26. THE FILE CAPABILITY MODEL
+
+For a detailed breakdown of ForgeHub's file handling strategy, including capability tiers, supported formats, hierarchical permissions, and the unified viewer architecture, please refer to the dedicated [File Capability Model](./file-capability-model.md) document.
+
+---
+
+# 27. THE SOCIAL & COLLABORATION GRAPH
+
+For a detailed map of ForgeHub's core social architecture, including connection gating, the intelligent inbox, global discovery, and the intersection of identity and engineering collaboration, please refer to the dedicated [Social & Collaboration Graph](./social-collaboration-graph.md) document.

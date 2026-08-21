@@ -208,10 +208,11 @@ const DEFAULT_KNOWLEDGE_AI = [
 ];
 
 const DEFAULT_INBOX_ITEMS = [
-  { id: "inbox-1", title: "Approve the command-surface interaction model", source: "ForgeHub Redesign · Approval", state: "Action required" },
-  { id: "inbox-2", title: "New comment on AI guardrails", source: "Decision log · Mention", state: "Mention" },
-  { id: "inbox-3", title: "Milestone risk changed", source: "Project cockpit · Update", state: "Project update" },
-  { id: "inbox-4", title: "Research synthesis ready", source: "Knowledge hub · Digest", state: "AI digest" },
+  { id: "inbox-1", type: "Messages", title: "Can you review the gearbox?", source: "Sarah · Project: Autonomous Robot", state: "10:42 AM", avatar: "S" },
+  { id: "inbox-2", type: "Requests", title: "David wants to join Autonomous Robot", source: "Join Request · Skills: C++, Arduino, STM32", state: "Action required", avatar: "D" },
+  { id: "inbox-3", type: "Mentions", title: "Sarah mentioned you in gearbox.step", source: "File Comment", state: "Mention", avatar: "S" },
+  { id: "inbox-4", type: "Notifications", title: "Milestone risk changed", source: "Project cockpit · Update", state: "System", avatar: "F" },
+  { id: "inbox-5", type: "Notifications", title: "Research synthesis ready", source: "Knowledge hub · Digest", state: "AI digest", avatar: "F" },
 ];
 
 const DEFAULT_INBOX_SELECTED = {
@@ -353,7 +354,7 @@ export function HomeScreen({ scope, data }: { scope?: string; data?: HomeScreenD
   );
 }
 
-export function InboxScreen({ data }: { data?: InboxScreenData }) {
+export function InboxScreen({ data, activeTab = "Messages" }: { data?: InboxScreenData; activeTab?: string }) {
   const items = data ? data.items : DEFAULT_INBOX_ITEMS;
   const selected = data?.selected ?? DEFAULT_INBOX_SELECTED;
   const triage = data ? data.triage : DEFAULT_INBOX_TRIAGE;
@@ -379,23 +380,24 @@ export function InboxScreen({ data }: { data?: InboxScreenData }) {
 
       {/* Tabs */}
       <div className="flex space-x-1 rounded-lg bg-surface-muted p-1 sm:w-fit">
-        {["All", "Unread", "Mentions", "Reviews", "Requests"].map((tab, idx) => (
-          <button
+        {["Messages", "Requests", "Notifications", "Mentions"].map((tab) => (
+          <Link
             key={tab}
+            href={`/inbox?tab=${tab}`}
             className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-              idx === 0
+              activeTab === tab
                 ? "bg-surface text-text-primary shadow-sm"
                 : "text-text-muted hover:bg-surface/50 hover:text-text-primary"
             }`}
           >
             {tab}
-          </button>
+          </Link>
         ))}
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)_320px]">
-        <PanelCard id="action-required" title="Queue" description="Triage queue with urgency first, chronology second.">
-          <InboxQueue initialItems={items} />
+        <PanelCard id="action-required" title={`${activeTab} queue`} description="Triage queue with urgency first, chronology second.">
+          <InboxQueue initialItems={items.filter(i => (i as any).type === activeTab || !(i as any).type)} />
         </PanelCard>
 
         <PanelCard id="project-updates" title="Selected item" description="Inspect source context without losing your place in the queue.">

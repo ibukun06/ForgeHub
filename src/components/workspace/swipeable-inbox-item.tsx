@@ -10,6 +10,7 @@ export type InboxItemData = {
   source: string;
   state: string;
   isFirst: boolean;
+  avatar?: string;
 };
 
 export function SwipeableInboxItem({ item, onClear }: { item: InboxItemData; onClear: (id: string) => void }) {
@@ -48,13 +49,20 @@ export function SwipeableInboxItem({ item, onClear }: { item: InboxItemData; onC
         onDragEnd={handleDragEnd}
         animate={controls}
         whileTap={{ cursor: "grabbing" }}
-        className={`relative cursor-grab bg-bg p-4 transition-colors hover:bg-surface-elevated active:cursor-grabbing ${
+        className={`relative flex items-start gap-4 cursor-grab bg-bg p-4 transition-colors hover:bg-surface-elevated active:cursor-grabbing ${
           item.isFirst ? "border border-primary/30 bg-primary-soft shadow-lg" : ""
         }`}
       >
-        <p className={`eyebrow ${item.isFirst ? "text-primary" : "text-text-muted"}`}>{item.state}</p>
-        <p className="mt-2 font-medium text-text-primary">{item.title}</p>
-        <p className="mt-1 text-sm text-text-muted">{item.source}</p>
+        {item.avatar && (
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+            {item.avatar}
+          </div>
+        )}
+        <div className="flex-1 min-w-0">
+          <p className={`eyebrow ${item.isFirst ? "text-primary" : "text-text-muted"}`}>{item.state}</p>
+          <p className="mt-1 font-medium text-text-primary">{item.title}</p>
+          <p className="mt-1 text-sm text-text-muted truncate">{item.source}</p>
+        </div>
       </motion.div>
     </div>
   );

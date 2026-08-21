@@ -1,16 +1,35 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useTheme } from "@/components/theme/theme-provider";
-import { Monitor, Moon, Sun } from "lucide-react";
+import { useTheme, type ThemeMode } from "@/components/theme/theme-provider";
+import { Monitor, Moon, Sun, Clock, Check } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
+const ACCENTS = [
+  { id: "forge-orange", name: "Forge Orange", color: "bg-orange-500" },
+  { id: "blue", name: "Blue", color: "bg-blue-500" },
+  { id: "purple", name: "Purple", color: "bg-purple-500" },
+  { id: "green", name: "Green", color: "bg-emerald-500" },
+  { id: "teal", name: "Teal", color: "bg-teal-500" },
+];
+
+const LIGHT_THEMES = [
+  { id: "forge-light", name: "Forge Light" },
+  { id: "forge-light-hc", name: "High Contrast Light" },
+];
+
+const DARK_THEMES = [
+  { id: "forge-dark", name: "Forge Dark" },
+  { id: "forge-dim", name: "Forge Dim" },
+  { id: "forge-dark-hc", name: "High Contrast Dark" },
+];
+
 export default function AppearanceSettingsPage() {
-  const { theme, setTheme } = useTheme();
+  const { preferences, setPreferences, resolvedTheme } = useTheme();
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   
-  const [density, setDensity] = useState("comfortable");
+  // Local state for workspace settings that aren't in theme provider
   const [sidebarState, setSidebarState] = useState("expanded");
   const [gridVisibility, setGridVisibility] = useState(true);
   const [cadViewer, setCadViewer] = useState("standard");
@@ -30,7 +49,18 @@ export default function AppearanceSettingsPage() {
           
         if (prefs?.appearance) {
           const appearance = prefs.appearance as any;
-          setDensity(appearance.density || "comfortable");
+          
+          // Hydrate the theme provider
+          setPreferences({
+            themeMode: appearance.themeMode || "system",
+            lightTheme: appearance.lightTheme || "forge-light",
+            darkTheme: appearance.darkTheme || "forge-dim",
+            accent: appearance.accent || "forge-orange",
+            density: appearance.density || "comfortable",
+            motion: appearance.motion || "system"
+          });
+
+          // Hydrate non-theme appearance settings
           setSidebarState(appearance.sidebar || "expanded");
           setGridVisibility(appearance.grid_visibility ?? true);
           setCadViewer(appearance.cad_viewer || "standard");
@@ -52,8 +82,7 @@ export default function AppearanceSettingsPage() {
         .from('user_preferences')
         .update({
           appearance: {
-            theme,
-            density,
+            ...preferences,
             sidebar: sidebarState,
             grid_visibility: gridVisibility,
             cad_viewer: cadViewer
@@ -62,8 +91,6 @@ export default function AppearanceSettingsPage() {
         .eq('user_id', user.id);
         
       if (error) throw error;
-      
-      alert("Appearance settings saved successfully!");
     } catch (err: unknown) {
       alert("Failed to save appearance settings: " + (err instanceof Error ? err.message : String(err)));
     } finally {
@@ -82,134 +109,176 @@ export default function AppearanceSettingsPage() {
         <p className="text-sm text-text-muted">Customize the look and feel of your ForgeHub experience.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-8 max-w-3xl">
+      <form onSubmit={handleSubmit} className="space-y-10 max-w-4xl">
         
-        {/* Theme */}
+        {/* Theme Mode Selection */}
         <section className="space-y-5">
-          <h3 className="text-sm font-semibold uppercase tracking-wider text-text-muted border-b border-border pb-2">Theme</h3>
-          <div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <button
-                type="button"
-                onClick={() => setTheme("light")}
-                className={`flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all ${
-                  theme === "light" 
-                    ? "border-primary bg-primary/5" 
-                    : "border-border bg-surface hover:border-primary/50"
-                }`}
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-900 shadow-sm border border-slate-200">
-                  <Sun className="h-5 w-5" />
-                </div>
-                <span className={`text-sm font-medium ${theme === "light" ? "text-primary" : "text-text-primary"}`}>
-                  Light
-                </span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setTheme("dark")}
-                className={`flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all ${
-                  theme === "dark" 
-                    ? "border-primary bg-primary/5" 
-                    : "border-border bg-surface hover:border-primary/50"
-                }`}
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-amber-500 shadow-sm border border-slate-800">
-                  <Moon className="h-5 w-5" />
-                </div>
-                <span className={`text-sm font-medium ${theme === "dark" ? "text-primary" : "text-text-primary"}`}>
-                  Dark
-                </span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setTheme("system")}
-                className={`flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all ${
-                  theme === "system" 
-                    ? "border-primary bg-primary/5" 
-                    : "border-border bg-surface hover:border-primary/50"
-                }`}
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-elevated text-text-muted shadow-sm border border-border">
-                  <Monitor className="h-5 w-5" />
-                </div>
-                <span className={`text-sm font-medium ${theme === "system" ? "text-primary" : "text-text-primary"}`}>
-                  System
-                </span>
-              </button>
-            </div>
-            <p className="mt-3 text-xs text-text-muted">
-              System mode automatically switches between light and dark based on your OS settings.
-            </p>
+          <h3 className="text-sm font-semibold uppercase tracking-wider text-text-muted border-b border-border pb-2">Theme Mode</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <ModeButton
+              icon={<Monitor />} label="System" value="system"
+              current={preferences.themeMode}
+              onClick={() => setPreferences({ themeMode: "system" })}
+            />
+            <ModeButton
+              icon={<Sun />} label="Light" value="light"
+              current={preferences.themeMode}
+              onClick={() => setPreferences({ themeMode: "light" })}
+            />
+            <ModeButton
+              icon={<Moon />} label="Dark" value="dark"
+              current={preferences.themeMode}
+              onClick={() => setPreferences({ themeMode: "dark" })}
+            />
+            <ModeButton
+              icon={<Clock />} label="Auto" value="auto"
+              current={preferences.themeMode}
+              onClick={() => setPreferences({ themeMode: "auto" })}
+            />
           </div>
         </section>
 
-        {/* Layout Preferences */}
+        {/* Theme Presets */}
+        <section className="space-y-5">
+          <h3 className="text-sm font-semibold uppercase tracking-wider text-text-muted border-b border-border pb-2">Theme Presets</h3>
+          
+          {(preferences.themeMode === "system" || preferences.themeMode === "auto") ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-text-primary mb-2">Day Theme</label>
+                <Select
+                  value={preferences.lightTheme}
+                  options={LIGHT_THEMES}
+                  onChange={(v) => setPreferences({ lightTheme: v })}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-text-primary mb-2">Night Theme</label>
+                <Select
+                  value={preferences.darkTheme}
+                  options={DARK_THEMES}
+                  onChange={(v) => setPreferences({ darkTheme: v })}
+                />
+              </div>
+            </div>
+          ) : preferences.themeMode === "light" ? (
+            <div>
+              <label className="block text-sm font-medium text-text-primary mb-2">Light Theme</label>
+              <Select
+                value={preferences.lightTheme}
+                options={LIGHT_THEMES}
+                onChange={(v) => setPreferences({ lightTheme: v })}
+              />
+            </div>
+          ) : (
+            <div>
+              <label className="block text-sm font-medium text-text-primary mb-2">Dark Theme</label>
+              <Select
+                value={preferences.darkTheme}
+                options={DARK_THEMES}
+                onChange={(v) => setPreferences({ darkTheme: v })}
+              />
+            </div>
+          )}
+        </section>
+
+        {/* Accent Color */}
+        <section className="space-y-5">
+          <h3 className="text-sm font-semibold uppercase tracking-wider text-text-muted border-b border-border pb-2">Accent Color</h3>
+          <div className="flex flex-wrap gap-4">
+            {ACCENTS.map((accent) => (
+              <button
+                key={accent.id}
+                type="button"
+                onClick={() => setPreferences({ accent: accent.id })}
+                className={`group relative flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all ${
+                  preferences.accent === accent.id ? "border-primary" : "border-transparent hover:scale-110"
+                }`}
+                title={accent.name}
+              >
+                <div className={`h-8 w-8 rounded-full ${accent.color}`} />
+                {preferences.accent === accent.id && (
+                  <Check className="absolute h-4 w-4 text-white drop-shadow-md" strokeWidth={3} />
+                )}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* Layout & Density */}
         <section className="space-y-5">
           <h3 className="text-sm font-semibold uppercase tracking-wider text-text-muted border-b border-border pb-2">Layout & Density</h3>
-          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
               <label className="block text-sm font-medium text-text-primary mb-1">Interface Density</label>
-              <select
-                value={density}
-                onChange={(e) => setDensity(e.target.value)}
-                className="w-full bg-input-bg border border-border rounded-lg px-3 py-2 text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
-              >
-                <option value="compact">Compact</option>
-                <option value="comfortable">Comfortable</option>
-                <option value="spacious">Spacious</option>
-              </select>
+              <Select
+                value={preferences.density}
+                onChange={(v) => setPreferences({ density: v })}
+                options={[
+                  { id: "compact", name: "Compact" },
+                  { id: "comfortable", name: "Comfortable" },
+                  { id: "spacious", name: "Spacious" }
+                ]}
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-primary mb-1">Navigation Sidebar</label>
-              <select
-                value={sidebarState}
-                onChange={(e) => setSidebarState(e.target.value)}
-                className="w-full bg-input-bg border border-border rounded-lg px-3 py-2 text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
-              >
-                <option value="expanded">Expanded by default</option>
-                <option value="collapsed">Collapsed by default</option>
-                <option value="remember">Remember last state</option>
-              </select>
+              <label className="block text-sm font-medium text-text-primary mb-1">Motion</label>
+              <Select
+                value={preferences.motion}
+                onChange={(v) => setPreferences({ motion: v })}
+                options={[
+                  { id: "system", name: "Follow System" },
+                  { id: "full", name: "Full Motion" },
+                  { id: "reduced", name: "Reduced Motion" }
+                ]}
+              />
             </div>
           </div>
         </section>
 
-        {/* Engineering Workspace */}
+        {/* Live Preview */}
         <section className="space-y-5">
-          <h3 className="text-sm font-semibold uppercase tracking-wider text-text-muted border-b border-border pb-2">Engineering Workspace</h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-              <label className="block text-sm font-medium text-text-primary mb-1">Grid Visibility</label>
-              <div className="flex items-center gap-3 mt-2">
-                <input
-                  type="checkbox"
-                  id="grid-visibility"
-                  checked={gridVisibility}
-                  onChange={(e) => setGridVisibility(e.target.checked)}
-                  className="h-4 w-4 rounded border-border text-primary focus:ring-primary/50"
-                />
-                <label htmlFor="grid-visibility" className="text-sm text-text-primary">
-                  Show background grid on engineering canvas
-                </label>
+          <h3 className="text-sm font-semibold uppercase tracking-wider text-text-muted border-b border-border pb-2">Live Preview</h3>
+          <div className="surface-panel overflow-hidden border border-border">
+            {/* Fake Header */}
+            <div className="flex items-center justify-between border-b border-border bg-surface px-4 py-3">
+              <div className="flex items-center gap-4">
+                <div className="h-6 w-6 rounded bg-primary"></div>
+                <div className="font-semibold">ForgeHub UI</div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="h-8 w-24 rounded bg-input-bg"></div>
+                <div className="h-8 w-8 rounded-full bg-input-bg border border-border"></div>
               </div>
             </div>
             
-            <div>
-              <label className="block text-sm font-medium text-text-primary mb-1">Default CAD Viewer Engine</label>
-              <select
-                value={cadViewer}
-                onChange={(e) => setCadViewer(e.target.value)}
-                className="w-full bg-input-bg border border-border rounded-lg px-3 py-2 text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
-              >
-                <option value="standard">Standard WebGL</option>
-                <option value="high_performance">High Performance (Requires Hardware Accel)</option>
-                <option value="lite">Lite (Faster loading)</option>
-              </select>
+            {/* Fake Body */}
+            <div className="flex h-48 bg-bg">
+              {/* Fake Sidebar */}
+              <div className="hidden sm:block w-48 border-r border-border bg-surface p-3 space-y-2">
+                <div className="h-6 w-full rounded bg-primary/10 text-primary px-2 py-1 text-xs font-medium flex items-center">
+                  Overview
+                </div>
+                <div className="h-6 w-full rounded hover:bg-surface-muted text-text-muted px-2 py-1 text-xs flex items-center">
+                  Projects
+                </div>
+                <div className="h-6 w-full rounded hover:bg-surface-muted text-text-muted px-2 py-1 text-xs flex items-center">
+                  Settings
+                </div>
+              </div>
+              {/* Fake Content */}
+              <div className="flex-1 p-6">
+                <div className="h-6 w-1/3 rounded bg-surface-elevated mb-4 border border-border"></div>
+                <div className="space-y-3">
+                  <div className="h-4 w-full rounded bg-surface-muted"></div>
+                  <div className="h-4 w-5/6 rounded bg-surface-muted"></div>
+                  <div className="h-4 w-4/6 rounded bg-surface-muted"></div>
+                </div>
+                <div className="mt-6 flex gap-3">
+                  <button type="button" className="signal-pill signal-pill-brand">Primary Action</button>
+                  <button type="button" className="signal-pill signal-pill-neutral">Secondary</button>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -225,5 +294,43 @@ export default function AppearanceSettingsPage() {
         </div>
       </form>
     </div>
+  );
+}
+
+function ModeButton({ icon, label, value, current, onClick }: { icon: React.ReactNode, label: string, value: string, current: string, onClick: () => void }) {
+  const isActive = current === value;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all ${
+        isActive 
+          ? "border-primary bg-primary/5" 
+          : "border-border bg-surface hover:border-border-strong"
+      }`}
+    >
+      <div className={`flex h-10 w-10 items-center justify-center rounded-full shadow-sm border ${
+        isActive ? "bg-surface-elevated text-primary border-primary/20" : "bg-surface text-text-muted border-border"
+      }`}>
+        {icon}
+      </div>
+      <span className={`text-sm font-medium ${isActive ? "text-primary" : "text-text-primary"}`}>
+        {label}
+      </span>
+    </button>
+  );
+}
+
+function Select({ value, onChange, options }: { value: string, onChange: (v: string) => void, options: { id: string, name: string }[] }) {
+  return (
+    <select
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className="w-full bg-input-bg border border-border rounded-lg px-3 py-2 text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
+    >
+      {options.map((opt) => (
+        <option key={opt.id} value={opt.id}>{opt.name}</option>
+      ))}
+    </select>
   );
 }
