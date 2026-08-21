@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useTheme } from "@/components/theme/theme-provider";
+import { useTheme, type ThemeMode } from "@/components/theme/theme-provider";
 import { Monitor, Moon, Sun, Clock, Check } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
@@ -48,22 +48,22 @@ export default function AppearanceSettingsPage() {
           .single();
           
         if (prefs?.appearance) {
-          const appearance = prefs.appearance as Record<string, string | boolean | undefined>;
+          const appearance = prefs.appearance as Record<string, unknown>;
           
           // Hydrate the theme provider
           setPreferences({
-            themeMode: appearance.themeMode || "system",
-            lightTheme: appearance.lightTheme || "forge-light",
-            darkTheme: appearance.darkTheme || "forge-dim",
-            accent: appearance.accent || "forge-orange",
-            density: appearance.density || "comfortable",
-            motion: appearance.motion || "system"
+            themeMode: (appearance.themeMode as ThemeMode) || "system",
+            lightTheme: (appearance.lightTheme as string) || "forge-light",
+            darkTheme: (appearance.darkTheme as string) || "forge-dim",
+            accent: (appearance.accent as string) || "forge-orange",
+            density: (appearance.density as string) || "comfortable",
+            motion: (appearance.motion as string) || "system"
           });
 
           // Hydrate non-theme appearance settings
-          setSidebarState(appearance.sidebar || "expanded");
-          setGridVisibility(appearance.grid_visibility ?? true);
-          setCadViewer(appearance.cad_viewer || "standard");
+          setSidebarState((appearance.sidebar as string) || "expanded");
+          setGridVisibility((appearance.grid_visibility as boolean) ?? true);
+          setCadViewer((appearance.cad_viewer as string) || "standard");
         }
       }
       setLoading(false);
