@@ -2,6 +2,7 @@
 
 import { useState, useEffect, use } from "react";
 import { createClient } from "@/lib/supabase/client";
+import type { Database } from "@/lib/supabase/types";
 
 export default function ProjectGeneralSettingsPage({ 
   params 
@@ -48,16 +49,15 @@ export default function ProjectGeneralSettingsPage({
     if (!project) return;
     setSaving(true);
     
-    const updateData: any = {
+    const updateData: Database['public']['Tables']['projects']['Update'] = {
       name: generalInfo.name,
       description: generalInfo.description,
-      visibility: generalInfo.visibility,
+      visibility: generalInfo.visibility as Database['public']['Tables']['projects']['Update']['visibility'],
     };
     
     try {
       const { error } = await supabase
         .from("projects")
-        // @ts-expect-error Bypassing Supabase RejectExcessProperties check
         .update(updateData)
         .eq("id", (project as { id: string }).id);
         

@@ -1222,7 +1222,7 @@ function EmptyInlineState({ title, description, actionLabel, actionHref }: { tit
   );
 }
 
-export function DashboardScreen({ user, data }: { user: import('@supabase/supabase-js').User | null; data?: DashboardScreenData }) {
+export function DashboardScreen({ user }: { user: import('@supabase/supabase-js').User | null; data?: HomeScreenData }) {
   const displayName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split("@")[0] || "Builder";
   return (
     <div className="space-y-10 animate-in fade-in duration-500">
@@ -1321,7 +1321,7 @@ export function DashboardScreen({ user, data }: { user: import('@supabase/supaba
   );
 }
 
-export function WorkspaceScreen({ workspace, projects }: { workspace: { name: string; slug: string; workspace_members?: unknown[]; [key: string]: unknown }, projects: { id: string; name: string; slug: string; project_type?: string; description?: string; [key: string]: unknown }[], user?: { user_metadata?: { full_name?: string; name?: string }; email?: string } | null }) {
+export function WorkspaceScreen({ workspace, projects }: { workspace: { name: string; slug: string; workspace_members?: unknown[]; [key: string]: unknown }, projects: { id: string; name: string; slug: string; project_type?: string | null; description?: string | null; [key: string]: unknown }[], user?: { user_metadata?: { full_name?: string; name?: string }; email?: string } | null }) {
   return (
     <div className="space-y-10 animate-in fade-in duration-500">
       {/* Context Header */}

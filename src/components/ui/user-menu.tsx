@@ -29,7 +29,7 @@ export function UserMenu({ user }: { user: { email?: string; displayName?: strin
     window.location.href = "/";
   };
 
-  const getInitials = (email: string) => email?.slice(0, 2).toUpperCase() || "U";
+  const getInitials = (email?: string) => email?.slice(0, 2).toUpperCase() || "U";
 
   return (
     <div className="relative inline-block text-left" ref={menuRef}>
@@ -61,7 +61,7 @@ export function UserMenu({ user }: { user: { email?: string; displayName?: strin
               Dashboard
             </Link>
             <Link
-              href={`/profile/${user.id}`}
+              href={user?.id ? `/profile/${user.id}` : "/settings/profile"}
               onClick={() => setIsOpen(false)}
               className="group flex items-center px-4 py-2 text-text-muted hover:bg-surface-elevated hover:text-text-primary transition-colors"
             >

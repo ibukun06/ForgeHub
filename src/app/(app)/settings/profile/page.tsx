@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
+import type { Database } from "@/lib/supabase/types";
 
 const DISCIPLINES = [
   "Mechanical Engineering",
@@ -102,28 +103,16 @@ export default function ProfileSettingsPage() {
         }
       });
       
-      const updateData: any = {
+      const updateData: Database['public']['Tables']['users']['Update'] = {
         name: formData.name,
-        username: formData.username,
         bio: formData.bio,
-        location: formData.location,
-        website: formData.website,
         institution: formData.institution,
-        title: formData.title,
-        discipline: formData.discipline,
         skills: formData.skills.split(",").map(s => s.trim()).filter(Boolean),
-        expertise: formData.expertise.split(",").map(s => s.trim()).filter(Boolean),
-        social_links: {
-          twitter: formData.twitter,
-          github: formData.github,
-          linkedin: formData.linkedin
-        }
       };
 
       // 2. Update public profile directly
       const { error } = await supabase
         .from('users')
-        // @ts-expect-error Bypassing Supabase RejectExcessProperties check
         .update(updateData)
         .eq('id', user.id);
         

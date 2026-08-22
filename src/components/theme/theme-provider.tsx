@@ -26,6 +26,8 @@ type ThemeContextValue = {
   preferences: ThemePreferences;
   setPreferences: (prefs: Partial<ThemePreferences>) => void;
   resolvedTheme: string;
+  theme: ThemeMode;
+  setTheme: (mode: ThemeMode) => void;
 };
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
@@ -137,7 +139,15 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <ThemeContext.Provider value={{ preferences, setPreferences, resolvedTheme }}>
+    <ThemeContext.Provider
+      value={{
+        preferences,
+        setPreferences,
+        resolvedTheme,
+        theme: preferences.themeMode,
+        setTheme: (mode: ThemeMode) => setPreferences({ themeMode: mode }),
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );

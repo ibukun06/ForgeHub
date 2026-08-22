@@ -366,20 +366,22 @@ function GlobalSidebar({
           </div>
         </div>
 
-        <div className="border-t border-border px-4 py-4">
-          <div className={textContainerClass}>
-            <div className="surface-panel-muted p-3">
-              <p className="text-xs uppercase tracking-[0.14em] text-text-muted">Signed in</p>
-              <p className="mt-2 truncate font-medium text-text-primary">{user.displayName}</p>
-              <p className="truncate text-sm text-text-muted">{user.email}</p>
+        {user ? (
+          <div className="border-t border-border px-4 py-4">
+            <div className={textContainerClass}>
+              <div className="surface-panel-muted p-3">
+                <p className="text-xs uppercase tracking-[0.14em] text-text-muted">Signed in</p>
+                <p className="mt-2 truncate font-medium text-text-primary">{user.displayName || user.user_metadata?.full_name || "User"}</p>
+                <p className="truncate text-sm text-text-muted">{user.email}</p>
+              </div>
+            </div>
+            <div className={`justify-center md:flex ${!collapsed ? "lg:hidden" : ""}`} title={`${user.displayName || "User"} — ${user.email || ""}`}>
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-soft text-sm font-semibold text-primary shadow-sm">
+                {initials(user.displayName || user.user_metadata?.full_name || "User")}
+              </span>
             </div>
           </div>
-          <div className={`justify-center md:flex ${!collapsed ? "lg:hidden" : ""}`} title={`${user.displayName} — ${user.email}`}>
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-soft text-sm font-semibold text-primary shadow-sm">
-              {initials(user.displayName)}
-            </span>
-          </div>
-        </div>
+        ) : null}
       </aside>
     </>
   );

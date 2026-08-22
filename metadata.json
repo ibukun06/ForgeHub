@@ -1,0 +1,8 @@
+{
+  "name": "ForgeHub",
+  "description": "A guided, AI-assisted documentation workspace for student and early-career technical teams",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
