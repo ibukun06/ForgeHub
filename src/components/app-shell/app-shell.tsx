@@ -110,24 +110,21 @@ export function AppShell({ user, workspaces = [], children }: AppShellProps) {
   }, [navOpen]);
 
   return (
-    <div className="min-h-screen bg-bg text-text-primary">
-      <GlobalSidebar
-        shellState={shellState}
-        user={user}
-        workspaces={workspaces}
-        openCommand={() => setCommandOpen(true)}
-        mobileOpen={navOpen}
-        closeMobile={closeMobileNav}
-        collapsed={sidebarCollapsed}
-        onToggleCollapsed={toggleSidebarCollapsed}
-        sidebarRef={sidebarRef}
-      />
+    <div className="min-h-screen bg-bg text-text-primary flex justify-center">
+      <div className="flex w-full max-w-[1600px] relative bg-bg shadow-sm">
+        <GlobalSidebar
+          shellState={shellState}
+          user={user}
+          workspaces={workspaces}
+          openCommand={() => setCommandOpen(true)}
+          mobileOpen={navOpen}
+          closeMobile={closeMobileNav}
+          collapsed={sidebarCollapsed}
+          onToggleCollapsed={toggleSidebarCollapsed}
+          sidebarRef={sidebarRef}
+        />
 
-      <div
-        className={`min-h-screen transition-[padding-left] duration-200 md:pl-16 ${
-          sidebarCollapsed ? "lg:pl-16" : "lg:pl-[18rem]"
-        }`}
-      >
+        <div className="flex min-w-0 flex-1 flex-col min-h-screen">
         <header className="sticky top-0 z-30 border-b border-border bg-bg/90 backdrop-blur-xl">
           <div className="flex items-center gap-3 px-4 py-3 sm:px-5 lg:px-6">
             <button
@@ -211,6 +208,7 @@ export function AppShell({ user, workspaces = [], children }: AppShellProps) {
 
       <MobileTabBar openCommand={() => setCommandOpen(true)} />
       <CommandSurface open={commandOpen} onClose={() => setCommandOpen(false)} shellState={shellState} />
+      </div>
     </div>
   );
 }
@@ -251,7 +249,7 @@ function GlobalSidebar({
       
       <aside
         ref={sidebarRef}
-        className={`fixed inset-y-0 left-0 z-50 flex w-[85vw] max-w-[18rem] flex-col border-r border-border bg-surface text-text-primary transition-[transform,width] duration-200 md:w-16 md:translate-x-0 ${
+        className={`fixed md:sticky top-0 inset-y-0 left-0 z-50 flex h-[100dvh] shrink-0 w-[85vw] max-w-[18rem] flex-col border-r border-border bg-surface text-text-primary transition-[transform,width] duration-200 md:w-16 md:translate-x-0 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         } ${collapsed ? "lg:w-16" : "lg:w-[18rem]"}`}
       >

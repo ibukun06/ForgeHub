@@ -1,0 +1,17 @@
+# FORGEHUB — GAP ANALYSIS
+
+*A comparative matrix of ForgeHub's Current State (Repository Reality) vs. Intended State (Ideal Product), outlining the delta and assigning priority to bridge the gap.*
+
+| Area | Current State (Actual) | Intended State (Ideal) | Gap | Priority |
+| :--- | :--- | :--- | :--- | :--- |
+| **Architecture** | Next.js App Router, Supabase Auth/DB, solid UI component shell. | Strict Server/Client boundaries, heavily optimized data fetching, secure environments. | **Minimal.** The foundation is solid and correct. Needs minor schema syncs (e.g., Kanban statuses). | **P1 - Core** |
+| **UX & UI Shell** | Premium "Obsidian Glass" aesthetic. Navigational structures exist. High visual polish. | Keyboard-first, dense, actionable command center with zero-latency optimistic updates. | **Moderate.** The shell is beautiful but many buttons are visually mocked stubs. Command palette is missing. | **P1 - Core** |
+| **Collaboration** | Backend tables exist (`project_members`). UI allows "invites". **No real-time features.** | Live cursors, WebSockets (Yjs), presence, granular inline comments, strict RBAC enforcement. | **Massive.** The core collaborative engine does not exist in the frontend. It is currently a single-player app. | **P0 - Critical** |
+| **AI Integration** | Basic `@google/genai` scripts for simple text summarization (inbox/briefs). | Agentic AI that understands the Project Graph, auto-drafts ADRs, and acts as an automated reviewer. | **Large.** The current AI is a basic wrapper. True contextual AI requires RAG over the document schema. | **P2 - Strategic** |
+| **Files & Artifacts** | `project_files` table exists. Mocked UI. | Native in-browser rendering of CAD, PDFs, datasets, with immutable version control. | **Massive.** File handling and 3D rendering are entirely unbuilt. | **P3 - Expansion** |
+| **Documentation** | Beautiful, hardcoded `doc-editor.tsx` UI prototype. Database tables exist (`documents`). | Full block-based collaborative editor (Tiptap/Lexical) synced via CRDTs. | **Massive.** The most important feature (writing docs) is currently a static UI mockup. | **P0 - Critical** |
+| **Engineering Graph** | Not implemented. Folders/lists only. | Visual node-based canvas showing requirements → decisions → implementations. | **Complete.** Does not exist in architecture or UI. | **P2 - Strategic** |
+| **Profiles & Portfolio** | Basic `user_profiles` table. UI for "Explore" mockups exists. | Living resume, skill extraction, public vanity URLs, exportable social cards. | **Large.** UI exists in pieces, but the data pipeline to extract public proof is missing. | **P2 - Strategic** |
+| **Security & RBAC** | Supabase RLS is configured for basic tenant isolation (workspaces). | Granular role enforcement (Student vs Advisor) in UI and API limits. | **Moderate.** Backend is mostly secure, but frontend lacks conditional rendering based on detailed roles. | **P1 - Core** |
+| **Mobile & Responsive** | Tailwind responsive classes used, but complex views (Kanban/Editor) are desktop-first. | First-class mobile experience, especially for the Universal Inbox and quick approvals. | **Moderate.** Complex data views need mobile-specific paradigms (e.g., swipeable cards). | **P1 - Core** |
+| **Performance** | Fast (Next.js SSR), but relies heavily on full page reloads for mutations (`router.refresh`). | Sub-100ms optimistic UI updates across all mutations. Minimal refetching. | **Moderate.** Need to transition to fine-grained optimistic state (already started in Kanban). | **P1 - Core** |

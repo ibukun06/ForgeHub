@@ -28,7 +28,7 @@ export default function AccessibilitySettingsPage() {
           .single();
           
         if (prefs?.accessibility) {
-          setAccessibility(prev => ({ ...prev, ...prefs.accessibility }));
+          setAccessibility(prev => ({ ...prev, ...(prefs.accessibility as any) }));
         }
       }
       setLoading(false);

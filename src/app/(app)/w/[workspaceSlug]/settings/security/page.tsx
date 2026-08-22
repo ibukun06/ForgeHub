@@ -39,7 +39,7 @@ export default function WorkspaceSecuritySettingsPage({
           .single();
           
         if (prefs?.security) {
-          setSecurity(prev => ({ ...prev, ...prefs.security }));
+          setSecurity(prev => ({ ...prev, ...(prefs.security as any) }));
         }
       }
       setLoading(false);

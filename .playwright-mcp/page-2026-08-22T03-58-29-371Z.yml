@@ -1,0 +1,338 @@
+- generic [active] [ref=f16e1]:
+  - banner [ref=f16e2]:
+    - generic [ref=f16e3]:
+      - link [ref=f16e4] [cursor=pointer]:
+        - /url: /
+        - img "ForgeHub Logo" [ref=f16e5]
+        - text: ForgeHub
+      - navigation [ref=f16e6]:
+        - link "Product" [ref=f16e7] [cursor=pointer]:
+          - /url: /features
+        - link "Explore" [ref=f16e8] [cursor=pointer]:
+          - /url: /explore
+        - link "Pricing" [ref=f16e9] [cursor=pointer]:
+          - /url: /pricing
+        - link "About" [ref=f16e10] [cursor=pointer]:
+          - /url: /about
+      - generic [ref=f16e11]:
+        - button "Current theme is system. Click to switch." [ref=f16e12] [cursor=pointer]
+        - button "OL" [ref=f16e16] [cursor=pointer]
+        - link "Dashboard" [ref=f16e18] [cursor=pointer]:
+          - /url: /dashboard
+  - main [ref=f16e19]:
+    - generic [ref=f16e21]:
+      - generic [ref=f16e22]:
+        - generic [ref=f16e23]: ForgeHub
+        - paragraph [ref=f16e36]: The Operating System for Technical Creation
+        - heading "A living map of an idea becoming real." [level=1] [ref=f16e37]
+        - paragraph [ref=f16e38]: ForgeHub is a new digital environment where technical ideas become research, designs, experiments, failures, and ultimately, proof of work. Don't just claim your skills—prove how you solve problems.
+        - generic [ref=f16e39]:
+          - link "Open ForgeHub" [ref=f16e40] [cursor=pointer]:
+            - /url: /dashboard
+          - link "Continue Building" [ref=f16e44] [cursor=pointer]:
+            - /url: /dashboard
+        - generic [ref=f16e45]:
+          - generic [ref=f16e46]: Living Project Maps
+          - generic [ref=f16e52]: First-Class Failure Logs
+          - generic [ref=f16e58]: AI Intelligence Layer
+          - generic [ref=f16e62]: Version Evolution
+      - generic [ref=f16e65]:
+        - generic [ref=f16e66]:
+          - generic [ref=f16e67]: Project Map / Active State
+          - generic [ref=f16e68]: PROTOTYPE TESTING
+        - generic [ref=f16e69]:
+          - generic [ref=f16e72]: Problem
+          - generic [ref=f16e77]: Prototype
+          - generic [ref=f16e82]: Result
+          - generic [ref=f16e86]: Vibration Fail
+        - generic [ref=f16e94]:
+          - paragraph [ref=f16e95]: Latest AI Insight
+          - paragraph [ref=f16e96]: "Frame resonance occurred at operating speed. Recommendation: Increase frame stiffness or review material specs before next version."
+    - generic [ref=f16e98]:
+      - paragraph [ref=f16e99]: Built for the people actually building things
+      - generic [ref=f16e100]:
+        - generic [ref=f16e101]: Engineering Students
+        - generic [ref=f16e102]: Project Leads
+        - generic [ref=f16e103]: Researchers & Academics
+        - generic [ref=f16e104]: Hardware Makers
+    - generic [ref=f16e106]:
+      - generic [ref=f16e107]:
+        - heading "What ForgeHub is" [level=2] [ref=f16e108]
+        - paragraph [ref=f16e109]: ForgeHub is a digital workspace for turning an idea into a finished, documented project. The same way GitHub tracks how code evolves, ForgeHub tracks how a build evolves — the research, the failed prototypes, the design decisions, the fixes. The journey is the product.
+      - generic [ref=f16e110]:
+        - heading "Who it's for" [level=2] [ref=f16e111]
+        - list [ref=f16e112]:
+          - listitem [ref=f16e113]:
+            - generic [ref=f16e114]: →
+            - text: Engineering students turning a year of work into a real thesis, not a scramble
+          - listitem [ref=f16e115]:
+            - generic [ref=f16e116]: →
+            - text: Project leads who need their team documenting as they go, not at the deadline
+          - listitem [ref=f16e117]:
+            - generic [ref=f16e118]: →
+            - text: Makers and researchers who want proof they can actually build something
+    - generic [ref=f16e120]:
+      - generic [ref=f16e121]:
+        - paragraph [ref=f16e122]: The core loop
+        - heading "Make the record while the work is still fresh." [level=2] [ref=f16e123]
+        - paragraph [ref=f16e124]: ForgeHub is opinionated about what a technical project should leave behind, without pretending every team builds the same way.
+      - generic [ref=f16e125]:
+        - article [ref=f16e126]:
+          - generic [ref=f16e127]: "01"
+          - heading "Guided documentation" [level=3] [ref=f16e132]
+          - paragraph [ref=f16e133]: Start with prompts for the problem, requirements, design, testing, and the decisions that connect them.
+        - article [ref=f16e134]:
+          - generic [ref=f16e135]: "02"
+          - heading "AI-assisted drafting" [level=3] [ref=f16e140]
+          - paragraph [ref=f16e141]: Turn your own notes into a useful first draft. Every AI output stays visibly draft until a human accepts it.
+        - article [ref=f16e142]:
+          - generic [ref=f16e143]: "03"
+          - heading "Roles that make sense" [level=3] [ref=f16e150]
+          - paragraph [ref=f16e151]: Give contributors editing access and advisors review access without turning permissions into guesswork.
+        - article [ref=f16e152]:
+          - generic [ref=f16e153]: "04"
+          - heading "A living decisions log" [level=3] [ref=f16e158]
+          - paragraph [ref=f16e159]: Capture what the team chose, what it considered, and why the choice made sense at the time.
+        - article [ref=f16e160]:
+          - generic [ref=f16e161]: "05"
+          - heading "Evidence beside the record" [level=3] [ref=f16e165]
+          - paragraph [ref=f16e166]: Attach sketches, research, images, and supporting files where the team will actually find them.
+        - article [ref=f16e167]:
+          - generic [ref=f16e168]: "06"
+          - heading "A considered public snapshot" [level=3] [ref=f16e173]
+          - paragraph [ref=f16e174]: Publish the sections you choose when the work is ready. Private project content never becomes public by accident.
+    - generic [ref=f16e176]:
+      - heading "How ForgeHub works" [level=2] [ref=f16e177]
+      - generic [ref=f16e178]:
+        - generic [ref=f16e180]:
+          - heading "01 Explore" [level=3] [ref=f16e185]:
+            - generic [ref=f16e186]: "01"
+            - text: Explore
+          - paragraph [ref=f16e187]: See what other builders are documenting — real projects, real progress, real dead ends.
+        - generic [ref=f16e188]:
+          - heading "02 Create a project" [level=3] [ref=f16e192]:
+            - generic [ref=f16e193]: "02"
+            - text: Create a project
+          - paragraph [ref=f16e194]: Set it up in a minute — name, type, category. ForgeHub sets up your guided document set automatically.
+        - generic [ref=f16e195]:
+          - heading "03 Build & document" [level=3] [ref=f16e201]:
+            - generic [ref=f16e202]: "03"
+            - text: Build & document
+          - paragraph [ref=f16e203]: Work through each phase as you actually build, with your AI mentor and your team alongside you.
+        - generic [ref=f16e204]:
+          - heading "04 Publish" [level=3] [ref=f16e212]:
+            - generic [ref=f16e213]: "04"
+            - text: Publish
+          - paragraph [ref=f16e214]: Turn it into a shareable case study when it's ready — opt-in, section by section.
+    - generic [ref=f16e216]:
+      - generic [ref=f16e217]:
+        - generic [ref=f16e218]:
+          - paragraph [ref=f16e219]: Project field notes
+          - heading "A better record of the messy middle." [level=2] [ref=f16e220]
+          - paragraph [ref=f16e221]: These illustrative stories show the shape of a ForgeHub project. Published work will replace them as teams share their own records.
+        - generic [ref=f16e222]: Illustrative projects / pre-launch
+      - generic [ref=f16e223]:
+        - generic [ref=f16e229]:
+          - generic [ref=f16e230]:
+            - generic [ref=f16e231]: Robotics & Mechatronics
+            - generic [ref=f16e232]: "24"
+          - heading "Autonomous Trash-Sorting Robot" [level=3] [ref=f16e235]
+          - paragraph [ref=f16e236]: Mechanical eng. team, final year
+          - generic [ref=f16e237]: 72% complete
+          - generic [ref=f16e241]:
+            - generic [ref=f16e242]: Arduino
+            - generic [ref=f16e243]: Computer Vision
+            - generic [ref=f16e244]: CAD
+          - generic [ref=f16e245]: Team of 4
+        - generic [ref=f16e256]:
+          - generic [ref=f16e257]:
+            - generic [ref=f16e258]: Biomedical
+            - generic [ref=f16e259]: "31"
+          - heading "Low-Cost Prosthetic Hand" [level=3] [ref=f16e262]
+          - paragraph [ref=f16e263]: Biomedical design group
+          - generic [ref=f16e264]: 58% complete
+          - generic [ref=f16e268]:
+            - generic [ref=f16e269]: 3D Printing
+            - generic [ref=f16e270]: Servo Control
+            - generic [ref=f16e271]: CAD
+          - generic [ref=f16e272]: Team of 3
+        - generic [ref=f16e286]:
+          - generic [ref=f16e287]:
+            - generic [ref=f16e288]: Renewable Energy
+            - generic [ref=f16e289]: "18"
+          - heading "Campus Solar Micro-Grid" [level=3] [ref=f16e292]
+          - paragraph [ref=f16e293]: Renewable energy capstone
+          - generic [ref=f16e294]: 91% complete
+          - generic [ref=f16e298]:
+            - generic [ref=f16e299]: Solar
+            - generic [ref=f16e300]: Power Electronics
+            - generic [ref=f16e301]: Data Logging
+          - generic [ref=f16e302]: Team of 5
+    - generic [ref=f16e309]:
+      - heading "Browse by category" [level=2] [ref=f16e310]
+      - generic [ref=f16e311]:
+        - link "Mechanical" [ref=f16e312] [cursor=pointer]:
+          - /url: /explore?category=mechanical
+        - link "Electrical & Electronics" [ref=f16e325] [cursor=pointer]:
+          - /url: /explore?category=electrical
+        - link "Software" [ref=f16e329] [cursor=pointer]:
+          - /url: /explore?category=software
+        - link "Robotics & Mechatronics" [ref=f16e335] [cursor=pointer]:
+          - /url: /explore?category=robotics
+        - link "AI & Data" [ref=f16e340] [cursor=pointer]:
+          - /url: /explore?category=ai-data
+        - link "Renewable Energy" [ref=f16e354] [cursor=pointer]:
+          - /url: /explore?category=renewable
+        - link "Aerospace" [ref=f16e362] [cursor=pointer]:
+          - /url: /explore?category=aerospace
+        - link "Civil & Structural" [ref=f16e369] [cursor=pointer]:
+          - /url: /explore?category=civil
+        - link "Biomedical" [ref=f16e375] [cursor=pointer]:
+          - /url: /explore?category=biomedical
+        - link "Research" [ref=f16e380] [cursor=pointer]:
+          - /url: /explore?category=research
+    - generic [ref=f16e385]:
+      - generic [ref=f16e386]:
+        - paragraph [ref=f16e387]: Why ForgeHub
+        - heading "The problem is not your work ethic. It is where the work lives." [level=2] [ref=f16e388]
+        - paragraph [ref=f16e389]: Great technical work gets lost when the reasoning is scattered. ForgeHub gives the project one thread from problem statement to outcome.
+      - generic [ref=f16e390]:
+        - generic [ref=f16e391]:
+          - heading "Without ForgeHub" [level=3] [ref=f16e392]
+          - list [ref=f16e393]:
+            - listitem [ref=f16e394]:
+              - generic [ref=f16e398]: Scattered across WhatsApp, Drive, and a notebook
+            - listitem [ref=f16e399]:
+              - generic [ref=f16e403]: Files nobody else can open when context matters
+            - listitem [ref=f16e404]:
+              - generic [ref=f16e408]: No record of why a decision was made
+            - listitem [ref=f16e409]:
+              - generic [ref=f16e413]: An empty portfolio when it is time to apply
+        - generic [ref=f16e414]:
+          - heading "With ForgeHub" [level=3] [ref=f16e415]
+          - list [ref=f16e416]:
+            - listitem [ref=f16e417]:
+              - generic [ref=f16e420]: One workspace, one source of truth
+            - listitem [ref=f16e421]:
+              - generic [ref=f16e424]: Guided documentation for every phase
+            - listitem [ref=f16e425]:
+              - generic [ref=f16e428]: A decisions log nobody has to reconstruct
+            - listitem [ref=f16e429]:
+              - generic [ref=f16e432]: A shareable case study when you are ready
+    - generic [ref=f16e434]:
+      - heading "From early builders" [level=2] [ref=f16e435]
+      - generic [ref=f16e436]:
+        - blockquote [ref=f16e437]:
+          - paragraph [ref=f16e438]: “My advisor could finally see the whole project, not just the final report.”
+          - generic [ref=f16e439]: — Final-year Mechanical Engineering student
+        - blockquote [ref=f16e440]:
+          - paragraph [ref=f16e441]: “We stopped losing decisions in old WhatsApp threads nobody could search.”
+          - generic [ref=f16e442]: — Robotics team lead
+        - blockquote [ref=f16e443]:
+          - paragraph [ref=f16e444]: “The AI mentor is actually useful because it's read my project, not just my prompt.”
+          - generic [ref=f16e445]: — Independent hardware maker
+    - generic [ref=f16e447]:
+      - heading "Questions" [level=2] [ref=f16e448]
+      - generic [ref=f16e449]:
+        - group [ref=f16e450]:
+          - generic "Is ForgeHub free? +" [ref=f16e451] [cursor=pointer]:
+            - text: Is ForgeHub free?
+            - generic [ref=f16e452]: +
+        - group [ref=f16e453]:
+          - generic "Do I need a team to use it? +" [ref=f16e454] [cursor=pointer]:
+            - text: Do I need a team to use it?
+            - generic [ref=f16e455]: +
+        - group [ref=f16e456]:
+          - generic "What if my project isn't finished? +" [ref=f16e457] [cursor=pointer]:
+            - text: What if my project isn't finished?
+            - generic [ref=f16e458]: +
+        - group [ref=f16e459]:
+          - generic "Can my advisor or mentor join? +" [ref=f16e460] [cursor=pointer]:
+            - text: Can my advisor or mentor join?
+            - generic [ref=f16e461]: +
+        - group [ref=f16e462]:
+          - generic "Is my project private by default? +" [ref=f16e463] [cursor=pointer]:
+            - text: Is my project private by default?
+            - generic [ref=f16e464]: +
+        - group [ref=f16e465]:
+          - generic "What kinds of projects work on ForgeHub? +" [ref=f16e466] [cursor=pointer]:
+            - text: What kinds of projects work on ForgeHub?
+            - generic [ref=f16e467]: +
+    - generic [ref=f16e469]:
+      - heading "Your next build deserves a real record." [level=2] [ref=f16e470]
+      - paragraph [ref=f16e471]: Forge it into reality — start with a single idea.
+      - generic [ref=f16e472]:
+        - link "Open ForgeHub" [ref=f16e473] [cursor=pointer]:
+          - /url: /dashboard
+        - link "My Projects" [ref=f16e474] [cursor=pointer]:
+          - /url: /dashboard
+  - contentinfo [ref=f16e475]:
+    - generic [ref=f16e476]:
+      - generic [ref=f16e477]:
+        - link [ref=f16e478] [cursor=pointer]:
+          - /url: /
+          - img "ForgeHub Logo" [ref=f16e479]
+          - text: ForgeHub
+        - paragraph [ref=f16e480]: The workspace where engineering builds get documented, not lost.
+      - generic [ref=f16e481]:
+        - generic [ref=f16e482]:
+          - heading "Product" [level=3] [ref=f16e483]
+          - list [ref=f16e484]:
+            - listitem [ref=f16e485]:
+              - link "Features" [ref=f16e486] [cursor=pointer]:
+                - /url: /features
+            - listitem [ref=f16e487]:
+              - link "Explore" [ref=f16e488] [cursor=pointer]:
+                - /url: /explore
+            - listitem [ref=f16e489]:
+              - link "Workspaces" [ref=f16e490] [cursor=pointer]:
+                - /url: /explore
+            - listitem [ref=f16e491]:
+              - link "Projects" [ref=f16e492] [cursor=pointer]:
+                - /url: /explore
+            - listitem [ref=f16e493]:
+              - link "Pricing" [ref=f16e494] [cursor=pointer]:
+                - /url: /pricing
+            - listitem [ref=f16e495]: Changelog
+        - generic [ref=f16e496]:
+          - heading "Resources" [level=3] [ref=f16e497]
+          - list [ref=f16e498]:
+            - listitem [ref=f16e499]: Documentation
+            - listitem [ref=f16e500]: Help Center
+            - listitem [ref=f16e501]: Blog
+            - listitem [ref=f16e502]: Engineering Resources
+            - listitem [ref=f16e503]: Community
+        - generic [ref=f16e504]:
+          - heading "Company" [level=3] [ref=f16e505]
+          - list [ref=f16e506]:
+            - listitem [ref=f16e507]:
+              - link "About" [ref=f16e508] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=f16e509]: Careers
+            - listitem [ref=f16e510]:
+              - link "Contact" [ref=f16e511] [cursor=pointer]:
+                - /url: /contact
+            - listitem [ref=f16e512]: Press
+        - generic [ref=f16e513]:
+          - heading "Social" [level=3] [ref=f16e514]
+          - list [ref=f16e515]:
+            - listitem [ref=f16e516]: LinkedIn
+            - listitem [ref=f16e517]: GitHub
+            - listitem [ref=f16e518]: YouTube
+            - listitem [ref=f16e519]: X
+            - listitem [ref=f16e520]: Discord
+        - generic [ref=f16e521]:
+          - heading "Legal" [level=3] [ref=f16e522]
+          - list [ref=f16e523]:
+            - listitem [ref=f16e524]:
+              - link "Privacy" [ref=f16e525] [cursor=pointer]:
+                - /url: /privacy
+            - listitem [ref=f16e526]:
+              - link "Terms" [ref=f16e527] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=f16e528]: Cookies
+            - listitem [ref=f16e529]: Security
+            - listitem [ref=f16e530]: Acceptable Use
+    - paragraph [ref=f16e531]: © 2026 ForgeHub.
+  - button "Open Next.js Dev Tools" [ref=f16e537] [cursor=pointer]
+  - alert [ref=f16e541]

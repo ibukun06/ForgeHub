@@ -13,7 +13,7 @@ export function EmptyState({
   children?: ReactNode;
 }) {
   return (
-    <div className="surface-panel-muted flex flex-col items-center justify-center p-8 text-center sm:p-12">
+    <div className="surface-grid relative flex flex-col items-center justify-center p-8 text-center sm:p-12 border border-dashed border-border-strong rounded-lg bg-surface/50 shadow-sm">
       {Icon && (
         <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-surface shadow-sm ring-1 ring-border">
           <Icon className="h-6 w-6 text-text-muted" aria-hidden />

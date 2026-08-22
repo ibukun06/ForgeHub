@@ -28,7 +28,7 @@ export default function CollaborationSettingsPage() {
           .single();
           
         if (prefs?.collaboration) {
-          setCollab(prev => ({ ...prev, ...prefs.collaboration }));
+          setCollab(prev => ({ ...prev, ...(prefs.collaboration as any) }));
         }
       }
       setLoading(false);

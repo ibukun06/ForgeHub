@@ -156,6 +156,7 @@ export type ProjectCockpitData = {
   aiBrief: string[];
   decisions: Array<{ title: string; status: string }>;
   artifacts: Array<{ title: string; kind: string; summary: string }>;
+  role: string;
 };
 
 type ViewerGraph = {
@@ -713,6 +714,7 @@ export async function getProjectCockpitData(projectSlug: string, workspaceSlug: 
       kind: titleCase(document.document_type),
       summary: `Updated in the current project cycle and ready for linked work, review, or AI summarization.`,
     })),
+    role: graph.role,
   };
 }
 

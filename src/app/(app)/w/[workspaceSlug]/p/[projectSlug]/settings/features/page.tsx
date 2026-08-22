@@ -39,7 +39,7 @@ export default function ProjectFeaturesSettingsPage({
           .single();
           
         if (prefs?.features) {
-          setFeatures(prev => ({ ...prev, ...prefs.features }));
+          setFeatures(prev => ({ ...prev, ...(prefs.features as any) }));
         }
       }
       setLoading(false);

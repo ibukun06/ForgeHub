@@ -31,7 +31,7 @@ export default function NotificationsSettingsPage() {
           .single();
           
         if (prefs?.notifications) {
-          setNotifications(prev => ({ ...prev, ...prefs.notifications }));
+          setNotifications(prev => ({ ...prev, ...(prefs.notifications as any) }));
         }
       }
       setLoading(false);

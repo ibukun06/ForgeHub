@@ -1,0 +1,115 @@
+- generic [active] [ref=f20e1]:
+  - generic [ref=f20e3]:
+    - complementary [ref=f20e4]:
+      - link [ref=f20e6] [cursor=pointer]:
+        - /url: /inbox
+        - generic [ref=f20e9]:
+          - paragraph [ref=f20e10]: ForgeHub
+          - paragraph [ref=f20e11]: Project OS
+      - button "Collapse sidebar" [expanded] [ref=f20e13] [cursor=pointer]:
+        - generic [ref=f20e17]: Collapse
+      - button "Search, command, or ask AI" [ref=f20e19] [cursor=pointer]:
+        - generic [ref=f20e23]: Search, command...
+      - navigation "Primary navigation" [ref=f20e24]:
+        - link "Home" [ref=f20e25] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Explore" [ref=f20e32] [cursor=pointer]:
+          - /url: /explore
+        - link "Inbox" [ref=f20e37] [cursor=pointer]:
+          - /url: /inbox
+      - generic [ref=f20e42]:
+        - generic [ref=f20e43]: Workspaces
+        - generic [ref=f20e44]:
+          - link "Ibukunoluwa Oluwafemi's Workspace" [ref=f20e45] [cursor=pointer]:
+            - /url: /w/ibukunoluwa-oluwafemi
+          - link "Create new" [ref=f20e53] [cursor=pointer]:
+            - /url: /projects/new
+      - generic [ref=f20e59]:
+        - paragraph [ref=f20e60]: Signed in
+        - paragraph [ref=f20e61]: Ibukunoluwa Oluwafemi
+        - paragraph [ref=f20e62]: oluwafemiibk@gmail.com
+    - generic [ref=f20e63]:
+      - banner [ref=f20e64]:
+        - generic [ref=f20e65]:
+          - button "Collapse context rail" [ref=f20e66] [cursor=pointer]
+          - generic [ref=f20e70]:
+            - generic [ref=f20e71]: Inbox
+            - generic [ref=f20e74]:
+              - paragraph [ref=f20e75]: Inbox · global view
+              - paragraph [ref=f20e76]: Inbox
+          - button "Search, command, or ask AI ⌘K" [ref=f20e77] [cursor=pointer]:
+            - text: Search, command, or ask AI
+            - generic [ref=f20e81]: ⌘K
+          - link "Create" [ref=f20e82] [cursor=pointer]:
+            - /url: /projects/new
+          - button "Current theme is system. Click to switch." [ref=f20e84] [cursor=pointer]
+          - button "OL" [ref=f20e89] [cursor=pointer]
+      - generic [ref=f20e91]:
+        - complementary [ref=f20e92]:
+          - generic [ref=f20e93]:
+            - paragraph [ref=f20e94]: Current scope
+            - heading "Inbox" [level=2] [ref=f20e95]
+            - paragraph [ref=f20e96]: Inbox · global view
+          - generic [ref=f20e97]: Context rail
+          - generic [ref=f20e98]:
+            - link [ref=f20e99] [cursor=pointer]:
+              - /url: /inbox#action-required
+              - paragraph [ref=f20e100]: Action required
+              - paragraph [ref=f20e101]: Approvals, blockers, mentions
+            - link [ref=f20e102] [cursor=pointer]:
+              - /url: /inbox#approvals
+              - paragraph [ref=f20e103]: Approvals
+              - paragraph [ref=f20e104]: Decisions waiting on you
+            - link [ref=f20e105] [cursor=pointer]:
+              - /url: /inbox#project-updates
+              - paragraph [ref=f20e106]: Project updates
+              - paragraph [ref=f20e107]: Signal over noise
+            - link [ref=f20e108] [cursor=pointer]:
+              - /url: /inbox#snoozed
+              - paragraph [ref=f20e109]: Snoozed
+              - paragraph [ref=f20e110]: Deferred follow-ups
+        - main [ref=f20e111]:
+          - generic [ref=f20e112]:
+            - generic [ref=f20e113]:
+              - paragraph [ref=f20e114]: Start a new build
+              - heading "Give the idea some structure." [level=1] [ref=f20e115]
+              - paragraph [ref=f20e116]: Answer a few useful questions, then ForgeHub will prepare a private project record instead of dropping you into a blank dashboard.
+            - generic [ref=f20e117]:
+              - generic [ref=f20e118]:
+                - generic "Project creation progress" [ref=f20e119]:
+                  - generic [ref=f20e120]: 01 / Idea
+                  - generic [ref=f20e121]: 02 / Type
+                  - generic [ref=f20e122]: 03 / Documents
+                  - generic [ref=f20e123]: 04 / Review
+                - generic [ref=f20e124]:
+                  - generic [ref=f20e125]:
+                    - generic [ref=f20e126]: Project name *
+                    - textbox "Project name" [ref=f20e127]:
+                      - /placeholder: e.g. Autonomous field rover
+                  - generic [ref=f20e128]:
+                    - generic [ref=f20e129]: What are you making?
+                    - textbox "What are you making?" [ref=f20e130]:
+                      - /placeholder: Describe the problem, who it affects, and what you want to change.
+                    - paragraph [ref=f20e131]: 0/500
+                - button "Continue" [ref=f20e133] [cursor=pointer]
+              - complementary [ref=f20e136]:
+                - heading "Start with a useful record." [level=2] [ref=f20e137]
+                - paragraph [ref=f20e138]: The first document set is a working hypothesis, not a contract. Your project stays private until you choose to publish it.
+                - link "Back to projects" [ref=f20e139] [cursor=pointer]:
+                  - /url: /projects
+        - complementary [ref=f20e140]:
+          - generic [ref=f20e141]: Utility rail
+          - generic [ref=f20e142]:
+            - generic [ref=f20e143]:
+              - heading "AI triage" [level=3] [ref=f20e144]
+              - list [ref=f20e145]:
+                - listitem [ref=f20e146]: • Cluster related notifications
+                - listitem [ref=f20e147]: • Summarize long threads
+                - listitem [ref=f20e148]: • Explain why this item is urgent
+            - generic [ref=f20e149]:
+              - heading "Inbox actions" [level=3] [ref=f20e150]
+              - list [ref=f20e151]:
+                - listitem [ref=f20e152]: • Mute source
+                - listitem [ref=f20e153]: • Snooze until tomorrow
+                - listitem [ref=f20e154]: • Convert update to task
+  - button "Open Next.js Dev Tools" [ref=f20e160] [cursor=pointer]

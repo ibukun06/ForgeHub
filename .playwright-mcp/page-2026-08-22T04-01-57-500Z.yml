@@ -1,0 +1,104 @@
+- generic [active] [ref=f18e1]:
+  - generic [ref=f18e3]:
+    - complementary [ref=f18e4]:
+      - link [ref=f18e6] [cursor=pointer]:
+        - /url: /inbox
+        - generic [ref=f18e9]:
+          - paragraph [ref=f18e10]: ForgeHub
+          - paragraph [ref=f18e11]: Project OS
+      - button "Collapse sidebar" [expanded] [ref=f18e13] [cursor=pointer]:
+        - generic [ref=f18e17]: Collapse
+      - button "Search, command, or ask AI" [ref=f18e19] [cursor=pointer]:
+        - generic [ref=f18e23]: Search, command...
+      - navigation "Primary navigation" [ref=f18e24]:
+        - link "Home" [ref=f18e25] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Explore" [ref=f18e32] [cursor=pointer]:
+          - /url: /explore
+        - link "Inbox" [ref=f18e37] [cursor=pointer]:
+          - /url: /inbox
+      - generic [ref=f18e42]:
+        - generic [ref=f18e43]: Workspaces
+        - generic [ref=f18e44]:
+          - link "Ibukunoluwa Oluwafemi's Workspace" [ref=f18e45] [cursor=pointer]:
+            - /url: /w/ibukunoluwa-oluwafemi
+          - link "Create new" [ref=f18e53] [cursor=pointer]:
+            - /url: /projects/new
+      - generic [ref=f18e59]:
+        - paragraph [ref=f18e60]: Signed in
+        - paragraph [ref=f18e61]: Ibukunoluwa Oluwafemi
+        - paragraph [ref=f18e62]: oluwafemiibk@gmail.com
+    - generic [ref=f18e63]:
+      - banner [ref=f18e64]:
+        - generic [ref=f18e65]:
+          - button "Collapse context rail" [ref=f18e66] [cursor=pointer]
+          - generic [ref=f18e70]:
+            - generic [ref=f18e71]:
+              - link "Forgehub" [ref=f18e73] [cursor=pointer]:
+                - /url: /w/forgehub/inbox
+              - link "Forgehub Redesign" [ref=f18e77] [cursor=pointer]:
+                - /url: /w/forgehub/p/forgehub-redesign/overview
+              - generic [ref=f18e80]: Board
+            - generic [ref=f18e82]:
+              - paragraph [ref=f18e83]: Board · project cockpit
+              - paragraph [ref=f18e84]: Forgehub Redesign
+          - button "Search, command, or ask AI ⌘K" [ref=f18e85] [cursor=pointer]:
+            - text: Search, command, or ask AI
+            - generic [ref=f18e89]: ⌘K
+          - link "Create" [ref=f18e90] [cursor=pointer]:
+            - /url: /projects/new
+          - button "Current theme is system. Click to switch." [ref=f18e92] [cursor=pointer]
+          - button "OL" [ref=f18e97] [cursor=pointer]
+      - generic [ref=f18e99]:
+        - complementary [ref=f18e100]:
+          - generic [ref=f18e101]:
+            - paragraph [ref=f18e102]: Current scope
+            - heading "Forgehub Redesign" [level=2] [ref=f18e103]
+            - paragraph [ref=f18e104]: Board · project cockpit
+          - generic [ref=f18e105]: Context rail
+          - generic [ref=f18e106]:
+            - link [ref=f18e107] [cursor=pointer]:
+              - /url: /w/forgehub/p/forgehub-redesign/overview
+              - paragraph [ref=f18e108]: Overview
+              - paragraph [ref=f18e109]: Jump within this project
+            - link [ref=f18e110] [cursor=pointer]:
+              - /url: /w/forgehub/p/forgehub-redesign/board
+              - paragraph [ref=f18e111]: Board
+              - paragraph [ref=f18e112]: Current project section
+            - link [ref=f18e113] [cursor=pointer]:
+              - /url: /w/forgehub/p/forgehub-redesign/docs
+              - paragraph [ref=f18e114]: Docs
+              - paragraph [ref=f18e115]: Jump within this project
+            - link [ref=f18e116] [cursor=pointer]:
+              - /url: /w/forgehub/p/forgehub-redesign/decisions
+              - paragraph [ref=f18e117]: Decisions
+              - paragraph [ref=f18e118]: Jump within this project
+            - link [ref=f18e119] [cursor=pointer]:
+              - /url: /w/forgehub/p/forgehub-redesign/team
+              - paragraph [ref=f18e120]: Team
+              - paragraph [ref=f18e121]: Jump within this project
+            - link [ref=f18e122] [cursor=pointer]:
+              - /url: /w/forgehub/p/forgehub-redesign/files
+              - paragraph [ref=f18e123]: Files
+              - paragraph [ref=f18e124]: Jump within this project
+            - link [ref=f18e125] [cursor=pointer]:
+              - /url: /w/forgehub/p/forgehub-redesign/ai
+              - paragraph [ref=f18e126]: Copilot
+              - paragraph [ref=f18e127]: Jump within this project
+        - main [ref=f18e128]
+        - complementary [ref=f18e273]:
+          - generic [ref=f18e274]: Utility rail
+          - generic [ref=f18e275]:
+            - generic [ref=f18e276]:
+              - heading "Project intelligence" [level=3] [ref=f18e277]
+              - list [ref=f18e278]:
+                - listitem [ref=f18e279]: • Summarize project health with evidence
+                - listitem [ref=f18e280]: • Identify blockers and decision gaps
+                - listitem [ref=f18e281]: • Draft the next stakeholder update
+            - generic [ref=f18e282]:
+              - heading "Jump targets" [level=3] [ref=f18e283]
+              - list [ref=f18e284]:
+                - listitem [ref=f18e285]: • Open current milestone
+                - listitem [ref=f18e286]: • Inspect latest decision record
+                - listitem [ref=f18e287]: • Review active discussion threads
+  - button "Open Next.js Dev Tools" [ref=f18e293] [cursor=pointer]

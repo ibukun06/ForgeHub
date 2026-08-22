@@ -42,7 +42,7 @@ type KanbanBoardProps = {
 
 const COLUMNS: { id: string; label: string; colorClass: string; dbStatus: SectionStatus }[] = [
   { id: "Backlog", label: "Backlog", colorClass: "border-t-border", dbStatus: "not_started" },
-  { id: "In progress", label: "In progress", colorClass: "border-t-primary", dbStatus: "not_started" }, // Schema does not have in_progress
+  { id: "In progress", label: "In progress", colorClass: "border-t-primary", dbStatus: "in_progress" },
   { id: "Review", label: "Review", colorClass: "border-t-warning", dbStatus: "ai_draft" },
   { id: "Done", label: "Done", colorClass: "border-t-success", dbStatus: "team_reviewed" },
 ];

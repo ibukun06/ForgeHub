@@ -991,7 +991,7 @@ function ScreenHero({
   );
 }
 
-function PageIntro({ title, description }: { title: string; description: string }) {
+export function PageIntro({ title, description }: { title: string; description: string }) {
   return (
     <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
       <div className="max-w-3xl">

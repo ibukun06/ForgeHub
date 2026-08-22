@@ -11,20 +11,20 @@ import {
   MessagesSquare,
   Users,
   Files,
+  Sparkles,
+  Scale,
 } from "lucide-react";
 
 export type ShellAreaKey = "dashboard" | "inbox" | "explore" | "settings" | "projects";
 
 export type ProjectSectionKey =
   | "overview"
-  | "roadmap"
   | "board"
   | "docs"
-  | "chat"
-  | "review"
-  | "insights"
+  | "decisions"
   | "team"
-  | "files";
+  | "files"
+  | "ai";
 
 export type ContextItem = {
   label: string;
@@ -77,14 +77,12 @@ export const PRIMARY_NAV: NavItem[] = [
 
 export const PROJECT_SPINE: ProjectSpineItem[] = [
   { key: "overview", label: "Overview", icon: LayoutDashboard },
-  { key: "roadmap", label: "Plan", icon: Map },
   { key: "board", label: "Board", icon: KanbanSquare },
   { key: "docs", label: "Docs", icon: BookMarked },
-  { key: "chat", label: "Chat", icon: MessagesSquare },
-  { key: "review", label: "Review", icon: CheckCircle2 },
-  { key: "insights", label: "Insights", icon: Activity },
+  { key: "decisions", label: "Decisions", icon: Scale },
   { key: "team", label: "Team", icon: Users },
   { key: "files", label: "Files", icon: Files },
+  { key: "ai", label: "Copilot", icon: Sparkles },
 ];
 
 export const FAVORITE_LINKS: FavoriteLink[] = [

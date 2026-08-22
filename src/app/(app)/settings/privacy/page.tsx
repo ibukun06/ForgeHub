@@ -27,7 +27,7 @@ export default function PrivacySettingsPage() {
           .single();
           
         if (prefs?.privacy) {
-          setPrivacy(prev => ({ ...prev, ...prefs.privacy }));
+          setPrivacy(prev => ({ ...prev, ...(prefs.privacy as any) }));
         }
       }
       setLoading(false);

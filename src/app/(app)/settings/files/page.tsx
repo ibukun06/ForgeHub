@@ -29,7 +29,7 @@ export default function FilesSettingsPage() {
           .single();
           
         if (prefs?.files) {
-          setFiles(prev => ({ ...prev, ...prefs.files }));
+          setFiles(prev => ({ ...prev, ...(prefs.files as any) }));
         }
       }
       setLoading(false);

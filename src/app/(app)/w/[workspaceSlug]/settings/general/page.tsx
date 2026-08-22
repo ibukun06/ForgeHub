@@ -44,7 +44,7 @@ export default function WorkspaceGeneralSettingsPage({
           .single();
           
         if (prefs?.general) {
-          setWorkspaceInfo(prev => ({ ...prev, ...prefs.general }));
+          setWorkspaceInfo(prev => ({ ...prev, ...(prefs.general as any) }));
         }
       }
       setLoading(false);
